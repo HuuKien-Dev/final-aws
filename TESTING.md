@@ -16,7 +16,7 @@ Các bài kiểm thử tập trung vào nghiệp vụ học tập, xác thực v
 
 Unit test hoặc mock S3/AI không xác nhận kết nối AWS hay nhà cung cấp thật. Kiểm thử PostgreSQL cần database test riêng; kiểm tra HTTP/trình duyệt cần ứng dụng đang hoạt động. Kết quả test tĩnh không chứng minh giao diện không tràn hoặc hạ tầng đã cấu hình đúng.
 
-Đối chiếu các kết nối thực tế với [tài liệu thiết kế kiến trúc](docs/THIET_KE_HA_TANG.md). Ghi rõ ngày, phiên bản mã, môi trường, số test đạt/bỏ qua và phần chưa kiểm chứng khi lập biên bản.
+Ghi rõ ngày, phiên bản mã, môi trường, số test đạt/bỏ qua và phần chưa kiểm chứng khi lập biên bản.
 
 ## Rà soát ngày 09/11/2026
 
