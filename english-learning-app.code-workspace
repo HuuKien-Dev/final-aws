@@ -1,0 +1,14 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.encoding": "utf8",
+    "editor.unicodeHighlight.allowedLocales": {
+      "vi": true,
+      "en": true
+    }
+  }
+}

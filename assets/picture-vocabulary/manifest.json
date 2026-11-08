@@ -1,0 +1,68 @@
+[
+  {
+    "id": "leaf",
+    "file": "leaf.jpg",
+    "author": "mendhak",
+    "original": "mendhak-Red_Acer.jpg",
+    "source": "https://launchpad.net/ubuntu-wallpapers",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "sha256": "1fbfcf0cc4b7a176d86404ba92d017fdec0ec799426b64ed198d6f1e90abd0fe",
+    "changes": "None; original bytes copied from installed ubuntu-wallpapers package."
+  },
+  {
+    "id": "forest",
+    "file": "forest.jpg",
+    "author": "mendhak",
+    "original": "mendhak-Bluebells_Suspended_In_Time.jpg",
+    "source": "https://launchpad.net/ubuntu-wallpapers",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "sha256": "b686eda5bd1278bca3f9f8e6acfcf79492107c2f5655e13d071c78435f1ebff4",
+    "changes": "None; original bytes copied from installed ubuntu-wallpapers package."
+  },
+  {
+    "id": "raccoon",
+    "file": "raccoon.png",
+    "author": "cnusr25",
+    "original": "cnusr25-Simple_Raccoon_Light.png",
+    "source": "https://launchpad.net/ubuntu-wallpapers",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "sha256": "70f17dfff9b366a797132fbe481634c6cbb1c88509917165542413198c01f1ab",
+    "changes": "None; original bytes copied from installed ubuntu-wallpapers package."
+  },
+  {
+    "id": "mug",
+    "file": "mug.png",
+    "author": "ezspain",
+    "original": "ezspain-Ubuntu_Coffee_Mug_Light.png",
+    "source": "https://launchpad.net/ubuntu-wallpapers",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "sha256": "d1c419d2f6da721a696668af25fb558c9e040cb0021f970dae7c0390a46c623c",
+    "changes": "None; original bytes copied from installed ubuntu-wallpapers package."
+  },
+  {
+    "id": "lightning",
+    "file": "lightning.jpg",
+    "author": "Valentino martinez ferreira",
+    "original": "vale1ntin0omf-Electric_Veins_of_the_Storm.jpg",
+    "source": "https://launchpad.net/ubuntu-wallpapers",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "sha256": "97d70432e4ab47cbce8f1c74f33fc90410fb6e36e14b13c91a7f73517fe47617",
+    "changes": "None; original bytes copied from installed ubuntu-wallpapers package."
+  },
+  {
+    "id": "stars",
+    "file": "stars.jpg",
+    "author": "Hajime Mizuno",
+    "original": "mizuno-as-Winter_Grand_Triangle.jpg",
+    "source": "https://launchpad.net/ubuntu-wallpapers",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "sha256": "e9068f5e34e038dd0f90826370e529dfa08966773e8df7af5aa2d4463c574c4c",
+    "changes": "None; original bytes copied from installed ubuntu-wallpapers package."
+  }
+]

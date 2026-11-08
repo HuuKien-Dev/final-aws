@@ -1,0 +1,122 @@
+[
+  {
+    "id": "leaf",
+    "topic": "nature",
+    "topicName": "Thiên nhiên",
+    "english": "leaf",
+    "vietnamese": "chiếc lá",
+    "example": "The leaf is red.",
+    "image": "/api/picture-assets/leaf.jpg",
+    "alt": "Chiếc lá phong màu đỏ nổi bật trên cành."
+  },
+  {
+    "id": "forest",
+    "topic": "nature",
+    "topicName": "Thiên nhiên",
+    "english": "forest",
+    "vietnamese": "khu rừng",
+    "example": "We walk through the forest.",
+    "image": "/api/picture-assets/forest.jpg",
+    "alt": "Khu rừng có cây xanh và hoa dưới tán cây."
+  },
+  {
+    "id": "flower",
+    "topic": "nature",
+    "topicName": "Thiên nhiên",
+    "english": "flower",
+    "vietnamese": "bông hoa",
+    "example": "Purple flowers grow in the forest.",
+    "image": "/api/picture-assets/forest.jpg",
+    "alt": "Những bông hoa tím mọc dưới tán cây trong rừng."
+  },
+  {
+    "id": "raccoon",
+    "topic": "animals",
+    "topicName": "Động vật",
+    "english": "raccoon",
+    "vietnamese": "gấu mèo",
+    "example": "The raccoon has a striped tail.",
+    "image": "/api/picture-assets/raccoon.png",
+    "alt": "Tranh minh họa gấu mèo với mặt nạ đen và đuôi có sọc."
+  },
+  {
+    "id": "tail",
+    "topic": "animals",
+    "topicName": "Động vật",
+    "english": "tail",
+    "vietnamese": "cái đuôi",
+    "example": "The raccoon has a long tail.",
+    "image": "/api/picture-assets/raccoon.png",
+    "alt": "Đuôi có sọc nằm phía dưới hình gấu mèo."
+  },
+  {
+    "id": "mug",
+    "topic": "objects",
+    "topicName": "Đồ vật",
+    "english": "mug",
+    "vietnamese": "cốc có quai",
+    "example": "This mug is orange.",
+    "image": "/api/picture-assets/mug.png",
+    "alt": "Tranh minh họa cốc màu cam có quai bên trái."
+  },
+  {
+    "id": "handle",
+    "topic": "objects",
+    "topicName": "Đồ vật",
+    "english": "handle",
+    "vietnamese": "cái quai",
+    "example": "Hold the mug by its handle.",
+    "image": "/api/picture-assets/mug.png",
+    "alt": "Quai cốc màu cam nằm ở bên trái chiếc cốc."
+  },
+  {
+    "id": "steam",
+    "topic": "objects",
+    "topicName": "Đồ vật",
+    "english": "steam",
+    "vietnamese": "hơi nước",
+    "example": "Steam rises from the hot drink.",
+    "image": "/api/picture-assets/mug.png",
+    "alt": "Hơi nước màu sáng bay lên từ đồ uống trong cốc."
+  },
+  {
+    "id": "lightning",
+    "topic": "sky",
+    "topicName": "Bầu trời & Thời tiết",
+    "english": "lightning",
+    "vietnamese": "tia chớp",
+    "example": "Lightning lights up the sky.",
+    "image": "/api/picture-assets/lightning.jpg",
+    "alt": "Các tia chớp sáng xuất hiện trong bầu trời giông tối."
+  },
+  {
+    "id": "cloud",
+    "topic": "sky",
+    "topicName": "Bầu trời & Thời tiết",
+    "english": "cloud",
+    "vietnamese": "đám mây",
+    "example": "Dark clouds cover the sky.",
+    "image": "/api/picture-assets/lightning.jpg",
+    "alt": "Các đám mây giông đen trên bầu trời có sấm chớp."
+  },
+  {
+    "id": "star",
+    "topic": "sky",
+    "topicName": "Bầu trời & Thời tiết",
+    "english": "star",
+    "vietnamese": "ngôi sao",
+    "example": "A bright star shines in the night sky.",
+    "image": "/api/picture-assets/stars.jpg",
+    "alt": "Những ngôi sao tỏa sáng trên bầu trời đêm."
+  },
+  {
+    "id": "sky",
+    "topic": "sky",
+    "topicName": "Bầu trời & Thời tiết",
+    "english": "sky",
+    "vietnamese": "bầu trời",
+    "example": "The night sky is full of stars.",
+    "image": "/api/picture-assets/stars.jpg",
+    "alt": "Toàn cảnh bầu trời đêm đầy sao trên mặt biển."
+  }
+]

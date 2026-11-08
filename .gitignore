@@ -1,0 +1,20 @@
+node_modules/
+.next/
+.venv/
+.tools/
+.env
+.env.*
+!.env.example
+__pycache__/
+.pytest_cache/
+*.tar.gz
+test-results/
+
+*.tsbuildinfo
+releases/
+# Local agent/cloud credentials and private keys
+.aws/
+.codex/
+.agents/
+*.pem
+*.key

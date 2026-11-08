@@ -1,0 +1,625 @@
+{
+  "schema_version": 1,
+  "topics": [
+    {
+      "id": "greetings",
+      "name": "Chào hỏi",
+      "description": "Tự tin bắt đầu một cuộc trò chuyện",
+      "phrases": [
+        {
+          "english": "Hello!",
+          "vietnamese": "Xin chào!"
+        },
+        {
+          "english": "How are you?",
+          "vietnamese": "Bạn khỏe không?"
+        },
+        {
+          "english": "Nice to meet you.",
+          "vietnamese": "Rất vui được gặp bạn."
+        },
+        {
+          "english": "My name is Linh.",
+          "vietnamese": "Tên tôi là Linh."
+        },
+        {
+          "english": "Thank you very much.",
+          "vietnamese": "Cảm ơn bạn rất nhiều."
+        },
+        {
+          "english": "See you tomorrow.",
+          "vietnamese": "Hẹn gặp bạn ngày mai."
+        }
+      ]
+    },
+    {
+      "id": "food",
+      "name": "Ăn uống",
+      "description": "Gọi món và trò chuyện ở nhà hàng",
+      "phrases": [
+        {
+          "english": "Could I see the menu, please?",
+          "vietnamese": "Cho tôi xem thực đơn được không?"
+        },
+        {
+          "english": "I would like a cup of tea.",
+          "vietnamese": "Tôi muốn một tách trà."
+        },
+        {
+          "english": "I am allergic to peanuts.",
+          "vietnamese": "Tôi bị dị ứng với đậu phộng."
+        },
+        {
+          "english": "Could we have the bill, please?",
+          "vietnamese": "Cho chúng tôi xin hóa đơn được không?"
+        },
+        {
+          "english": "Is this dish spicy?",
+          "vietnamese": "Món này có cay không?"
+        },
+        {
+          "english": "Can I have some water?",
+          "vietnamese": "Cho tôi xin ít nước được không?"
+        }
+      ]
+    },
+    {
+      "id": "shopping",
+      "name": "Mua sắm",
+      "description": "Hỏi giá và chọn món đồ bạn cần",
+      "phrases": [
+        {
+          "english": "How much does this cost?",
+          "vietnamese": "Cái này giá bao nhiêu?"
+        },
+        {
+          "english": "Do you have a smaller size?",
+          "vietnamese": "Bạn có cỡ nhỏ hơn không?"
+        },
+        {
+          "english": "Can I pay by card?",
+          "vietnamese": "Tôi thanh toán bằng thẻ được không?"
+        },
+        {
+          "english": "I am just looking, thank you.",
+          "vietnamese": "Tôi chỉ xem thôi, cảm ơn."
+        },
+        {
+          "english": "Can I try this on?",
+          "vietnamese": "Tôi thử cái này được không?"
+        },
+        {
+          "english": "I would like to return this.",
+          "vietnamese": "Tôi muốn trả lại món này."
+        }
+      ]
+    },
+    {
+      "id": "transport",
+      "name": "Đi lại",
+      "description": "Hỏi đường và sử dụng phương tiện công cộng",
+      "phrases": [
+        {
+          "english": "Where is the bus stop?",
+          "vietnamese": "Trạm xe buýt ở đâu?"
+        },
+        {
+          "english": "A ticket to the city centre, please.",
+          "vietnamese": "Cho tôi một vé đến trung tâm thành phố."
+        },
+        {
+          "english": "Could you help me find this address?",
+          "vietnamese": "Bạn giúp tôi tìm địa chỉ này được không?"
+        },
+        {
+          "english": "Please turn left here.",
+          "vietnamese": "Vui lòng rẽ trái ở đây."
+        },
+        {
+          "english": "What time does the train leave?",
+          "vietnamese": "Tàu khởi hành lúc mấy giờ?"
+        },
+        {
+          "english": "How long does it take?",
+          "vietnamese": "Mất bao lâu?"
+        }
+      ]
+    },
+    {
+      "id": "travel",
+      "name": "Du lịch",
+      "description": "Khám phá những nơi mới thật tự tin",
+      "phrases": [
+        {
+          "english": "I have a reservation.",
+          "vietnamese": "Tôi đã đặt phòng."
+        },
+        {
+          "english": "What time is check-out?",
+          "vietnamese": "Mấy giờ phải trả phòng?"
+        },
+        {
+          "english": "Where can I buy tickets?",
+          "vietnamese": "Tôi mua vé ở đâu?"
+        },
+        {
+          "english": "Could you take a photo for me?",
+          "vietnamese": "Bạn chụp giúp tôi một tấm ảnh được không?"
+        },
+        {
+          "english": "Is breakfast included?",
+          "vietnamese": "Giá đã bao gồm bữa sáng chưa?"
+        },
+        {
+          "english": "I need a doctor.",
+          "vietnamese": "Tôi cần bác sĩ."
+        }
+      ]
+    },
+    {
+      "id": "family",
+      "name": "Gia đình",
+      "description": "Giới thiệu và hỏi thăm người thân",
+      "phrases": [
+        {
+          "english": "I live with my parents.",
+          "vietnamese": "Tôi sống cùng bố mẹ."
+        },
+        {
+          "english": "Do you have any siblings?",
+          "vietnamese": "Bạn có anh chị em không?"
+        },
+        {
+          "english": "My sister is a teacher.",
+          "vietnamese": "Chị gái tôi là giáo viên."
+        },
+        {
+          "english": "How is your family?",
+          "vietnamese": "Gia đình bạn thế nào?"
+        },
+        {
+          "english": "We usually have dinner together.",
+          "vietnamese": "Chúng tôi thường ăn tối cùng nhau."
+        },
+        {
+          "english": "Let me introduce my brother.",
+          "vietnamese": "Để tôi giới thiệu anh trai tôi."
+        }
+      ]
+    },
+    {
+      "id": "friends",
+      "name": "Bạn bè",
+      "description": "Kết bạn và giữ liên lạc",
+      "phrases": [
+        {
+          "english": "Would you like to join us?",
+          "vietnamese": "Bạn có muốn tham gia cùng chúng tôi không?"
+        },
+        {
+          "english": "What do you do in your free time?",
+          "vietnamese": "Bạn làm gì lúc rảnh?"
+        },
+        {
+          "english": "We have a lot in common.",
+          "vietnamese": "Chúng ta có nhiều điểm chung."
+        },
+        {
+          "english": "Let’s keep in touch.",
+          "vietnamese": "Chúng ta hãy giữ liên lạc nhé."
+        },
+        {
+          "english": "Are you free this weekend?",
+          "vietnamese": "Cuối tuần này bạn có rảnh không?"
+        },
+        {
+          "english": "Thanks for being there for me.",
+          "vietnamese": "Cảm ơn bạn đã ở bên tôi."
+        }
+      ]
+    },
+    {
+      "id": "work",
+      "name": "Công việc",
+      "description": "Trao đổi hằng ngày ở nơi làm việc",
+      "phrases": [
+        {
+          "english": "Could you send me the report?",
+          "vietnamese": "Bạn gửi cho tôi báo cáo được không?"
+        },
+        {
+          "english": "When is the deadline?",
+          "vietnamese": "Hạn chót là khi nào?"
+        },
+        {
+          "english": "I am working on it.",
+          "vietnamese": "Tôi đang làm việc đó."
+        },
+        {
+          "english": "Let’s discuss this after lunch.",
+          "vietnamese": "Chúng ta hãy thảo luận việc này sau bữa trưa."
+        },
+        {
+          "english": "Could you explain that again?",
+          "vietnamese": "Bạn giải thích lại điều đó được không?"
+        },
+        {
+          "english": "Thank you for your feedback.",
+          "vietnamese": "Cảm ơn bạn đã góp ý."
+        }
+      ]
+    },
+    {
+      "id": "school",
+      "name": "Trường học",
+      "description": "Hỏi bài và học cùng bạn",
+      "phrases": [
+        {
+          "english": "Which class are you in?",
+          "vietnamese": "Bạn học lớp nào?"
+        },
+        {
+          "english": "Could I borrow your notes?",
+          "vietnamese": "Tôi mượn vở ghi của bạn được không?"
+        },
+        {
+          "english": "I have a question about this exercise.",
+          "vietnamese": "Tôi có câu hỏi về bài tập này."
+        },
+        {
+          "english": "When do we have to hand this in?",
+          "vietnamese": "Khi nào chúng ta phải nộp bài này?"
+        },
+        {
+          "english": "Let’s study together.",
+          "vietnamese": "Chúng ta hãy học cùng nhau."
+        },
+        {
+          "english": "I need more time to finish.",
+          "vietnamese": "Tôi cần thêm thời gian để hoàn thành."
+        }
+      ]
+    },
+    {
+      "id": "directions",
+      "name": "Hỏi đường",
+      "description": "Tìm địa điểm và chỉ đường",
+      "phrases": [
+        {
+          "english": "How do I get to the station?",
+          "vietnamese": "Tôi đến nhà ga bằng cách nào?"
+        },
+        {
+          "english": "Go straight and turn left.",
+          "vietnamese": "Đi thẳng rồi rẽ trái."
+        },
+        {
+          "english": "Is it within walking distance?",
+          "vietnamese": "Có thể đi bộ đến đó không?"
+        },
+        {
+          "english": "It is opposite the bank.",
+          "vietnamese": "Nó nằm đối diện ngân hàng."
+        },
+        {
+          "english": "Could you show me on the map?",
+          "vietnamese": "Bạn chỉ cho tôi trên bản đồ được không?"
+        },
+        {
+          "english": "I think I am lost.",
+          "vietnamese": "Tôi nghĩ mình bị lạc rồi."
+        }
+      ]
+    },
+    {
+      "id": "hotel",
+      "name": "Khách sạn",
+      "description": "Đặt phòng và trao đổi với lễ tân",
+      "phrases": [
+        {
+          "english": "I have a reservation under the name Linh.",
+          "vietnamese": "Tôi có đặt phòng tên Linh."
+        },
+        {
+          "english": "What time is check-out?",
+          "vietnamese": "Mấy giờ phải trả phòng?"
+        },
+        {
+          "english": "Is breakfast included?",
+          "vietnamese": "Giá phòng đã bao gồm bữa sáng chưa?"
+        },
+        {
+          "english": "Could I have an extra towel?",
+          "vietnamese": "Cho tôi xin thêm một chiếc khăn được không?"
+        },
+        {
+          "english": "The air conditioner is not working.",
+          "vietnamese": "Máy điều hòa không hoạt động."
+        },
+        {
+          "english": "Could you store my luggage?",
+          "vietnamese": "Bạn giữ hành lý giúp tôi được không?"
+        }
+      ]
+    },
+    {
+      "id": "health",
+      "name": "Sức khỏe",
+      "description": "Mô tả tình trạng và đặt lịch khám",
+      "phrases": [
+        {
+          "english": "I would like to make an appointment.",
+          "vietnamese": "Tôi muốn đặt lịch hẹn."
+        },
+        {
+          "english": "I have a headache.",
+          "vietnamese": "Tôi bị đau đầu."
+        },
+        {
+          "english": "How long have you felt this way?",
+          "vietnamese": "Bạn thấy như vậy bao lâu rồi?"
+        },
+        {
+          "english": "I am taking this medication.",
+          "vietnamese": "Tôi đang dùng thuốc này."
+        },
+        {
+          "english": "Could you write that down for me?",
+          "vietnamese": "Bạn viết điều đó ra giúp tôi được không?"
+        },
+        {
+          "english": "Where is the nearest pharmacy?",
+          "vietnamese": "Hiệu thuốc gần nhất ở đâu?"
+        }
+      ]
+    },
+    {
+      "id": "phone",
+      "name": "Điện thoại",
+      "description": "Gọi điện và để lại lời nhắn",
+      "phrases": [
+        {
+          "english": "May I speak to Ms. Lan?",
+          "vietnamese": "Cho tôi gặp cô Lan được không?"
+        },
+        {
+          "english": "Who is calling, please?",
+          "vietnamese": "Xin hỏi ai đang gọi vậy?"
+        },
+        {
+          "english": "Could you hold on a moment?",
+          "vietnamese": "Bạn chờ máy một lát được không?"
+        },
+        {
+          "english": "Can I leave a message?",
+          "vietnamese": "Tôi để lại lời nhắn được không?"
+        },
+        {
+          "english": "The connection is poor.",
+          "vietnamese": "Đường truyền không tốt."
+        },
+        {
+          "english": "I will call you back later.",
+          "vietnamese": "Tôi sẽ gọi lại cho bạn sau."
+        }
+      ]
+    },
+    {
+      "id": "appointments",
+      "name": "Lịch hẹn",
+      "description": "Sắp xếp và thay đổi kế hoạch",
+      "phrases": [
+        {
+          "english": "Does Tuesday afternoon work for you?",
+          "vietnamese": "Chiều thứ Ba có tiện cho bạn không?"
+        },
+        {
+          "english": "Could we reschedule our meeting?",
+          "vietnamese": "Chúng ta đổi lịch gặp được không?"
+        },
+        {
+          "english": "I am running ten minutes late.",
+          "vietnamese": "Tôi sẽ đến muộn mười phút."
+        },
+        {
+          "english": "Let’s meet at the main entrance.",
+          "vietnamese": "Chúng ta hãy gặp ở lối vào chính."
+        },
+        {
+          "english": "Please let me know if your plans change.",
+          "vietnamese": "Hãy cho tôi biết nếu kế hoạch của bạn thay đổi."
+        },
+        {
+          "english": "See you at three o’clock.",
+          "vietnamese": "Hẹn gặp bạn lúc ba giờ."
+        }
+      ]
+    },
+    {
+      "id": "hobbies",
+      "name": "Sở thích",
+      "description": "Chia sẻ hoạt động yêu thích",
+      "phrases": [
+        {
+          "english": "I enjoy reading in the evening.",
+          "vietnamese": "Tôi thích đọc sách vào buổi tối."
+        },
+        {
+          "english": "What kind of music do you like?",
+          "vietnamese": "Bạn thích thể loại nhạc nào?"
+        },
+        {
+          "english": "Have you tried painting?",
+          "vietnamese": "Bạn đã thử vẽ tranh chưa?"
+        },
+        {
+          "english": "I am learning to play the guitar.",
+          "vietnamese": "Tôi đang học chơi đàn ghi-ta."
+        },
+        {
+          "english": "That sounds like fun.",
+          "vietnamese": "Nghe có vẻ thú vị đấy."
+        },
+        {
+          "english": "How often do you go swimming?",
+          "vietnamese": "Bạn đi bơi bao lâu một lần?"
+        }
+      ]
+    },
+    {
+      "id": "weather",
+      "name": "Thời tiết",
+      "description": "Trò chuyện và lên kế hoạch theo thời tiết",
+      "phrases": [
+        {
+          "english": "What is the weather like today?",
+          "vietnamese": "Hôm nay thời tiết thế nào?"
+        },
+        {
+          "english": "It looks like rain.",
+          "vietnamese": "Trời có vẻ sắp mưa."
+        },
+        {
+          "english": "You should bring an umbrella.",
+          "vietnamese": "Bạn nên mang theo ô."
+        },
+        {
+          "english": "It is much cooler today.",
+          "vietnamese": "Hôm nay trời mát hơn nhiều."
+        },
+        {
+          "english": "I hope it clears up soon.",
+          "vietnamese": "Tôi hy vọng trời sớm quang đãng."
+        },
+        {
+          "english": "Shall we stay indoors?",
+          "vietnamese": "Chúng ta ở trong nhà nhé?"
+        }
+      ]
+    },
+    {
+      "id": "home",
+      "name": "Nhà ở",
+      "description": "Thuê nhà và sinh hoạt hằng ngày",
+      "phrases": [
+        {
+          "english": "How much is the monthly rent?",
+          "vietnamese": "Tiền thuê nhà mỗi tháng là bao nhiêu?"
+        },
+        {
+          "english": "Are utilities included?",
+          "vietnamese": "Giá thuê đã bao gồm điện nước chưa?"
+        },
+        {
+          "english": "Could I arrange a viewing?",
+          "vietnamese": "Tôi hẹn xem nhà được không?"
+        },
+        {
+          "english": "The kitchen tap is leaking.",
+          "vietnamese": "Vòi nước trong bếp đang bị rò rỉ."
+        },
+        {
+          "english": "When can I move in?",
+          "vietnamese": "Khi nào tôi có thể chuyển vào?"
+        },
+        {
+          "english": "Please keep the noise down.",
+          "vietnamese": "Vui lòng giữ yên lặng."
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "name": "Dịch vụ hằng ngày",
+      "description": "Giao dịch ở bưu điện và ngân hàng",
+      "phrases": [
+        {
+          "english": "I would like to open an account.",
+          "vietnamese": "Tôi muốn mở tài khoản."
+        },
+        {
+          "english": "Could I get a receipt?",
+          "vietnamese": "Cho tôi xin biên lai được không?"
+        },
+        {
+          "english": "How much does delivery cost?",
+          "vietnamese": "Phí giao hàng là bao nhiêu?"
+        },
+        {
+          "english": "I need to send this parcel.",
+          "vietnamese": "Tôi cần gửi bưu kiện này."
+        },
+        {
+          "english": "When will it arrive?",
+          "vietnamese": "Khi nào nó sẽ đến?"
+        },
+        {
+          "english": "Could you check the address?",
+          "vietnamese": "Bạn kiểm tra địa chỉ giúp tôi được không?"
+        }
+      ]
+    },
+    {
+      "id": "emergencies",
+      "name": "Tình huống khẩn cấp",
+      "description": "Nhờ giúp đỡ và thông báo sự cố",
+      "phrases": [
+        {
+          "english": "Please call an ambulance.",
+          "vietnamese": "Làm ơn gọi xe cấp cứu."
+        },
+        {
+          "english": "I need help right away.",
+          "vietnamese": "Tôi cần được giúp đỡ ngay."
+        },
+        {
+          "english": "Someone has lost their bag.",
+          "vietnamese": "Có người bị mất túi."
+        },
+        {
+          "english": "Where is the emergency exit?",
+          "vietnamese": "Lối thoát hiểm ở đâu?"
+        },
+        {
+          "english": "Please stay calm.",
+          "vietnamese": "Xin hãy giữ bình tĩnh."
+        },
+        {
+          "english": "Can you tell me your location?",
+          "vietnamese": "Bạn cho tôi biết vị trí của bạn được không?"
+        }
+      ]
+    },
+    {
+      "id": "opinions",
+      "name": "Bày tỏ ý kiến",
+      "description": "Đồng ý, góp ý và trao đổi lịch sự",
+      "phrases": [
+        {
+          "english": "What do you think about this?",
+          "vietnamese": "Bạn nghĩ sao về việc này?"
+        },
+        {
+          "english": "I see your point.",
+          "vietnamese": "Tôi hiểu ý bạn."
+        },
+        {
+          "english": "I agree with you.",
+          "vietnamese": "Tôi đồng ý với bạn."
+        },
+        {
+          "english": "I am not sure that would work.",
+          "vietnamese": "Tôi không chắc cách đó sẽ hiệu quả."
+        },
+        {
+          "english": "Could we try another approach?",
+          "vietnamese": "Chúng ta thử cách khác được không?"
+        },
+        {
+          "english": "That is a good suggestion.",
+          "vietnamese": "Đó là một gợi ý hay."
+        }
+      ]
+    }
+  ]
+}

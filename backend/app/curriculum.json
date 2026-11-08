@@ -1,0 +1,790 @@
+[
+  {
+    "id": "ielts",
+    "name": "IELTS",
+    "description": "Bài khởi động theo dạng IELTS Academic, không phải đề thi đầy đủ.",
+    "lexicon": [
+      [
+        "whereas",
+        "trong khi đó"
+      ],
+      [
+        "contribute to",
+        "góp phần vào"
+      ],
+      [
+        "maintenance",
+        "việc bảo trì"
+      ]
+    ],
+    "lessons": [
+      {
+        "id": "ielts-listening",
+        "skill": "listening",
+        "title": "Nghe: IELTS",
+        "instructions": "Đọc câu hỏi, nghe đoạn ghi âm rồi chọn đáp án.",
+        "text": "Receptionist: Good morning, Riverside Community Centre. How can I help? Student: I would like to join the photography course. Receptionist: The beginners course starts on Monday the fourteenth of June. It runs for six weeks. Classes are on Monday evenings, from six thirty to eight. Student: How much does it cost? Receptionist: Ninety pounds for the whole course. You need to bring your own camera, but we provide the other materials. Student: Where do we meet? Receptionist: In room twelve, next to the library. Please arrive ten minutes early for your first class.",
+        "questions": [
+          {
+            "question": "When are the classes?",
+            "options": [
+              "Monday evenings",
+              "Tuesday mornings",
+              "Friday evenings"
+            ],
+            "correct": 0,
+            "explanation": "Người lễ tân nói: Classes are on Monday evenings."
+          },
+          {
+            "question": "How much is the whole course?",
+            "options": [
+              "£60",
+              "£90",
+              "£14"
+            ],
+            "correct": 1,
+            "explanation": "Ninety pounds là tổng học phí, không phải phí từng buổi."
+          },
+          {
+            "question": "What should students bring?",
+            "options": [
+              "All materials",
+              "A library card",
+              "Their own camera"
+            ],
+            "correct": 2,
+            "explanation": "Bring your own camera; các vật liệu khác được cung cấp."
+          }
+        ],
+        "minutes": 10
+      },
+      {
+        "id": "ielts-reading",
+        "skill": "reading",
+        "title": "Đọc: IELTS",
+        "instructions": "Đọc đoạn văn và chọn đáp án dựa trên thông tin trong bài.",
+        "text": "Urban green spaces can support both people and wildlife. In one small study, residents who spent time in a community garden reported feeling less stressed. However, the researchers cautioned that the study did not establish that gardening alone caused the improvement. Participants also socialised and exercised, and those activities may have contributed. Gardens can also help rainwater soak into the soil rather than flow directly into drains. This benefit depends on soil quality and garden design. Some city councils now encourage residents to help plan shared gardens. Local participation can make the spaces more useful, but regular maintenance still requires time and funding. Green spaces are therefore a useful part of urban planning rather than a complete solution to every problem.",
+        "questions": [
+          {
+            "question": "The study proved that gardening alone reduced stress.",
+            "options": [
+              "True",
+              "False",
+              "Not Given"
+            ],
+            "correct": 1,
+            "explanation": "Đoạn văn nói nghiên cứu không chứng minh việc làm vườn là nguyên nhân duy nhất."
+          },
+          {
+            "question": "The gardens were larger than football fields.",
+            "options": [
+              "True",
+              "False",
+              "Not Given"
+            ],
+            "correct": 2,
+            "explanation": "Bài không đề cập kích thước khu vườn."
+          },
+          {
+            "question": "Rainwater absorption depends partly on soil quality.",
+            "options": [
+              "True",
+              "False",
+              "Not Given"
+            ],
+            "correct": 0,
+            "explanation": "Bài viết nêu lợi ích này phụ thuộc chất lượng đất và thiết kế vườn."
+          }
+        ],
+        "minutes": 10
+      },
+      {
+        "id": "ielts-writing",
+        "skill": "writing",
+        "title": "Viết: IELTS",
+        "instructions": "Writing Task 2: Some people think employers should allow staff to work from home, while others believe everyone should work in an office. Discuss both views and give your own opinion. Write at least 250 words; suggested time: 40 minutes.",
+        "model": "A clear response should discuss flexibility and commuting, consider collaboration and support in an office, and explain a justified personal position. For example: Working arrangements should depend on the task rather than a single rule for all employees. Remote work can protect focused time, whereas shared office days can support collaboration. Develop each argument with a specific example and acknowledge a limitation.",
+        "tips": [
+          "Xác định đủ hai quan điểm và ý kiến của bạn.",
+          "Mỗi đoạn thân bài cần một luận điểm, giải thích và ví dụ.",
+          "Dành 5 phút cuối kiểm tra chủ ngữ, thì và liên kết câu."
+        ],
+        "minutes": 40,
+        "questions": []
+      },
+      {
+        "id": "ielts-speaking",
+        "skill": "speaking",
+        "title": "Nói: IELTS",
+        "instructions": "Speaking Part 2: Describe a skill you would like to learn. Say what it is, why you want to learn it, how you would learn it, and how it could help you. Prepare for one minute, then speak for one to two minutes.",
+        "model": "I would like to learn public speaking because I often need to explain ideas at work. I would start by joining a small practice group and recording short talks. For example, I could give a two-minute presentation each week. This skill would help me communicate more clearly and feel more confident.",
+        "tips": [
+          "Ghi từ khóa thay vì học thuộc nguyên bài.",
+          "Thêm ví dụ cá nhân và lý do cụ thể.",
+          "Dùng bản ghi để tự nghe lại nhịp nói; AI ở đây nhận xét nội dung qua bản chép lời."
+        ],
+        "minutes": 10,
+        "questions": []
+      },
+      {
+        "id": "ielts-writing-task1",
+        "skill": "writing",
+        "title": "IELTS Academic Writing Task 1",
+        "minutes": 20,
+        "instructions": "The table shows the percentage of commuters using three transport modes in a fictional city. In 2010: bus 40%, car 45%, bicycle 15%. In 2020: bus 35%, car 40%, bicycle 25%. Summarise the information by selecting and reporting the main features, and make comparisons where relevant. Write at least 150 words.",
+        "model": "Overall, cars remained the most common mode, while cycling was the only category to increase. The share of cyclists rose from 15% to 25%, a gain of ten percentage points. Bus and car use each fell by five percentage points. Develop this overview with accurate comparisons and avoid inventing causes that the table does not show.",
+        "tips": [
+          "Nêu tổng quan thay đổi chính.",
+          "Phân biệt phần trăm với điểm phần trăm.",
+          "Không thêm nguyên nhân không có trong dữ liệu."
+        ],
+        "questions": []
+      }
+    ]
+  },
+  {
+    "id": "it",
+    "name": "CNTT",
+    "description": "Trao đổi yêu cầu, báo lỗi và cập nhật tiến độ bằng tiếng Anh.",
+    "lexicon": [
+      [
+        "reproduce",
+        "tái hiện"
+      ],
+      [
+        "regression",
+        "lỗi hồi quy"
+      ],
+      [
+        "deployment",
+        "việc triển khai"
+      ]
+    ],
+    "lessons": [
+      {
+        "id": "it-listening",
+        "skill": "listening",
+        "title": "Nghe: CNTT",
+        "instructions": "Đọc câu hỏi, nghe đoạn ghi âm rồi chọn đáp án.",
+        "text": "Hi team. The payment page is failing for some mobile users. Please reproduce the issue on Android first. Do not deploy a fix until the tests pass. Mai will check the logs, and Nam will update the ticket before three this afternoon. We will review the changes together at four. Customer data must not be copied into the test environment.",
+        "questions": [
+          {
+            "question": "Which platform should be checked first?",
+            "options": [
+              "Android",
+              "Desktop",
+              "iOS"
+            ],
+            "correct": 0,
+            "explanation": "Người nói yêu cầu reproduce the issue on Android first."
+          },
+          {
+            "question": "When should Nam update the ticket?",
+            "options": [
+              "After four",
+              "Before three",
+              "Tomorrow"
+            ],
+            "correct": 1,
+            "explanation": "Nam cần cập nhật ticket trước 3 giờ chiều."
+          },
+          {
+            "question": "What must happen before deployment?",
+            "options": [
+              "Copy customer data",
+              "Close the ticket",
+              "Tests must pass"
+            ],
+            "correct": 2,
+            "explanation": "Chỉ triển khai sau khi kiểm thử đạt."
+          }
+        ],
+        "minutes": 10
+      },
+      {
+        "id": "it-reading",
+        "skill": "reading",
+        "title": "Đọc: CNTT",
+        "instructions": "Đọc đoạn văn và chọn đáp án dựa trên thông tin trong bài.",
+        "text": "A useful bug report helps another developer reproduce an issue. Start with a short title and describe the expected behaviour. Then explain what actually happened. Include the application version, device, and exact steps needed to trigger the bug. If the problem happens only occasionally, say so. Screenshots and logs may help, but remove passwords, access tokens, and personal information before sharing them. A report should focus on observable facts rather than blaming a colleague. After a fix is proposed, repeat the original steps and check related features for regressions.",
+        "questions": [
+          {
+            "question": "What should a report include?",
+            "options": [
+              "Only an opinion",
+              "Exact reproduction steps",
+              "A colleague’s password"
+            ],
+            "correct": 1,
+            "explanation": "Bài nêu cần các bước chính xác để tái hiện lỗi."
+          },
+          {
+            "question": "What should be removed from shared logs?",
+            "options": [
+              "All timestamps",
+              "The application version",
+              "Access tokens"
+            ],
+            "correct": 2,
+            "explanation": "Cần xóa mật khẩu, token và thông tin cá nhân."
+          },
+          {
+            "question": "What should be checked after a fix?",
+            "options": [
+              "Related features",
+              "Only the title",
+              "Nothing else"
+            ],
+            "correct": 0,
+            "explanation": "Kiểm tra cả các tính năng liên quan để phát hiện hồi quy."
+          }
+        ],
+        "minutes": 10
+      },
+      {
+        "id": "it-writing",
+        "skill": "writing",
+        "title": "Viết: CNTT",
+        "instructions": "Write a 120–180 word bug report for a mobile checkout error. Include expected behaviour, actual behaviour, reproduction steps, impact, and a proposed next step.",
+        "model": "Title: Checkout fails after confirming a mobile payment. Expected: A confirmation page appears. Actual: The page remains loading. Steps: Sign in to the test account, add a product, and confirm payment on Android. Impact: Some mobile users cannot complete checkout. Next step: Review the request logs with sensitive values removed and add a regression test.",
+        "tips": [
+          "Tách Expected và Actual.",
+          "Dùng bước tái hiện cụ thể.",
+          "Không đưa khóa API hoặc dữ liệu khách hàng vào bài."
+        ],
+        "minutes": 10,
+        "questions": []
+      },
+      {
+        "id": "it-speaking",
+        "skill": "speaking",
+        "title": "Nói: CNTT",
+        "instructions": "You are a developer giving a daily stand-up update. Explain what you finished, what you will do next, and one blocker. Ask the AI teammate a follow-up question.",
+        "model": "Yesterday I reproduced the checkout issue and added a failing test. Today I will review the payment response handling. I am blocked by missing access to the test dashboard. Could you help me find the right person to ask?",
+        "tips": [
+          "Dùng Yesterday / Today / Blocker.",
+          "Nói rõ bạn cần ai hỗ trợ.",
+          "Kết thúc bằng câu hỏi cụ thể."
+        ],
+        "minutes": 10,
+        "questions": []
+      }
+    ]
+  },
+  {
+    "id": "business",
+    "name": "Kinh doanh",
+    "description": "Họp, đàm phán và viết email công việc.",
+    "lexicon": [
+      [
+        "scope",
+        "phạm vi"
+      ],
+      [
+        "quotation",
+        "báo giá"
+      ],
+      [
+        "working days",
+        "ngày làm việc"
+      ]
+    ],
+    "lessons": [
+      {
+        "id": "business-listening",
+        "skill": "listening",
+        "title": "Nghe: Kinh doanh",
+        "instructions": "Đọc câu hỏi, nghe đoạn ghi âm rồi chọn đáp án.",
+        "text": "Thank you for joining the call. We can offer a five percent discount if you order at least two hundred units. Delivery normally takes ten working days after payment. The quoted price does not include shipping. Please send your final order by Thursday so that we can confirm stock on Friday. We cannot guarantee delivery next week.",
+        "questions": [
+          {
+            "question": "What quantity is needed for the discount?",
+            "options": [
+              "100 units",
+              "200 units",
+              "500 units"
+            ],
+            "correct": 1,
+            "explanation": "Cần ít nhất 200 sản phẩm."
+          },
+          {
+            "question": "Does the price include shipping?",
+            "options": [
+              "Yes",
+              "Only on Friday",
+              "No"
+            ],
+            "correct": 2,
+            "explanation": "Giá báo chưa gồm phí vận chuyển."
+          },
+          {
+            "question": "When is the final order due?",
+            "options": [
+              "Thursday",
+              "Friday",
+              "Next week"
+            ],
+            "correct": 0,
+            "explanation": "Gửi đơn cuối cùng trước hoặc trong thứ Năm."
+          }
+        ],
+        "minutes": 10
+      },
+      {
+        "id": "business-reading",
+        "skill": "reading",
+        "title": "Đọc: Kinh doanh",
+        "instructions": "Đọc đoạn văn và chọn đáp án dựa trên thông tin trong bài.",
+        "text": "A clear business proposal begins with the customer’s problem. It then explains how the proposed service could address that problem and how success would be measured. The scope should list both included work and exclusions, so that each side understands its responsibilities. A realistic schedule should allow time for customer feedback. Prices, payment dates, and assumptions should be stated plainly. If an estimate depends on information that is not yet available, identify that uncertainty. A persuasive proposal does not promise results that the supplier cannot control.",
+        "questions": [
+          {
+            "question": "What should a proposal begin with?",
+            "options": [
+              "A promise of guaranteed profit",
+              "The supplier’s holiday",
+              "The customer’s problem"
+            ],
+            "correct": 2,
+            "explanation": "Mở đầu bằng vấn đề của khách hàng."
+          },
+          {
+            "question": "Why list exclusions?",
+            "options": [
+              "To clarify responsibilities",
+              "To hide costs",
+              "To remove all feedback"
+            ],
+            "correct": 0,
+            "explanation": "Phạm vi và ngoại lệ giúp làm rõ trách nhiệm."
+          },
+          {
+            "question": "What should be done with an uncertain estimate?",
+            "options": [
+              "Treat it as guaranteed",
+              "State the uncertainty",
+              "Omit all prices"
+            ],
+            "correct": 1,
+            "explanation": "Cần nêu rõ điểm chưa chắc chắn và giả định."
+          }
+        ],
+        "minutes": 10
+      },
+      {
+        "id": "business-writing",
+        "skill": "writing",
+        "title": "Viết: Kinh doanh",
+        "instructions": "Write a 120–180 word email proposing a meeting with a potential customer. Explain the purpose, suggest two time slots, and ask for confirmation.",
+        "model": "Dear Ms Nguyen, Thank you for your interest in our service. I would welcome a short meeting to understand your team’s requirements and discuss a suitable scope. Would Tuesday at 10 a.m. or Wednesday at 2 p.m. work for you? The discussion should take about thirty minutes. Please let me know which time you prefer. Kind regards, Linh",
+        "tips": [
+          "Nêu mục đích ngay đầu email.",
+          "Ghi rõ múi giờ nếu họp quốc tế.",
+          "Kết thúc bằng một hành động cần người nhận xác nhận."
+        ],
+        "minutes": 10,
+        "questions": []
+      },
+      {
+        "id": "business-speaking",
+        "skill": "speaking",
+        "title": "Nói: Kinh doanh",
+        "instructions": "Role-play a supplier meeting. Introduce your proposal, explain one benefit, ask about the customer’s priorities, and respond politely to a request for a lower price.",
+        "model": "Our proposal focuses on reducing manual reporting. Could you tell me which tasks take the most time? We can discuss a lower price if we reduce the initial scope. Would a small pilot help you assess the value?",
+        "tips": [
+          "Hỏi nhu cầu trước khi đề nghị.",
+          "Dùng could / would để trao đổi lịch sự.",
+          "Xác nhận lại điều đã thống nhất."
+        ],
+        "minutes": 10,
+        "questions": []
+      }
+    ]
+  },
+  {
+    "id": "tourism",
+    "name": "Du lịch",
+    "description": "Hướng dẫn khách, giới thiệu điểm đến và xử lý thay đổi.",
+    "lexicon": [
+      [
+        "itinerary",
+        "lịch trình"
+      ],
+      [
+        "step-free access",
+        "lối tiếp cận không có bậc thang"
+      ],
+      [
+        "destination",
+        "điểm đến"
+      ]
+    ],
+    "lessons": [
+      {
+        "id": "tourism-listening",
+        "skill": "listening",
+        "title": "Nghe: Du lịch",
+        "instructions": "Đọc câu hỏi, nghe đoạn ghi âm rồi chọn đáp án.",
+        "text": "Welcome to our walking tour. We will meet outside the city museum at nine tomorrow morning. Please bring water and comfortable shoes. The tour lasts two hours and finishes at the riverside market. If it rains heavily, we will visit the indoor craft exhibition instead. Lunch is not included. Please tell me today if you need step-free access.",
+        "questions": [
+          {
+            "question": "Where does the tour start?",
+            "options": [
+              "The riverside market",
+              "Outside the city museum",
+              "The craft shop"
+            ],
+            "correct": 1,
+            "explanation": "Điểm hẹn ở ngoài bảo tàng thành phố."
+          },
+          {
+            "question": "What happens in heavy rain?",
+            "options": [
+              "The group visits an indoor exhibition",
+              "The tour lasts four hours",
+              "Lunch is provided"
+            ],
+            "correct": 0,
+            "explanation": "Khi mưa lớn sẽ chuyển sang triển lãm thủ công trong nhà."
+          },
+          {
+            "question": "What is not included?",
+            "options": [
+              "The guide",
+              "The walk",
+              "Lunch"
+            ],
+            "correct": 2,
+            "explanation": "Người nói nêu rõ Lunch is not included."
+          }
+        ],
+        "minutes": 10
+      },
+      {
+        "id": "tourism-reading",
+        "skill": "reading",
+        "title": "Đọc: Du lịch",
+        "instructions": "Đọc đoạn văn và chọn đáp án dựa trên thông tin trong bài.",
+        "text": "Responsible tourism includes listening to the people who live at a destination. Visitors should follow local rules about photography, dress, and access to sacred places. A guide can explain the reasons for those rules rather than simply listing restrictions. Buying from local businesses may support the community, although visitors should still ask fair questions about prices and quality. Small groups can be easier to manage in narrow streets. Clear meeting points and emergency contact details help visitors feel prepared. Good guiding combines accurate information with respect for local life.",
+        "questions": [
+          {
+            "question": "What should visitors respect?",
+            "options": [
+              "Only their own schedule",
+              "Local rules",
+              "No restrictions"
+            ],
+            "correct": 1,
+            "explanation": "Du khách nên tôn trọng quy định địa phương."
+          },
+          {
+            "question": "Why might small groups help?",
+            "options": [
+              "They are easier to manage in narrow streets",
+              "They need no guide",
+              "They never ask questions"
+            ],
+            "correct": 0,
+            "explanation": "Nhóm nhỏ dễ quản lý trong đường hẹp."
+          },
+          {
+            "question": "What helps visitors prepare?",
+            "options": [
+              "Hidden meeting points",
+              "No contact details",
+              "Clear meeting points"
+            ],
+            "correct": 2,
+            "explanation": "Điểm hẹn rõ ràng và thông tin liên hệ giúp du khách chuẩn bị."
+          }
+        ],
+        "minutes": 10
+      },
+      {
+        "id": "tourism-writing",
+        "skill": "writing",
+        "title": "Viết: Du lịch",
+        "instructions": "Write a 120–180 word message to visitors explaining a changed tour itinerary due to rain. Include the new activity, meeting point, time, and what to bring.",
+        "model": "Dear guests, Heavy rain is forecast tomorrow, so our outdoor walk will be replaced by a visit to the indoor craft exhibition. We will still meet outside the city museum at 9 a.m. Please bring your booking confirmation and an umbrella for the short walk to the entrance. Thank you for your understanding.",
+        "tips": [
+          "Nêu thay đổi và lý do.",
+          "Phân biệt lịch cũ với lịch mới.",
+          "Cho khách cách liên hệ nếu có thắc mắc."
+        ],
+        "minutes": 10,
+        "questions": []
+      },
+      {
+        "id": "tourism-speaking",
+        "skill": "speaking",
+        "title": "Nói: Du lịch",
+        "instructions": "Act as a tour guide welcoming a new group. Introduce a destination, explain two practical details, and answer a visitor who asks about accessibility.",
+        "model": "Welcome to our city. Today we will explore the old quarter and visit the craft centre. The walk lasts about two hours. We can use a step-free route; please tell me if you would like extra breaks.",
+        "tips": [
+          "Nói ngắn, rõ và có thứ tự.",
+          "Hỏi nhu cầu của khách thay vì giả định.",
+          "Giải thích từ địa phương bằng tiếng Anh đơn giản."
+        ],
+        "minutes": 10,
+        "questions": []
+      }
+    ]
+  },
+  {
+    "id": "hospitality",
+    "name": "Nhà hàng – Khách sạn",
+    "description": "Đón khách, nhận đặt chỗ và xử lý phản hồi.",
+    "lexicon": [
+      [
+        "inconvenience",
+        "sự bất tiện"
+      ],
+      [
+        "availability",
+        "tình trạng còn chỗ"
+      ],
+      [
+        "maintenance team",
+        "đội bảo trì"
+      ]
+    ],
+    "lessons": [
+      {
+        "id": "hospitality-listening",
+        "skill": "listening",
+        "title": "Nghe: Nhà hàng – Khách sạn",
+        "instructions": "Đọc câu hỏi, nghe đoạn ghi âm rồi chọn đáp án.",
+        "text": "Good evening, Ms Tran. Your room is ready. Breakfast is served on the second floor from six thirty until ten. The Wi-Fi details are on your key card holder. Your airport transfer is booked for seven tomorrow morning. Please be in the lobby ten minutes before departure. If you need a wake-up call, dial zero to speak to reception.",
+        "questions": [
+          {
+            "question": "Where is breakfast served?",
+            "options": [
+              "The lobby",
+              "The second floor",
+              "The airport"
+            ],
+            "correct": 1,
+            "explanation": "Bữa sáng được phục vụ ở tầng hai."
+          },
+          {
+            "question": "When should the guest reach the lobby?",
+            "options": [
+              "6:50 a.m.",
+              "7:10 a.m.",
+              "10 a.m."
+            ],
+            "correct": 0,
+            "explanation": "Xe đi lúc 7 giờ; cần có mặt trước 10 phút, tức 6:50."
+          },
+          {
+            "question": "How can the guest request a wake-up call?",
+            "options": [
+              "Send a parcel",
+              "Call the airport",
+              "Dial zero"
+            ],
+            "correct": 2,
+            "explanation": "Bấm số 0 để liên hệ lễ tân."
+          }
+        ],
+        "minutes": 10
+      },
+      {
+        "id": "hospitality-reading",
+        "skill": "reading",
+        "title": "Đọc: Nhà hàng – Khách sạn",
+        "instructions": "Đọc đoạn văn và chọn đáp án dựa trên thông tin trong bài.",
+        "text": "When handling a complaint, staff should first listen without interrupting. Restate the issue to check understanding, then apologise for the inconvenience. Explain what can be done and give a realistic time frame. If a requested solution is outside your authority, contact a supervisor rather than making an unsupported promise. After the issue has been addressed, check whether the guest needs anything else. Notes shared with the next shift should contain relevant facts and avoid unnecessary personal details.",
+        "questions": [
+          {
+            "question": "What is the first step?",
+            "options": [
+              "Interrupt the guest",
+              "Listen",
+              "Promise a refund immediately"
+            ],
+            "correct": 1,
+            "explanation": "Bước đầu là lắng nghe không ngắt lời."
+          },
+          {
+            "question": "What if a solution is outside your authority?",
+            "options": [
+              "Contact a supervisor",
+              "Make any promise",
+              "Ignore the complaint"
+            ],
+            "correct": 0,
+            "explanation": "Liên hệ người quản lý khi vượt thẩm quyền."
+          },
+          {
+            "question": "What should shift notes contain?",
+            "options": [
+              "Personal gossip",
+              "Unnecessary details",
+              "Relevant facts"
+            ],
+            "correct": 2,
+            "explanation": "Ghi các sự kiện liên quan, tránh thông tin cá nhân không cần thiết."
+          }
+        ],
+        "minutes": 10
+      },
+      {
+        "id": "hospitality-writing",
+        "skill": "writing",
+        "title": "Viết: Nhà hàng – Khách sạn",
+        "instructions": "Write a 120–180 word reply to a guest whose air conditioner stopped working. Apologise, explain the next step, and provide a realistic update time without inventing guarantees.",
+        "model": "Dear Ms Tran, I am sorry that the air conditioner in your room is not working. I have asked our maintenance team to inspect it. Reception will update you within thirty minutes, even if the repair is still in progress. If you would prefer to discuss another room, please contact us so we can check availability.",
+        "tips": [
+          "Thừa nhận bất tiện cụ thể.",
+          "Nói rõ bước xử lý và thời điểm cập nhật.",
+          "Không hứa điều chưa được xác nhận."
+        ],
+        "minutes": 10,
+        "questions": []
+      },
+      {
+        "id": "hospitality-speaking",
+        "skill": "speaking",
+        "title": "Nói: Nhà hàng – Khách sạn",
+        "instructions": "Role-play a receptionist responding to a guest complaint about noise. Show empathy, clarify the issue, and offer a practical next step.",
+        "model": "I am sorry the noise has disturbed your rest. Could you tell me where it seems to be coming from? I will contact the duty manager now and update you shortly. Would you like us to check whether a quieter room is available?",
+        "tips": [
+          "Xin lỗi về trải nghiệm của khách.",
+          "Hỏi làm rõ bằng giọng lịch sự.",
+          "Đưa một bước xử lý cụ thể."
+        ],
+        "minutes": 10,
+        "questions": []
+      }
+    ]
+  },
+  {
+    "id": "medical",
+    "name": "Y khoa",
+    "description": "Luyện ngôn ngữ trong tình huống y tế giả lập; không dùng để chẩn đoán hoặc quyết định điều trị.",
+    "lexicon": [
+      [
+        "interpreter",
+        "thông dịch viên"
+      ],
+      [
+        "confidentiality",
+        "bảo mật thông tin"
+      ],
+      [
+        "appointment reminder",
+        "thông báo nhắc lịch hẹn"
+      ]
+    ],
+    "lessons": [
+      {
+        "id": "medical-listening",
+        "skill": "listening",
+        "title": "Nghe: Y khoa",
+        "instructions": "Đọc câu hỏi, nghe đoạn ghi âm rồi chọn đáp án.",
+        "text": "Receptionist: Good morning. I am calling to confirm your appointment with the nurse on Thursday at ten fifteen. Please arrive fifteen minutes early and bring a list of the medicines you currently take. If you need an interpreter, let us know before Wednesday afternoon. Patient: Do I need to change my medication? Receptionist: Please ask your clinician about that. I can only help with appointment arrangements.",
+        "questions": [
+          {
+            "question": "When is the appointment?",
+            "options": [
+              "Thursday at 10:15",
+              "Wednesday at 10:15",
+              "Thursday at 10:50"
+            ],
+            "correct": 0,
+            "explanation": "Cuộc hẹn vào thứ Năm lúc 10:15."
+          },
+          {
+            "question": "What should the patient bring?",
+            "options": [
+              "A new prescription",
+              "A list of current medicines",
+              "A medical textbook"
+            ],
+            "correct": 1,
+            "explanation": "Mang danh sách thuốc hiện đang dùng."
+          },
+          {
+            "question": "Who should answer the medication question?",
+            "options": [
+              "The receptionist",
+              "Another visitor",
+              "The clinician"
+            ],
+            "correct": 2,
+            "explanation": "Lễ tân chuyển câu hỏi về thuốc cho nhân viên lâm sàng."
+          }
+        ],
+        "minutes": 10
+      },
+      {
+        "id": "medical-reading",
+        "skill": "reading",
+        "title": "Đọc: Y khoa",
+        "instructions": "Đọc đoạn văn và chọn đáp án dựa trên thông tin trong bài.",
+        "text": "Clear communication in a clinic involves checking understanding rather than assuming it. A staff member can explain one point at a time using everyday language. A patient may be invited to explain the information in their own words so that unclear parts can be discussed again. A trained interpreter can help when people do not share a language. Staff should follow local procedures for consent and confidentiality. Language practice does not qualify a learner to diagnose a condition or recommend treatment. Clinical decisions belong to appropriately qualified professionals.",
+        "questions": [
+          {
+            "question": "How can understanding be checked?",
+            "options": [
+              "Ask the patient to explain in their own words",
+              "Assume silence means agreement",
+              "Use more unexplained jargon"
+            ],
+            "correct": 0,
+            "explanation": "Mời người bệnh diễn đạt lại để kiểm tra phần chưa rõ."
+          },
+          {
+            "question": "Who can assist with a language barrier?",
+            "options": [
+              "Only another patient",
+              "A trained interpreter",
+              "No one"
+            ],
+            "correct": 1,
+            "explanation": "Thông dịch viên được đào tạo có thể hỗ trợ."
+          },
+          {
+            "question": "Does language practice qualify a learner to diagnose?",
+            "options": [
+              "Always",
+              "Only after one lesson",
+              "No"
+            ],
+            "correct": 2,
+            "explanation": "Bài nhấn mạnh học ngôn ngữ không thay thế chuyên môn lâm sàng."
+          }
+        ],
+        "minutes": 10
+      },
+      {
+        "id": "medical-writing",
+        "skill": "writing",
+        "title": "Viết: Y khoa",
+        "instructions": "Write a 100–150 word fictional appointment reminder. Include the date, time, what to bring, and how to request an interpreter. Do not use real patient information or give medical advice.",
+        "model": "Dear patient, This is a reminder of your appointment on Thursday at 10:15 a.m. Please arrive fifteen minutes early and bring a list of your current medicines. If you need an interpreter, please contact reception before Wednesday afternoon. For questions about medication or treatment, contact your clinician.",
+        "tips": [
+          "Chỉ dùng dữ liệu giả lập.",
+          "Tách thông tin hành chính khỏi lời khuyên điều trị.",
+          "Dùng từ phổ thông và câu ngắn."
+        ],
+        "minutes": 10,
+        "questions": []
+      },
+      {
+        "id": "medical-speaking",
+        "skill": "speaking",
+        "title": "Nói: Y khoa",
+        "instructions": "In a fictional clinic reception role-play, confirm an appointment and ask whether the visitor needs an interpreter. Refer treatment questions to a qualified clinician.",
+        "model": "Good morning. Could you confirm the time of your appointment? Would you like us to arrange an interpreter? I can help with the appointment details. For questions about treatment, I will ask the clinical team to speak with you.",
+        "tips": [
+          "Xác nhận thay vì giả định.",
+          "Không đưa thông tin bệnh nhân thật.",
+          "Chỉ luyện giao tiếp và chuyển câu hỏi chuyên môn đúng người."
+        ],
+        "minutes": 10,
+        "questions": []
+      }
+    ]
+  }
+]

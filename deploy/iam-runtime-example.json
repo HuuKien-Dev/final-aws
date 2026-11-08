@@ -1,0 +1,19 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObjectVersion"
+      ],
+      "Resource": "arn:aws:s3:::REPLACE_RELEASE_BUCKET/releases/english-1.0.0.tar.gz"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "Resource": "REPLACE_ROLE_SPECIFIC_SECRET_ARN"
+    }
+  ]
+}

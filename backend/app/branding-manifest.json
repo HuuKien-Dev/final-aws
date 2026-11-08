@@ -1,0 +1,23 @@
+[
+  {
+    "source": "/home/huukien/FreeLingo/docs/assets/logo.png",
+    "public_url": "/api/media/docs-logo.png",
+    "bytes": 301558,
+    "sha256": "c9ea0f1ca08ccbf48c33d9f94220fd4658f2ca3e6c07d7f2fed3f2c2a67d1e45",
+    "local_path": "assets/branding/docs-logo.png"
+  },
+  {
+    "source": "/home/huukien/FreeLingo/assets/logo_large.png",
+    "public_url": "/api/media/logo_large.png",
+    "bytes": 1394251,
+    "sha256": "922da2cb58b019c65cf76ec6f17c559ec703a03ef1b4f9fb7cdd7e1f50ce6d18",
+    "local_path": "assets/branding/logo_large.png"
+  },
+  {
+    "source": "/home/huukien/FreeLingo/assets/logo.png",
+    "public_url": "/api/media/logo.png",
+    "bytes": 301558,
+    "sha256": "c9ea0f1ca08ccbf48c33d9f94220fd4658f2ca3e6c07d7f2fed3f2c2a67d1e45",
+    "local_path": "assets/branding/logo.png"
+  }
+]
