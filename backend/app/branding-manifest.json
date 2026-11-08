@@ -19,5 +19,12 @@
     "bytes": 301558,
     "sha256": "c9ea0f1ca08ccbf48c33d9f94220fd4658f2ca3e6c07d7f2fed3f2c2a67d1e45",
     "local_path": "assets/branding/logo.png"
+  },
+  {
+    "source": "Original character generated with the built-in imagegen tool; see assets/branding/green-mascot.prompt.md",
+    "public_url": "/api/media/green-mascot.png",
+    "bytes": 1482133,
+    "sha256": "c7230137ebf295d81131f1ecf1df2c04cba21ebe9fc18f8a4e3fe54a9c63112e",
+    "local_path": "assets/branding/green-mascot.png"
   }
 ]

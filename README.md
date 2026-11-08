@@ -11,14 +11,14 @@
 - **Nghe và đọc:** audio bài học, câu hỏi, giải thích và bản chép lời; lưu bài làm theo tài khoản.
 - **Từ vựng qua ảnh:** học từ theo hình, xem nghĩa/ví dụ, tải ảnh và thêm từ vào bộ cá nhân.
 - **Gia sư AI tùy chọn:** hỏi bài, luyện hội thoại, nhận góp ý bài viết hoặc bản chép lời, gợi ý trình độ và lộ trình học. Khả năng âm thanh tùy nhà cung cấp; ứng dụng chưa chấm phát âm từ âm thanh.
-- **Tài khoản cá nhân:** đăng ký/đăng nhập, tùy chọn Google/Facebook, lưu phiên và dữ liệu học riêng cho từng người.
+- **Tài khoản cá nhân:** đăng ký/đăng nhập bằng email và mật khẩu, lưu phiên và dữ liệu học riêng cho từng người. Màn hình đăng nhập có nhân vật mầm xanh đồng hành.
 - **Góp ý:** gửi lỗi, đề xuất tính năng hoặc góp ý nội dung và xem lại phản hồi đã gửi.
 
 Các bài học có sẵn, flashcard và trò chơi không yêu cầu khóa AI. Giao diện tiếng Việt hỗ trợ máy tính và thiết bị di động.
 
 ## Công nghệ
 
-Giao diện sử dụng **Next.js, React và TypeScript**; API sử dụng **FastAPI/Python**; **PostgreSQL** lưu tài khoản, phiên đăng nhập, bài làm và tiến độ. Frontend gọi API backend; backend xử lý nghiệp vụ, truy cập dữ liệu và phục vụ ảnh. Các tích hợp AI/OAuth nằm ở backend.
+Giao diện sử dụng **Next.js, React và TypeScript**; API sử dụng **FastAPI/Python**; **PostgreSQL** lưu tài khoản, phiên đăng nhập, bài làm và tiến độ. Frontend gọi API backend; backend xử lý nghiệp vụ, truy cập dữ liệu và phục vụ ảnh. Tích hợp AI nằm ở backend.
 
 ## Giấy phép và ghi công
 

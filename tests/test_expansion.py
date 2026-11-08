@@ -1,5 +1,5 @@
 """API boundaries and provider contracts without network, credentials or a running DB."""
-import asyncio,base64,copy,json,os,sys,time,uuid,wave
+import asyncio,base64,copy,json,os,sys,uuid,wave
 from pathlib import Path
 from unittest.mock import patch
 import httpx,pytest
@@ -8,7 +8,7 @@ from fastapi import HTTPException
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'backend'))
 from app.main import app,user,db
-from app import ai_service,oauth
+from app import ai_service
 from app.courses import CATALOG,LESSONS,public_lesson,review
 from app.expansion import CardBody,DeckBody,Suggestion
 class ASGIClient:
@@ -95,21 +95,15 @@ def test_csrf_and_body_limit_are_enforced_before_ai_or_storage():
     result=client.post('/api/ai',headers={'Origin':'http://localhost:3000','Content-Type':'application/json'},content=b'x'*(6*1024*1024+1))
     assert result.status_code==413
 
-def test_oauth_state_is_provider_browser_expiry_and_signature_bound():
-    secret='test-secret-'*4
-    payload={'provider':'google','state':'state-a','verifier':'verifier','time':time.time()}
-    value=oauth.sign(payload,secret)
-    assert oauth.verify(value,secret,'google','state-a')['verifier']=='verifier'
-    for token,provider,state in [(value,'facebook','state-a'),(value,'google','wrong'),(value+'x','google','state-a'),(oauth.sign({**payload,'time':time.time()-601},secret),'google','state-a')]:
-        with pytest.raises(HTTPException):oauth.verify(token,secret,provider,state)
-
-def test_oauth_start_sets_state_and_google_pkce_without_exposing_secrets(monkeypatch):
-    monkeypatch.setenv('GOOGLE_CLIENT_ID','client-id');monkeypatch.setenv('GOOGLE_CLIENT_SECRET','top-secret');monkeypatch.setenv('OAUTH_STATE_SECRET','s'*40)
-    result=ASGIClient(app).get('/api/auth/oauth/google/start',follow_redirects=False)
-    assert result.status_code==302
-    assert 'code_challenge=' in result.headers['location']
-    assert 'top-secret' not in result.headers['location']
-    assert 'HttpOnly' in result.headers['set-cookie'] and 'Path=/api/auth/oauth' in result.headers['set-cookie']
+@pytest.mark.parametrize('route',[
+    '/api/auth/providers',
+    '/api/auth/oauth/google/start',
+    '/api/auth/oauth/facebook/start',
+    '/api/auth/oauth/google/callback',
+    '/api/auth/oauth/facebook/callback',
+])
+def test_social_login_endpoints_are_removed(route):
+    assert ASGIClient(app).get(route).status_code==404
 
 def test_audio_validation_and_single_provider_capability(monkeypatch):
     monkeypatch.setenv('AI_PROVIDER','deepseek');monkeypatch.setenv('AI_API_KEY','test-key');monkeypatch.setenv('AI_AUDIO_ENABLED','true')
@@ -181,5 +175,5 @@ def test_s3_mode_never_silently_uses_local_images(monkeypatch):
 def test_all_logos_read_through_backend_in_local_mode(monkeypatch):
     from app import picture_assets
     monkeypatch.setenv('PICTURE_ASSET_STORAGE','local')
-    for name in ['logo.png','docs-logo.png','logo_large.png']:
+    for name in ['logo.png','docs-logo.png','logo_large.png','green-mascot.png']:
         assert picture_assets.read_asset(name).startswith(b'\x89PNG')

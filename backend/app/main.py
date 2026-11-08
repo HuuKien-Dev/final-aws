@@ -261,7 +261,5 @@ async def progress(current=Depends(user),connection=Depends(db)):
 # Additional learning features share the existing authentication and CSRF checks.
 from .expansion import install as install_expansion
 install_expansion(app,user,db)
-from .oauth import install as install_oauth
-install_oauth(app,db,issue_session,ORIGIN,SECURE)
 from .picture_assets import install as install_picture_assets
 install_picture_assets(app)

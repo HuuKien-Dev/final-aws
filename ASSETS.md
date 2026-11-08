@@ -31,6 +31,10 @@ Sáu ảnh có sẵn từ gói Ubuntu Wallpapers được sao chép nguyên byte
 
 Nguồn/tên gốc/hash/license đầy đủ ở `assets/picture-vocabulary/manifest.json` và `COPYRIGHT.txt`; bản metadata backend nằm ở `backend/app/picture-assets-manifest.json`. ZIP gồm sáu ảnh gốc và ghi công. Người học tải qua `/api/picture-assets/vocabulary-images.zip`; tải từng ảnh bằng nút trong mục học. Hình hiển thị object-fit:contain để giữ toàn cảnh; không cắt hoặc tạo lại ảnh gốc.
 
+## Nhân vật mầm xanh
+
+`assets/branding/green-mascot.png` là nhân vật mới, được tạo bằng công cụ `imagegen` cho trang chào và hộp thoại đăng nhập/đăng ký. PNG có nền trong suốt; prompt và nguồn tạo nằm trong `assets/branding/green-mascot.prompt.md`, SHA256 nằm trong `backend/app/branding-manifest.json`. Nhân vật này không thuộc bộ logo FreeLingo hoặc ảnh Ubuntu Wallpapers. Frontend lấy ảnh qua `/api/media/green-mascot.png`; backend phục vụ theo cùng cơ chế local/S3 của các ảnh khác.
+
 ## Âm thanh bài học
 
 Sáu tệp `frontend/public/audio/*-listening.wav` được tổng hợp cục bộ bằng eSpeak NG từ đoạn tự soạn trong `backend/app/curriculum.json`, giọng en-gb, tốc độ 145 từ/phút. Đây là **âm thanh**, không phải ảnh; yêu cầu lưu ảnh S3 không đổi vị trí các tệp audio. Không phải ghi âm người thật hay đề IELTS chính thức. Không phân phối chương trình eSpeak trong app. Có script `scripts/generate-course-audio.py` để tạo lại khi công cụ có sẵn.

@@ -15,7 +15,6 @@ async function proxy(request: NextRequest, context: {params: Promise<{path: stri
       body:['GET','HEAD'].includes(request.method) ? undefined : await request.arrayBuffer(),
       cache:'no-store',redirect:'manual',signal:AbortSignal.timeout(path[0]==='ai'?90000:20000)})
     const output = new Headers({'Cache-Control':'no-store'})
-    if(path[0]==='auth'&&path[1]==='oauth'&&upstream.headers.has('location')) output.set('Location',upstream.headers.get('location')!)
     output.set('Content-Type', upstream.headers.get('content-type') || 'application/json')
     for (const cookie of upstream.headers.getSetCookie()) output.append('Set-Cookie',cookie)
     return new Response(upstream.body,{status:upstream.status,headers:output})

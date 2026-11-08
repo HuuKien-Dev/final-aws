@@ -34,7 +34,7 @@
 20. AI chưa có khóa: hiển thị trạng thái chưa cấu hình, nút gửi tắt. Có khóa test: thử gia sư, nói, viết, lộ trình; kiểm tra câu gốc, câu sửa, toàn đoạn cải thiện, nhận xét và lịch sử riêng tài khoản. Tắt quyền model/quota để kiểm tra thông báo lỗi; không hiển thị khóa hoặc điểm giả.
 21. Chọn DeepSeek/Gemini/Claude: thao tác văn bản dùng đúng bên đang cấu hình. Không tự gọi OpenAI cho âm thanh. Chọn endpoint compatible/Colab có JSON mode để kiểm tra adapter; endpoint trả JSON sai phải hiện lỗi.
 22. Với cùng nhà cung cấp có audio được bật: cấp quyền micro trên HTTPS/localhost, ghi/dừng/nghe lại/tải về, gửi bản ghi và nghe phản hồi AI. Từ chối quyền micro/tệp >4 MB phải báo rõ. Rời mục trong khi ghi phải cảnh báo và dừng micro sau khi rời. Nhận xét phải ghi chưa đánh giá phát âm.
-23. Google/Facebook: kiểm thử bằng app OAuth test thật, consent/cancel/state hết hạn và callback qua proxy. Không có credential thì nút tắt. Email đã tồn tại bằng phương thức khác không tự gộp. Logout app xóa phiên app.
+23. Trang chào, form đăng nhập và đăng ký có nhân vật mầm xanh lớn; trên điện thoại nhân vật nằm trên form, không gây tràn ngang. Chỉ có đăng nhập email/mật khẩu, không còn nút Google/Facebook. Thử đăng ký, đăng nhập sai/đúng, chuyển giữa hai form và đăng xuất. Trong hộp thoại, Tab/Shift+Tab giữ focus bên trong và Escape đóng hộp thoại.
 24. Góp ý: gửi ba loại, tải lại thấy góp ý của mình, tài khoản khác không thấy. Nội dung trống hoặc <10 ký tự bị từ chối.
 
-Với OAuth, trình duyệt có chuyển hướng chủ động sang Google/Facebook khi người dùng bấm đăng nhập. Với AI, frontend vẫn chỉ gọi /api của app; backend kết nối nhà cung cấp được chọn. Các kiểm tra này chưa thay thế biên bản chạy thực tế.
+Với AI, frontend vẫn chỉ gọi /api của app; backend kết nối nhà cung cấp được chọn. Các kiểm tra này chưa thay thế biên bản chạy thực tế.

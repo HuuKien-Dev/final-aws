@@ -14,16 +14,28 @@ for(const ext of ['.tsx','.ts'])require.extensions[ext]=(module,filename)=>{
  module._compile(output,filename)
 }
 const Home=require('../frontend/app/page.tsx').default
+const AuthDialog=require('../frontend/app/components/AuthDialog.tsx').default
 const {WhyEnglish}=require('../frontend/app/components/Community.tsx')
 const {ResultView}=require('../frontend/app/components/AIPractice.tsx')
 test('first render offers a short introduction and account choices',()=>{
  const html=renderToStaticMarkup(React.createElement(Home))
  assert.match(html,/Học tiếng Anh/)
  assert.match(html,/Đăng ký tài khoản/)
- assert.match(html,/Tiếp tục với Google/)
- assert.match(html,/Tiếp tục với Facebook/)
+ assert.match(html,/green-mascot\.png/)
+ assert.doesNotMatch(html,/Google|Facebook|social-login/)
  assert.doesNotMatch(html,/class="welcome"/)
  assert.doesNotMatch(html,/Khóa API/)
+})
+for(const mode of ['login','register'])test(mode+' dialog shows the green companion and email/password form',()=>{
+ const noop=()=>{}
+ const html=renderToStaticMarkup(React.createElement(AuthDialog,{mode,email:'',password:'',error:'',busy:false,onClose:noop,onSwitch:noop,onEmailChange:noop,onPasswordChange:noop,onSubmit:noop}))
+ assert.match(html,/role="dialog"/)
+ assert.match(html,/aria-labelledby="auth-title"/)
+ assert.match(html,/green-mascot\.png/)
+ assert.match(html,/type="email"/)
+ assert.match(html,/type="password"/)
+ assert.match(html,new RegExp('autoComplete="'+(mode==='login'?'current-password':'new-password')+'"','i'))
+ assert.doesNotMatch(html,/Google|Facebook|oauth|social-login/)
 })
 test('public motivation page contains exactly twenty reasons',()=>{
  const html=renderToStaticMarkup(React.createElement(WhyEnglish))

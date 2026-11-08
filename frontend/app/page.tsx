@@ -5,6 +5,8 @@ import Lessons from './components/Lessons'
 import Courses from './components/Courses'
 import Vocabulary from './components/Vocabulary'
 import PictureVocabulary from './components/PictureVocabulary'
+import AuthDialog from './components/AuthDialog'
+import AuthMascot from './components/AuthMascot'
 import Tutor from './components/Tutor'
 import {WhyEnglish,Motivation,AppFeedback} from './components/Community'
 import {readLearningRoute, learningRouteSearch, type LearningTab as Tab} from './learning-route'
@@ -19,7 +21,6 @@ const symbols:Record<string,string>={greetings:'01',food:'02',shopping:'03',tran
 export default function Home(){
  const [historyReview,setHistoryReview]=useState<{id:string;result:Result;submitted_at:string}|null>(null),[historyLoading,setHistoryLoading]=useState('')
  const [moduleDirty,setModuleDirty]=useState(false)
- const [providers,setProviders]=useState<Record<string,boolean>>({})
  const historyRequest=useRef(0)
  const [mistakesOnly,setMistakesOnly]=useState(false)
  const [hideMeanings,setHideMeanings]=useState(false)
@@ -38,7 +39,7 @@ export default function Home(){
  const report=(e:unknown)=>setError(e instanceof Error?(e.name==='TimeoutError'?'Máy chủ phản hồi chậm. Vui lòng thử lại.':e.message):'Đã có lỗi xảy ra')
  const refreshProgress=useCallback(async()=>{const owner=accountRef.current;if(!owner)return;try{const data=await api<Progress>('/progress');if(accountRef.current===owner)setProgress(data)}catch(e){if(accountRef.current===owner)report(e)}},[])
  useEffect(()=>{const route=readLearningRoute(window.location.search);setTab(route.tab);setTopic(route.topic);setOnlyFavorites(route.favorites);setMistakesOnly(route.mistakes)},[])
- useEffect(()=>{api<Record<string,boolean>>('/auth/providers').then(setProviders).catch(()=>{});const authError=new URLSearchParams(window.location.search).get('auth_error');if(authError){setAuth('login');setError(authError==='oauth_email_exists'?'Email này đã có tài khoản. Hãy đăng nhập bằng phương thức đã đăng ký; ứng dụng không tự liên kết tài khoản.':authError==='oauth_cancelled'?'Bạn đã hủy đăng nhập mạng xã hội.':'Đăng nhập mạng xã hội chưa thành công. Vui lòng thử lại.')}api<Topic[]>('/topics').then(setTopics).catch(report);api<{email:string}>('/auth/me').then(u=>setEmail(u.email)).catch(()=>{}).finally(()=>setReady(true))},[])
+ useEffect(()=>{api<Topic[]>('/topics').then(setTopics).catch(report);api<{email:string}>('/auth/me').then(u=>setEmail(u.email)).catch(()=>{}).finally(()=>setReady(true))},[])
  const dirty=tab==='quiz'&&!!quiz&&!result&&JSON.stringify(answers)!==JSON.stringify(quiz.answers)
  useEffect(()=>{
   if(!ready)return
@@ -127,7 +128,10 @@ export default function Home(){
   {email&&<Motivation key={email} onLearn={()=>navigate('lessons')}/>}
   {notice&&<div className="notice" role="status">{notice}</div>}
   {error&&<div className="error" role="alert">{error}<button aria-label="Đóng thông báo" onClick={()=>setError('')}>×</button></div>}
-  {!ready&&tab!=='home'?<div className="loading-panel" role="status">Đang kiểm tra phiên đăng nhập…</div>:tab==='home'&&!email?<section className="entry-intro"><div className="eyebrow">MỖI NGÀY · TIẾNG ANH CHO BẠN</div><h1>Học tiếng Anh,<br/>từng bước mỗi ngày.</h1><p>Luyện giao tiếp, IELTS và tiếng Anh chuyên ngành qua Nghe, Nói, Đọc, Viết. Tự tạo flashcard, chơi để nhớ từ và học cùng gia sư AI.</p><div className="button-row"><button className="primary" onClick={()=>{setPendingTab('home');setAuth('login');setError('')}}>Đăng nhập →</button><button className="small-button" onClick={()=>{setPendingTab('home');setAuth('register');setError('')}}>Đăng ký tài khoản</button></div><div className="social-login">{['google','facebook'].map(provider=><button key={provider} className="small-button" disabled={!providers[provider]} onClick={()=>{window.location.href='/api/auth/oauth/'+provider+'/start'}}>Tiếp tục với {provider==='google'?'Google':'Facebook'}</button>)}</div>{!providers.google&&!providers.facebook&&<p className="muted">Đăng nhập mạng xã hội sẽ khả dụng khi quản trị viên cấu hình kết nối.</p>}<button className="text-button" onClick={()=>navigate('why')}>20 lý do để bắt đầu học tiếng Anh ↗</button></section>:tab==='home'?<>
+  {!ready&&tab!=='home'?<div className="loading-panel" role="status">Đang kiểm tra phiên đăng nhập…</div>:tab==='home'&&!email?<section className="entry-intro entry-with-mascot">
+   <div className="entry-visual"><span className="auth-visual-label">MỘT CHÚT MỖI NGÀY, MỘT BƯỚC TIẾN XA.</span><AuthMascot/><p>Người bạn xanh đã sẵn sàng. Còn bạn thì sao?</p></div>
+   <div className="entry-copy"><div className="eyebrow">MỖI NGÀY · TIẾNG ANH CHO BẠN</div><h1>Học tiếng Anh,<br/>từng bước mỗi ngày.</h1><p>Luyện giao tiếp, IELTS và tiếng Anh chuyên ngành qua Nghe, Nói, Đọc, Viết. Tự tạo flashcard, chơi để nhớ từ và học cùng gia sư AI.</p><div className="button-row"><button className="primary" onClick={()=>{setPendingTab('home');setAuth('login');setError('')}}>Đăng nhập →</button><button className="small-button" onClick={()=>{setPendingTab('home');setAuth('register');setError('')}}>Đăng ký tài khoản</button></div><button className="text-button" onClick={()=>navigate('why')}>20 lý do để bắt đầu học tiếng Anh ↗</button></div>
+  </section>:tab==='home'?<>
    <div className="welcome"><div><div className="eyebrow">HỌC ĐIỀU NHỎ. DÙNG MỖI NGÀY.</div><h1>Tiếng Anh gần gũi hơn,<br/>từng ngày một.</h1><p>Bắt đầu từ những câu nói thật đời thường.<br className="desktop"/> Học theo cách của bạn, tiến bộ theo nhịp của bạn.</p><div className="hero-actions"><button className="primary" onClick={()=>navigate('lessons')}>Bắt đầu học <span>→</span></button><button className="text-button" onClick={()=>navigate('quiz')}>Thử một bài quiz ↗</button></div><div className="hero-meta"><span>✓ Anh – Việt rõ nghĩa</span><span>✓ Lưu tiến độ của bạn</span></div></div>
    <div className="hero-art" aria-label="Thẻ câu giao tiếp minh họa"><div className="art-orbit"/><div className="art-caption">A LITTLE EVERY DAY</div><div className="floating-note">✦ Bạn làm được mà!</div><div className="sample-card"><div className="card-top"><span>CÂU HÔM NAY</span><span>EN / VI</span></div><div className="sample-quote">“</div><h2>Nice to<br/>meet you.</h2><div className="sample-rule"/><p>Rất vui được gặp bạn.</p><div className="sample-foot"><span>01 — Chào hỏi</span><span>↗</span></div></div><div className="art-bottom">Từ một câu nói đến một cuộc trò chuyện.</div></div></div>
    <section className="stats" aria-label="Thống kê"><div><span className="stat-icon">▤</span><div><strong>{topics.reduce((n,t)=>n+t.count,0)}</strong><span>Câu giao tiếp</span></div></div><div><span className="stat-icon">✓</span><div><strong>{progress?.mastered??0}</strong><span>Câu đã thuộc</span></div></div><div><span className="stat-icon">✎</span><div><strong>{progress?.quiz_count??0}</strong><span>Bài đã luyện</span></div></div></section>
@@ -155,7 +159,7 @@ export default function Home(){
   </>}
   <footer><span>mỗi ngày · Tiếng Anh cho người Việt</span><span>Tài nguyên hình ảnh: FreeLingo · <a href="/credits.html">Ghi công & giấy phép</a></span></footer>
   </div></main>
-  {auth&&<div className="modal-backdrop" onKeyDown={e=>{if(e.key==='Escape')setAuth(null)}}><section className="modal" role="dialog" aria-modal="true" aria-labelledby="auth-title"><button className="close" aria-label="Đóng" onClick={()=>setAuth(null)}>×</button><div className="eyebrow">CHÀO MỪNG BẠN</div><h2 id="auth-title">{auth==='login'?'Tiếp tục hành trình học':'Bắt đầu một thói quen mới'}</h2><p>Lưu bài làm, bộ từ vựng và hành trình học của bạn.</p><div className="social-login">{['google','facebook'].map(provider=><button key={provider} className="small-button" disabled={busy||!providers[provider]} onClick={()=>{window.location.href='/api/auth/oauth/'+provider+'/start'}}>Tiếp tục với {provider==='google'?'Google':'Facebook'}</button>)}</div><p className="muted">Hoặc dùng email và mật khẩu</p>{error&&<p className="error" role="alert">{error}</p>}<form onSubmit={authenticate}><label>Email<input autoFocus type="email" autoComplete="email" required value={authEmail} onChange={e=>setAuthEmail(e.target.value)}/></label><label>Mật khẩu <small>(ít nhất 10 ký tự)</small><input type="password" minLength={10} maxLength={128} required autoComplete={auth==='login'?'current-password':'new-password'} value={password} onChange={e=>setPassword(e.target.value)}/></label><button className="primary" disabled={busy}>{busy?'Đang xử lý…':auth==='login'?'Đăng nhập →':'Tạo tài khoản →'}</button></form><button className="text-button auth-switch" onClick={()=>{setAuth(auth==='login'?'register':'login');setError('')}}>{auth==='login'?'Chưa có tài khoản? Đăng ký':'Đã có tài khoản? Đăng nhập'}</button></section></div>}
+  {auth&&<AuthDialog mode={auth} email={authEmail} password={password} error={error} busy={busy} onClose={()=>setAuth(null)} onSwitch={()=>{setAuth(auth==='login'?'register':'login');setError('')}} onEmailChange={setAuthEmail} onPasswordChange={setPassword} onSubmit={authenticate}/>}
   {!ready&&<span className="sr-only">Đang kiểm tra phiên đăng nhập</span>}
  </div>
 }
