@@ -31,9 +31,10 @@ class OfflineLearningTests(unittest.TestCase):
         self.meanings = [p["vietnamese"] for p in self.phrases]
         self.questions = build_questions(self.phrases[:5], self.meanings, random.Random(9))
 
-    def test_sample_has_twenty_topics_and_120_bilingual_phrases(self):
+    def test_sample_has_twenty_topics_with_twenty_bilingual_phrases_each(self):
         self.assertEqual(len(self.topics), 20)
-        self.assertEqual(len(self.phrases), 120)
+        self.assertEqual(len(self.phrases), 400)
+        self.assertTrue(all(len(topic["phrases"]) == 20 for topic in self.topics))
 
     def test_questions_have_unique_options_and_one_correct_answer(self):
         for q in self.questions:

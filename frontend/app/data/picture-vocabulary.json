@@ -118,5 +118,125 @@
     "example": "The night sky is full of stars.",
     "image": "/api/picture-assets/stars.jpg",
     "alt": "Toàn cảnh bầu trời đêm đầy sao trên mặt biển."
+  },
+  {
+    "id": "tree",
+    "topic": "nature",
+    "topicName": "Thiên nhiên",
+    "english": "tree",
+    "vietnamese": "cây",
+    "example": "A tall tree grows in the forest.",
+    "image": "/api/picture-assets/forest.jpg",
+    "alt": "Khu rừng có cây xanh và hoa dưới tán cây."
+  },
+  {
+    "id": "branch",
+    "topic": "nature",
+    "topicName": "Thiên nhiên",
+    "english": "branch",
+    "vietnamese": "cành cây",
+    "example": "A red leaf hangs from the branch.",
+    "image": "/api/picture-assets/leaf.jpg",
+    "alt": "Chiếc lá phong màu đỏ nổi bật trên cành."
+  },
+  {
+    "id": "woodland",
+    "topic": "nature",
+    "topicName": "Thiên nhiên",
+    "english": "woodland",
+    "vietnamese": "vùng đất có cây rừng",
+    "example": "Flowers grow in the woodland.",
+    "image": "/api/picture-assets/forest.jpg",
+    "alt": "Khu rừng có cây xanh và hoa dưới tán cây."
+  },
+  {
+    "id": "ear",
+    "topic": "animals",
+    "topicName": "Động vật",
+    "english": "ear",
+    "vietnamese": "tai",
+    "example": "The raccoon has two small ears.",
+    "image": "/api/picture-assets/raccoon.png",
+    "alt": "Tranh minh họa gấu mèo với mặt nạ đen và đuôi có sọc."
+  },
+  {
+    "id": "paw",
+    "topic": "animals",
+    "topicName": "Động vật",
+    "english": "paw",
+    "vietnamese": "bàn chân động vật",
+    "example": "The raccoon has small paws.",
+    "image": "/api/picture-assets/raccoon.png",
+    "alt": "Tranh minh họa gấu mèo với mặt nạ đen và đuôi có sọc."
+  },
+  {
+    "id": "fur",
+    "topic": "animals",
+    "topicName": "Động vật",
+    "english": "fur",
+    "vietnamese": "bộ lông thú",
+    "example": "The raccoon has grey fur.",
+    "image": "/api/picture-assets/raccoon.png",
+    "alt": "Tranh minh họa gấu mèo với mặt nạ đen và đuôi có sọc."
+  },
+  {
+    "id": "nose",
+    "topic": "animals",
+    "topicName": "Động vật",
+    "english": "nose",
+    "vietnamese": "mũi",
+    "example": "The raccoon has a black nose.",
+    "image": "/api/picture-assets/raccoon.png",
+    "alt": "Tranh minh họa gấu mèo với mặt nạ đen và đuôi có sọc."
+  },
+  {
+    "id": "rim",
+    "topic": "objects",
+    "topicName": "Đồ vật",
+    "english": "rim",
+    "vietnamese": "miệng cốc",
+    "example": "The rim is the top edge of the mug.",
+    "image": "/api/picture-assets/mug.png",
+    "alt": "Tranh minh họa cốc màu cam có quai bên trái."
+  },
+  {
+    "id": "drink",
+    "topic": "objects",
+    "topicName": "Đồ vật",
+    "english": "drink",
+    "vietnamese": "đồ uống",
+    "example": "There is a hot drink in the mug.",
+    "image": "/api/picture-assets/mug.png",
+    "alt": "Tranh minh họa cốc màu cam có quai bên trái."
+  },
+  {
+    "id": "cup",
+    "topic": "objects",
+    "topicName": "Đồ vật",
+    "english": "cup",
+    "vietnamese": "cốc; tách",
+    "example": "A mug is a type of cup with a handle.",
+    "image": "/api/picture-assets/mug.png",
+    "alt": "Tranh minh họa cốc màu cam có quai bên trái."
+  },
+  {
+    "id": "night",
+    "topic": "sky",
+    "topicName": "Bầu trời & Thời tiết",
+    "english": "night",
+    "vietnamese": "ban đêm",
+    "example": "We can see many stars at night.",
+    "image": "/api/picture-assets/stars.jpg",
+    "alt": "Toàn cảnh bầu trời đêm đầy sao trên mặt biển."
+  },
+  {
+    "id": "storm",
+    "topic": "sky",
+    "topicName": "Bầu trời & Thời tiết",
+    "english": "storm",
+    "vietnamese": "cơn giông",
+    "example": "Lightning flashes during the storm.",
+    "image": "/api/picture-assets/lightning.jpg",
+    "alt": "Các tia chớp sáng xuất hiện trong bầu trời giông tối."
   }
 ]

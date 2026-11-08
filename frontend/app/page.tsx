@@ -1,13 +1,14 @@
 'use client'
-import {useCallback,useEffect,useRef,useState} from 'react'
+import {lazy,Suspense,useCallback,useEffect,useRef,useState} from 'react'
 import {api} from './lib/api'
 import Lessons from './components/Lessons'
-import Courses from './components/Courses'
-import Vocabulary from './components/Vocabulary'
-import PictureVocabulary from './components/PictureVocabulary'
+const Courses=lazy(()=>import('./components/Courses'))
+const Vocabulary=lazy(()=>import('./components/Vocabulary'))
+const PictureVocabulary=lazy(()=>import('./components/PictureVocabulary'))
 import AuthDialog from './components/AuthDialog'
 import AuthMascot from './components/AuthMascot'
-import Tutor from './components/Tutor'
+import Dashboard from './components/Dashboard'
+const Tutor=lazy(()=>import('./components/Tutor'))
 import {WhyEnglish,Motivation,AppFeedback} from './components/Community'
 import {readLearningRoute, learningRouteSearch, type LearningTab as Tab} from './learning-route'
 import QuizReview, {type QuizResult as Result} from './components/QuizReview'
@@ -17,8 +18,11 @@ type Progress={mastered:number;favorites:number;total:number;quiz_count:number;t
 type Quiz={id:string;answers:string[];questions:{phrase_id:string;english:string;options:string[]}[]}
 const labels:Record<Tab,string>={home:'Tổng quan',lessons:'Bài học',phrases:'Câu giao tiếp',flashcards:'Flashcard',quiz:'Luyện tập',progress:'Tiến độ',ielts:'IELTS',specialist:'Tiếng Anh chuyên ngành',pictures:'Từ vựng qua ảnh',vocabulary:'Flashcard của tôi',tutor:'Học với gia sư AI',placement:'Trình độ & Lộ trình',why:'Vì sao học tiếng Anh?',feedback:'Góp ý cải thiện app'}
 const navSymbols:Record<Tab,string>={home:'⌂',lessons:'▤',phrases:'≡',flashcards:'▣',quiz:'✎',progress:'↗',ielts:'I',specialist:'◇',pictures:'▧',vocabulary:'▣',tutor:'✦',placement:'◎',why:'?',feedback:'♡'}
-const symbols:Record<string,string>={greetings:'01',food:'02',shopping:'03',transport:'04',travel:'05'}
 export default function Home(){
+ const [menuOpen,setMenuOpen]=useState(false)
+ const menuButton=useRef<HTMLButtonElement>(null)
+ const previousTab=useRef<Tab>('home')
+ const [topicsLoading,setTopicsLoading]=useState(true),[topicsError,setTopicsError]=useState(''),[progressError,setProgressError]=useState('')
  const [historyReview,setHistoryReview]=useState<{id:string;result:Result;submitted_at:string}|null>(null),[historyLoading,setHistoryLoading]=useState('')
  const [moduleDirty,setModuleDirty]=useState(false)
  const historyRequest=useRef(0)
@@ -37,10 +41,18 @@ export default function Home(){
  const accountRef=useRef<string|null>(null)
  accountRef.current=email
  const report=(e:unknown)=>setError(e instanceof Error?(e.name==='TimeoutError'?'Máy chủ phản hồi chậm. Vui lòng thử lại.':e.message):'Đã có lỗi xảy ra')
- const refreshProgress=useCallback(async()=>{const owner=accountRef.current;if(!owner)return;try{const data=await api<Progress>('/progress');if(accountRef.current===owner)setProgress(data)}catch(e){if(accountRef.current===owner)report(e)}},[])
+ const refreshProgress=useCallback(async()=>{const owner=accountRef.current;if(!owner)return;setProgressError('');try{const data=await api<Progress>('/progress');if(accountRef.current===owner)setProgress(data)}catch{if(accountRef.current===owner)setProgressError('Chưa tải được tiến độ học tập.')}},[])
+ const loadTopics=useCallback(async()=>{setTopicsLoading(true);setTopicsError('');try{setTopics(await api<Topic[]>('/topics'))}catch{setTopicsError('Chưa tải được danh sách chủ đề. Vui lòng thử lại.')}finally{setTopicsLoading(false)}},[])
  useEffect(()=>{const route=readLearningRoute(window.location.search);setTab(route.tab);setTopic(route.topic);setOnlyFavorites(route.favorites);setMistakesOnly(route.mistakes)},[])
- useEffect(()=>{api<Topic[]>('/topics').then(setTopics).catch(report);api<{email:string}>('/auth/me').then(u=>setEmail(u.email)).catch(()=>{}).finally(()=>setReady(true))},[])
+ useEffect(()=>{void loadTopics();api<{email:string}>('/auth/me').then(u=>setEmail(u.email)).catch(()=>{}).finally(()=>setReady(true))},[loadTopics])
+ useEffect(()=>{if(!menuOpen)return;const close=(event:KeyboardEvent)=>{if(event.key==='Escape'){setMenuOpen(false);menuButton.current?.focus()}};window.addEventListener('keydown',close);return()=>window.removeEventListener('keydown',close)},[menuOpen])
  const dirty=tab==='quiz'&&!!quiz&&!result&&JSON.stringify(answers)!==JSON.stringify(quiz.answers)
+ useEffect(()=>{
+  if(previousTab.current===tab)return
+  previousTab.current=tab
+  window.scrollTo(0,0)
+  document.getElementById('learning-content')?.focus({preventScroll:true})
+ },[tab])
  useEffect(()=>{
   if(!ready)return
   if(!email&&!['home','why'].includes(tab)){setPendingTab(tab);setAuth('login');setTab('home');return}
@@ -72,13 +84,14 @@ export default function Home(){
  useEffect(()=>{
   if(!email||!['phrases','flashcards'].includes(tab))return
   let active=true
+  const controller=new AbortController()
   ++phraseRequest.current
   setLoadingPhrases(true);setPhrases([])
-  const timer=setTimeout(()=>{api<Phrase[]>('/phrases?'+new URLSearchParams({topic,q:query,favorites:String(onlyFavorites),mistakes:String(mistakesOnly),limit:'51',offset:String(offset)})).then(p=>{if(active){setHasMore(p.length>50);setPhrases(p.slice(0,50));setIndex(0);setFlipped(false)}}).catch(e=>{if(active)report(e)}).finally(()=>{if(active)setLoadingPhrases(false)})},200)
-  return()=>{active=false;++phraseRequest.current;clearTimeout(timer)}
+  const timer=setTimeout(()=>{api<Phrase[]>('/phrases?'+new URLSearchParams({topic,q:query,favorites:String(onlyFavorites),mistakes:String(mistakesOnly),limit:'51',offset:String(offset)}),'GET',undefined,controller.signal).then(p=>{if(active){setHasMore(p.length>50);setPhrases(p.slice(0,50));setIndex(0);setFlipped(false)}}).catch(e=>{if(active)report(e)}).finally(()=>{if(active)setLoadingPhrases(false)})},200)
+  return()=>{active=false;++phraseRequest.current;clearTimeout(timer);controller.abort()}
  },[tab,email,topic,query,onlyFavorites,mistakesOnly,offset])
  function canLeaveQuiz(){if(busy){setNotice('Đang xử lý yêu cầu. Vui lòng chờ một chút.');return false}return !(dirty||moduleDirty)||window.confirm('Bạn có bài làm hoặc nội dung chưa lưu. Rời mục này sẽ bỏ thay đổi chưa lưu. Bạn vẫn muốn tiếp tục?')}
- function navigate(next:Tab){if(next!==tab&&!canLeaveQuiz())return;setError('');setNotice('');if(!email&&!['home','why'].includes(next)){setPendingTab(next);setAuth('login');return}if(next!==tab)setModuleDirty(false);setTab(next)}
+ function navigate(next:Tab){if(next!==tab&&!canLeaveQuiz())return;setMenuOpen(false);setError('');setNotice('');if(!email&&!['home','why'].includes(next)){setPendingTab(next);setAuth('login');return}if(next!==tab)setModuleDirty(false);setTab(next)}
  async function authenticate(e:React.FormEvent){e.preventDefault();setBusy(true);setError('');try{const u=await api<{email:string}>('/auth/'+auth,'POST',{email:authEmail,password});setEmail(u.email);setAuth(null);setPassword('');setTab(pendingTab);setNotice('')}catch(e){report(e)}finally{setBusy(false)}}
  async function toggle(p:Phrase,kind:'favorites'|'flashcards'){
   if(savingId)return
@@ -118,26 +131,21 @@ export default function Home(){
  },[tab,auth,loadingPhrases,phrases.length])
  const card=phrases[Math.min(index,Math.max(0,phrases.length-1))]
  return <div className={'shell '+(!email?'guest-shell':'')}>
-  <aside className="sidebar"><a className="brand" href="/" onClick={e=>{e.preventDefault();navigate('home')}} aria-label="Trang chủ"><img src="/api/media/logo.png" alt="Logo FreeLingo" width="44" height="44"/><span>mỗi ngày<span className="brand-sub">TIẾNG ANH CHO BẠN</span></span></a>
-   <div className="nav-label">GÓC HỌC TẬP</div><nav>{(Object.keys(labels) as Tab[]).map(key=><button key={key} className={tab===key?'nav-item active':'nav-item'} onClick={()=>navigate(key)}><span className="nav-icon">{navSymbols[key]}</span>{labels[key]}{tab===key&&<span className="nav-dot"/>}</button>)}</nav>
+  <a className="skip-link" href="#learning-content">Đến nội dung học</a>
+  <aside className={'sidebar '+(menuOpen?'menu-open':'')}><a className="brand" href="/" onClick={e=>{e.preventDefault();navigate('home')}} aria-label="Trang chủ"><img src="/api/media/logo.png" alt="Logo FreeLingo" width="44" height="44"/><span>mỗi ngày<span className="brand-sub">TIẾNG ANH CHO BẠN</span></span></a>
+   <button ref={menuButton} className="small-button mobile-menu-toggle" aria-expanded={menuOpen} aria-controls="learning-navigation" onClick={()=>setMenuOpen(value=>!value)}>{menuOpen?'Đóng menu ×':'Mở menu học tập ☰'}</button><div className="nav-label">GÓC HỌC TẬP</div><nav id="learning-navigation" aria-label="Góc học tập">{(Object.keys(labels) as Tab[]).map(key=><button key={key} aria-current={tab===key?'page':undefined} className={tab===key?'nav-item active':'nav-item'} onClick={()=>navigate(key)}><span className="nav-icon">{navSymbols[key]}</span>{labels[key]}{tab===key&&<span className="nav-dot"/>}</button>)}</nav>
    <div className="side-note"><span className="note-star">✳</span><strong>Một chút mỗi ngày,<br/>một bước tiến xa.</strong><p>Chỉ cần 5 phút để học thêm điều mới.</p></div>
    <div className="side-bottom"><span className="status-dot"/> Học chủ động · Nhớ dài lâu</div>
   </aside>
   <main><header>{!email&&<button className="text-button" onClick={()=>navigate('home')}>mỗi ngày · Trang chủ</button>}<span className="breadcrumb">Góc học tập <span>/</span> <strong>{labels[tab]}</strong></span><div className="account">{email?<><span className="email">{email}</span><button className="small-button" onClick={async()=>{if(!canLeaveQuiz())return;try{await api('/auth/logout','POST',{});setEmail(null);setModuleDirty(false);setProgress(null);setPhrases([]);setQuiz(null);setResult(null);setTab('home')}catch(e){report(e)}}}>Đăng xuất</button></>:<button className="small-button" onClick={()=>{setPendingTab(tab);setAuth('login');setError('')}}>Đăng nhập <span>↗</span></button>}</div></header>
-  <div className="content">
-  {email&&<Motivation key={email} onLearn={()=>navigate('lessons')}/>}
+  <div className="content" id="learning-content" tabIndex={-1}>
+  {email&&tab!=='home'&&<Motivation key={email} onLearn={()=>navigate('lessons')}/>}
   {notice&&<div className="notice" role="status">{notice}</div>}
   {error&&<div className="error" role="alert">{error}<button aria-label="Đóng thông báo" onClick={()=>setError('')}>×</button></div>}
   {!ready&&tab!=='home'?<div className="loading-panel" role="status">Đang kiểm tra phiên đăng nhập…</div>:tab==='home'&&!email?<section className="entry-intro entry-with-mascot">
    <div className="entry-visual"><span className="auth-visual-label">MỘT CHÚT MỖI NGÀY, MỘT BƯỚC TIẾN XA.</span><AuthMascot/><p>Người bạn xanh đã sẵn sàng. Còn bạn thì sao?</p></div>
    <div className="entry-copy"><div className="eyebrow">MỖI NGÀY · TIẾNG ANH CHO BẠN</div><h1>Học tiếng Anh,<br/>từng bước mỗi ngày.</h1><p>Luyện giao tiếp, IELTS và tiếng Anh chuyên ngành qua Nghe, Nói, Đọc, Viết. Tự tạo flashcard, chơi để nhớ từ và học cùng gia sư AI.</p><div className="button-row"><button className="primary" onClick={()=>{setPendingTab('home');setAuth('login');setError('')}}>Đăng nhập →</button><button className="small-button" onClick={()=>{setPendingTab('home');setAuth('register');setError('')}}>Đăng ký tài khoản</button></div><button className="text-button" onClick={()=>navigate('why')}>20 lý do để bắt đầu học tiếng Anh ↗</button></div>
-  </section>:tab==='home'?<>
-   <div className="welcome"><div><div className="eyebrow">HỌC ĐIỀU NHỎ. DÙNG MỖI NGÀY.</div><h1>Tiếng Anh gần gũi hơn,<br/>từng ngày một.</h1><p>Bắt đầu từ những câu nói thật đời thường.<br className="desktop"/> Học theo cách của bạn, tiến bộ theo nhịp của bạn.</p><div className="hero-actions"><button className="primary" onClick={()=>navigate('lessons')}>Bắt đầu học <span>→</span></button><button className="text-button" onClick={()=>navigate('quiz')}>Thử một bài quiz ↗</button></div><div className="hero-meta"><span>✓ Anh – Việt rõ nghĩa</span><span>✓ Lưu tiến độ của bạn</span></div></div>
-   <div className="hero-art" aria-label="Thẻ câu giao tiếp minh họa"><div className="art-orbit"/><div className="art-caption">A LITTLE EVERY DAY</div><div className="floating-note">✦ Bạn làm được mà!</div><div className="sample-card"><div className="card-top"><span>CÂU HÔM NAY</span><span>EN / VI</span></div><div className="sample-quote">“</div><h2>Nice to<br/>meet you.</h2><div className="sample-rule"/><p>Rất vui được gặp bạn.</p><div className="sample-foot"><span>01 — Chào hỏi</span><span>↗</span></div></div><div className="art-bottom">Từ một câu nói đến một cuộc trò chuyện.</div></div></div>
-   <section className="stats" aria-label="Thống kê"><div><span className="stat-icon">▤</span><div><strong>{topics.reduce((n,t)=>n+t.count,0)}</strong><span>Câu giao tiếp</span></div></div><div><span className="stat-icon">✓</span><div><strong>{progress?.mastered??0}</strong><span>Câu đã thuộc</span></div></div><div><span className="stat-icon">✎</span><div><strong>{progress?.quiz_count??0}</strong><span>Bài đã luyện</span></div></div></section>
-   <section><div className="section-heading"><div><div className="eyebrow">CHỌN MỘT ĐIỂM BẮT ĐẦU</div><h2>Hôm nay bạn muốn học gì?</h2></div><span className="muted">{topics.length} chủ đề thực tế</span></div><div className="topic-grid">{topics.map(t=><button className={'topic-card topic-'+t.id} key={t.id} onClick={()=>{setTopic(t.id);setQuery('');setOnlyFavorites(false);setMistakesOnly(false);navigate('lessons')}}><div className="topic-top"><span className="topic-number">{symbols[t.id]||'+'}</span><span className="topic-arrow">↗</span></div><h3>{t.name}</h3><p>{t.description}</p><div className="topic-count">{t.count} câu giao tiếp <span>→</span></div></button>)}</div>{!topics.length&&<p className="empty">Chủ đề sẽ xuất hiện sau khi backend sẵn sàng và đã seed dữ liệu.</p>}</section>
-   <div className="practice-banner"><div className="banner-symbol">✳</div><div><h3>Biến “biết rồi” thành “nhớ lâu”.</h3><p>Lật thẻ, ôn câu quen và thử sức với một bài trắc nghiệm ngắn.</p></div><button className="small-button" onClick={()=>navigate('flashcards')}>Ôn flashcard →</button></div>
-  </>:<>
+  </section>:tab==='home'?<Dashboard topics={topics} loading={topicsLoading} topicsError={topicsError} onReload={loadTopics} progress={progress} progressError={progressError} onRetryProgress={refreshProgress} onNavigate={navigate} onTopic={id=>{setTopic(id);setQuery('');setOnlyFavorites(false);setMistakesOnly(false);navigate('lessons')}}/>:<Suspense fallback={<div className="loading-panel" role="status"><span className="spinner"/>Đang mở góc học tập…</div>}>
    <div className="page-title"><div className="eyebrow">MỖI NGÀY MỘT BƯỚC TIẾN</div><h1>{labels[tab]}</h1><p>{tab==='progress'?'Những gì bạn học đều được lưu trong tài khoản.':'Học những câu bạn có thể dùng ngay trong cuộc sống.'}</p></div>
    {tab==='why'&&<WhyEnglish/>}
    {tab==='pictures'&&<PictureVocabulary/>}
@@ -153,10 +161,10 @@ export default function Home(){
    {tab==='phrases'&&<div className="phrase-list">{phrases.map(p=><article className="phrase-row" key={p.id}><div><h3 lang="en">{p.english}</h3>{hideMeanings?<details><summary>Xem nghĩa tiếng Việt</summary><p>{p.vietnamese}</p></details>:<p>{p.vietnamese}</p>}</div><button className={p.favorite?'favorite selected':'favorite'} aria-label={(p.favorite?'Bỏ yêu thích: ':'Yêu thích: ')+p.english} disabled={!!savingId} onClick={()=>toggle(p,'favorites')}>{p.favorite?'♥':'♡'}</button></article>)}{!loadingPhrases&&!phrases.length&&<p className="empty">Chưa có câu phù hợp. Thử đổi chủ đề hoặc từ khóa nhé.</p>}</div>}
    {tab==='flashcards'&&!loadingPhrases&&(card?<div className="flashcard-area"><p className="muted">Phím cách: lật thẻ · ← / →: chuyển thẻ (khi không chọn ô nhập hoặc nút).</p><span className="muted">Thẻ {index+1} / {phrases.length} {card.mastered?'· Đã thuộc ✓':''}</span><button className={'flashcard '+(flipped?'flipped':'')} onClick={()=>setFlipped(!flipped)}><span className="eyebrow">{flipped?'NGHĨA TIẾNG VIỆT':'CÂU TIẾNG ANH'}</span><strong lang={flipped?'vi':'en'}>{flipped?card.vietnamese:card.english}</strong><span>Chạm để lật thẻ ↻</span></button><div className="flash-actions"><button className="small-button" disabled={index===0} onClick={()=>{setIndex(index-1);setFlipped(false)}}>← Trước</button><button className="primary" disabled={!!savingId} onClick={()=>toggle(card,'flashcards')}>{card.mastered?'Cần ôn lại':'Đánh dấu đã thuộc ✓'}</button><button className="small-button" disabled={index===phrases.length-1} onClick={()=>{setIndex(index+1);setFlipped(false)}}>Tiếp →</button></div></div>:<p className="empty">Chưa có thẻ phù hợp.</p>)}
    {['phrases','flashcards'].includes(tab)&&!loadingPhrases&&(offset>0||hasMore)&&<div className="pagination"><button className="small-button" disabled={offset===0} onClick={()=>setOffset(Math.max(0,offset-50))}>← Trang trước</button><span>Trang {Math.floor(offset/50)+1}</span><button className="small-button" disabled={!hasMore} onClick={()=>setOffset(offset+50)}>Trang tiếp →</button></div>}
-   {tab==='quiz'&&<div className="quiz-area">{quizLoading?<div className="loading-panel" role="status"><span className="spinner"/>Đang kiểm tra bài luyện đã lưu…</div>:!quiz?<div className="quiz-intro"><span className="note-star">✎</span><h2>5 câu hỏi. Một bước tiến mới.</h2><p>Chọn nghĩa tiếng Việt đúng. Kết quả được backend chấm và lưu vào tiến độ.</p><button className="primary" disabled={busy} onClick={startQuiz}>Bắt đầu bài trắc nghiệm →</button></div>:result?<div className="quiz-result"><QuizReview result={result}/><button className="primary" onClick={startQuiz} disabled={busy}>Luyện bài mới →</button></div>:<form onSubmit={e=>{e.preventDefault();void submitQuiz()}}>{quiz.questions.map((q,i)=><fieldset key={q.phrase_id} disabled={busy}><legend><span className="eyebrow">CÂU {i+1}</span></legend><p className="quiz-question" lang="en">{q.english}</p><div className="options">{q.options.map(o=><label className={answers[i]===o?'option chosen':'option'} key={o}><input required type="radio" name={'q'+i} value={o} checked={answers[i]===o} onChange={()=>setAnswers(old=>old.map((a,j)=>i===j?o:a))}/>{o}</label>)}</div></fieldset>)}<div className="quiz-controls"><button className="primary" disabled={busy||answers.some(a=>!a)}>Nộp bài và xem kết quả →</button><button type="button" className="small-button" disabled={busy} onClick={saveDraft}>Lưu bài để làm tiếp</button><span className="muted" role="status">{dirty?'Có đáp án chưa lưu':'Bản nháp đã được lưu'}</span></div></form>}</div>}
-   {tab==='progress'&&!progress&&<p className="loading-panel" role="status">Đang tải tiến độ…</p>}
+   {tab==='quiz'&&<div className="quiz-area">{quizLoading?<div className="loading-panel" role="status"><span className="spinner"/>Đang kiểm tra bài luyện đã lưu…</div>:!quiz?<div className="quiz-intro"><span className="note-star">✎</span><h2>5 câu hỏi. Một bước tiến mới.</h2><p>Chọn nghĩa tiếng Việt đúng. Xem đáp án sau khi nộp và theo dõi kết quả trong tiến độ.</p><button className="primary" disabled={busy} onClick={startQuiz}>Bắt đầu bài trắc nghiệm →</button></div>:result?<div className="quiz-result"><QuizReview result={result}/><button className="primary" onClick={startQuiz} disabled={busy}>Luyện bài mới →</button></div>:<form onSubmit={e=>{e.preventDefault();void submitQuiz()}}>{quiz.questions.map((q,i)=><fieldset key={q.phrase_id} disabled={busy}><legend><span className="eyebrow">CÂU {i+1}</span></legend><p className="quiz-question" lang="en">{q.english}</p><div className="options">{q.options.map(o=><label className={answers[i]===o?'option chosen':'option'} key={o}><input required type="radio" name={'q'+i} value={o} checked={answers[i]===o} onChange={()=>setAnswers(old=>old.map((a,j)=>i===j?o:a))}/>{o}</label>)}</div></fieldset>)}<div className="quiz-controls"><button className="primary" disabled={busy||answers.some(a=>!a)}>Nộp bài và xem kết quả →</button><button type="button" className="small-button" disabled={busy} onClick={saveDraft}>Lưu bài để làm tiếp</button><span className="muted" role="status">{dirty?'Có đáp án chưa lưu':'Bản nháp đã được lưu'}</span></div></form>}</div>}
+   {tab==='progress'&&!progress&&(progressError?<div className="error" role="alert">{progressError}<button className="small-button" onClick={()=>void refreshProgress()}>Thử lại</button></div>:<p className="loading-panel" role="status">Đang tải tiến độ…</p>)}
    {tab==='progress'&&progress&&<><section className="stats"><div><strong>{progress.mastered}/{progress.total}</strong><span>Câu đã thuộc</span></div><div><strong>{progress.favorites}</strong><span>Câu yêu thích</span></div><div><strong>{progress.quiz_count}</strong><span>Bài đã luyện</span></div></section><section className="topic-progress"><h2>Tiến độ theo chủ đề</h2>{progress.topics.map(t=><div className="progress-row" key={t.id}><div><strong>{t.name}</strong><span>{t.mastered}/{t.total} câu đã thuộc</span></div><progress value={t.mastered} max={Math.max(1,t.total)} aria-label={'Tiến độ '+t.name}/></div>)}</section><div className="section-heading"><h2>Lịch sử luyện tập</h2><button className="small-button" onClick={()=>{setMistakesOnly(true);setOnlyFavorites(false);setQuery('');setTopic('');navigate('flashcards')}}>Ôn câu từng sai →</button></div><p className="muted">Các câu sai trong 100 bài gần nhất sẽ được bỏ khỏi bộ ôn khi bạn trả lời đúng ở lần sau.</p><div className="history">{progress.history.length?progress.history.map(h=><button type="button" key={h.id} className="history-item" onClick={()=>openHistory(h.id)} disabled={historyLoading===h.id} aria-label={'Xem lại bài '+new Date(h.submitted_at).toLocaleString('vi-VN')}><span>{new Date(h.submitted_at).toLocaleString('vi-VN')}</span><strong>{h.score} / {h.total} câu đúng</strong><span>{historyLoading===h.id?'Đang tải…':'Xem lại →'}</span></button>):<p className="empty">Bắt đầu bài quiz đầu tiên để xem kết quả tại đây.</p>}</div>{historyReview&&<section className="quiz-result history-review" aria-label="Chi tiết bài đã luyện"><div className="history-review-heading"><span className="muted">{new Date(historyReview.submitted_at).toLocaleString('vi-VN')}</span><button className="small-button" onClick={()=>{historyRequest.current++;setHistoryReview(null)}}>Đóng chi tiết</button></div><QuizReview result={historyReview.result}/></section>}</>}
-  </>}
+  </Suspense>}
   <footer><span>mỗi ngày · Tiếng Anh cho người Việt</span><span>Tài nguyên hình ảnh: FreeLingo · <a href="/credits.html">Ghi công & giấy phép</a></span></footer>
   </div></main>
   {auth&&<AuthDialog mode={auth} email={authEmail} password={password} error={error} busy={busy} onClose={()=>setAuth(null)} onSwitch={()=>{setAuth(auth==='login'?'register':'login');setError('')}} onEmailChange={setAuthEmail} onPasswordChange={setPassword} onSubmit={authenticate}/>}

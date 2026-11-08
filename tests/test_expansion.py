@@ -38,6 +38,9 @@ def clean_overrides():
 def test_curriculum_has_all_skills_answer_keys_and_real_audio():
     assert len(CATALOG)==6 and len(LESSONS)==25
     for course in CATALOG:
+        assert len(course['lexicon'])==30
+        assert len({row[0].casefold() for row in course['lexicon']})==30
+        assert all(len(row)==3 and all(value.strip() for value in row) for row in course['lexicon'])
         assert {l['skill'] for l in course['lessons']}=={'reading','listening','speaking','writing'}
         for lesson in course['lessons']:
             public=public_lesson(lesson)
@@ -57,7 +60,7 @@ def test_blank_or_oversized_personal_content_is_rejected():
     for factory,payload in [(DeckBody,{'name':' '}),(CardBody,{'english':' ','vietnamese':'x'}),(CardBody,{'english':'hello','vietnamese':' '}),(Suggestion,{'category':'bug','message':' '*20}),(Suggestion,{'category':'admin','message':'a useful message'})]:
         with pytest.raises(ValueError):factory(**payload)
 
-@pytest.mark.parametrize('route',['/api/decks','/api/decks/'+str(uuid.uuid4())+'/cards','/api/courses','/api/feedback','/api/ai/history','/api/ai/status'])
+@pytest.mark.parametrize('route',['/api/decks','/api/decks/templates','/api/decks/'+str(uuid.uuid4())+'/cards','/api/courses','/api/feedback','/api/ai/history','/api/ai/status'])
 def test_private_routes_require_session(route):
     async def denied():raise HTTPException(401,'Bạn cần đăng nhập')
     app.dependency_overrides[user]=denied
@@ -177,3 +180,18 @@ def test_all_logos_read_through_backend_in_local_mode(monkeypatch):
     monkeypatch.setenv('PICTURE_ASSET_STORAGE','local')
     for name in ['logo.png','docs-logo.png','logo_large.png','green-mascot.png']:
         assert picture_assets.read_asset(name).startswith(b'\x89PNG')
+
+
+def test_unknown_template_does_not_reach_storage():
+    app.dependency_overrides[user]=dependency({'id':UID})
+    app.dependency_overrides[db]=dependency(None)
+    response=ASGIClient(app).post('/api/decks/templates/not-a-course',headers={'Origin':'http://localhost:3000'},json={})
+    assert response.status_code==404
+
+
+def test_template_import_requires_session():
+    async def denied():raise HTTPException(401,'Bạn cần đăng nhập')
+    app.dependency_overrides[user]=denied
+    app.dependency_overrides[db]=dependency(None)
+    response=ASGIClient(app).post('/api/decks/templates/ielts',headers={'Origin':'http://localhost:3000'},json={})
+    assert response.status_code==401

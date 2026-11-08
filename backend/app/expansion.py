@@ -48,6 +48,27 @@ def install(app,user,db):
           count(c.id) FILTER(WHERE c.mastered)::int AS mastered FROM vocabulary_decks d
           LEFT JOIN vocabulary_cards c ON c.deck_id=d.id WHERE d.user_id=$1 GROUP BY d.id ORDER BY d.created_at,d.id''',current['id'])]
 
+    @app.get('/api/decks/templates')
+    async def deck_templates(current=Depends(user)):
+        return [{'id':c['id'],'name':c['name'],'total':len(c['lexicon'])} for c in CATALOG]
+
+    @app.post('/api/decks/templates/{template_id}')
+    async def import_deck(template_id:str,current=Depends(user),connection=Depends(db)):
+        course=next((c for c in CATALOG if c['id']==template_id),None)
+        if course is None:raise HTTPException(404,'Không tìm thấy bộ từ mẫu')
+        # A retry opens the same personal deck, without overwriting edited cards.
+        did=uuid.uuid5(uuid.NAMESPACE_URL,f"english-learning:template:{current['id']}:{template_id}")
+        async with connection.transaction():
+            await connection.execute('SELECT id FROM users WHERE id=$1 FOR UPDATE',current['id'])
+            existing=await connection.fetchrow('SELECT id,name FROM vocabulary_decks WHERE id=$1 AND user_id=$2',did,current['id'])
+            if existing:return {**dict(existing),'created':False}
+            if await connection.fetchval('SELECT count(*) FROM vocabulary_decks WHERE user_id=$1',current['id'])>=100:
+                raise HTTPException(422,'Mỗi tài khoản tối đa 100 bộ thẻ')
+            await connection.execute('INSERT INTO vocabulary_decks(id,user_id,name) VALUES($1,$2,$3)',did,current['id'],course['name'])
+            await connection.executemany('INSERT INTO vocabulary_cards(id,deck_id,english,vietnamese,example,mastered) VALUES($1,$2,$3,$4,$5,$6)',
+                [(uuid.uuid4(),did,en,vi,example,False) for en,vi,example in course['lexicon']])
+        return {'id':did,'name':course['name'],'created':True}
+
     @app.post('/api/decks')
     async def create_deck(body:DeckBody,current=Depends(user),connection=Depends(db)):
         did=uuid.uuid4()

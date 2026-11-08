@@ -29,6 +29,62 @@
         {
           "english": "See you tomorrow.",
           "vietnamese": "Hẹn gặp bạn ngày mai."
+        },
+        {
+          "english": "Good morning!",
+          "vietnamese": "Chào buổi sáng!"
+        },
+        {
+          "english": "Good evening!",
+          "vietnamese": "Chào buổi tối!"
+        },
+        {
+          "english": "How have you been?",
+          "vietnamese": "Dạo này bạn thế nào?"
+        },
+        {
+          "english": "It's good to see you again.",
+          "vietnamese": "Thật vui khi gặp lại bạn."
+        },
+        {
+          "english": "What should I call you?",
+          "vietnamese": "Tôi nên gọi bạn là gì?"
+        },
+        {
+          "english": "Where are you from?",
+          "vietnamese": "Bạn đến từ đâu?"
+        },
+        {
+          "english": "I'm from Vietnam.",
+          "vietnamese": "Tôi đến từ Việt Nam."
+        },
+        {
+          "english": "What do you do?",
+          "vietnamese": "Bạn làm nghề gì?"
+        },
+        {
+          "english": "I'm learning English.",
+          "vietnamese": "Tôi đang học tiếng Anh."
+        },
+        {
+          "english": "Please speak a little more slowly.",
+          "vietnamese": "Vui lòng nói chậm hơn một chút."
+        },
+        {
+          "english": "Could you repeat that, please?",
+          "vietnamese": "Bạn có thể nhắc lại được không?"
+        },
+        {
+          "english": "It was nice talking to you.",
+          "vietnamese": "Rất vui được trò chuyện với bạn."
+        },
+        {
+          "english": "Have a lovely day!",
+          "vietnamese": "Chúc bạn một ngày tốt lành!"
+        },
+        {
+          "english": "Take care!",
+          "vietnamese": "Giữ gìn sức khỏe nhé!"
         }
       ]
     },
@@ -60,6 +116,62 @@
         {
           "english": "Can I have some water?",
           "vietnamese": "Cho tôi xin ít nước được không?"
+        },
+        {
+          "english": "Do you have any vegetarian dishes?",
+          "vietnamese": "Bạn có món chay nào không?"
+        },
+        {
+          "english": "What do you recommend?",
+          "vietnamese": "Bạn gợi ý món nào?"
+        },
+        {
+          "english": "I'd like a bowl of noodle soup.",
+          "vietnamese": "Tôi muốn một bát phở hoặc bún nước."
+        },
+        {
+          "english": "Can I have it without onions?",
+          "vietnamese": "Cho tôi món này không có hành được không?"
+        },
+        {
+          "english": "I'm allergic to peanuts.",
+          "vietnamese": "Tôi bị dị ứng với đậu phộng."
+        },
+        {
+          "english": "Could we have a table for two?",
+          "vietnamese": "Cho chúng tôi bàn hai người được không?"
+        },
+        {
+          "english": "I'd like some more rice.",
+          "vietnamese": "Tôi muốn thêm một ít cơm."
+        },
+        {
+          "english": "Could we have some water, please?",
+          "vietnamese": "Cho chúng tôi xin ít nước được không?"
+        },
+        {
+          "english": "I'll have the same, please.",
+          "vietnamese": "Cho tôi món giống vậy nhé."
+        },
+        {
+          "english": "This tastes delicious.",
+          "vietnamese": "Món này ngon quá."
+        },
+        {
+          "english": "Could you pack this to take away?",
+          "vietnamese": "Bạn gói món này để mang về được không?"
+        },
+        {
+          "english": "We'd like to pay separately.",
+          "vietnamese": "Chúng tôi muốn thanh toán riêng."
+        },
+        {
+          "english": "Does the price include service?",
+          "vietnamese": "Giá này đã bao gồm phí phục vụ chưa?"
+        },
+        {
+          "english": "I'm full, thank you.",
+          "vietnamese": "Tôi no rồi, cảm ơn bạn."
         }
       ]
     },
@@ -91,6 +203,62 @@
         {
           "english": "I would like to return this.",
           "vietnamese": "Tôi muốn trả lại món này."
+        },
+        {
+          "english": "I'm just looking, thank you.",
+          "vietnamese": "Tôi chỉ xem thôi, cảm ơn bạn."
+        },
+        {
+          "english": "Do you have this in blue?",
+          "vietnamese": "Bạn có mẫu này màu xanh dương không?"
+        },
+        {
+          "english": "Is this made of cotton?",
+          "vietnamese": "Cái này làm từ vải cotton phải không?"
+        },
+        {
+          "english": "Where are the fitting rooms?",
+          "vietnamese": "Phòng thử đồ ở đâu?"
+        },
+        {
+          "english": "This jacket is too tight.",
+          "vietnamese": "Chiếc áo khoác này chật quá."
+        },
+        {
+          "english": "I'll take this one.",
+          "vietnamese": "Tôi sẽ lấy cái này."
+        },
+        {
+          "english": "Is there a discount today?",
+          "vietnamese": "Hôm nay có giảm giá không?"
+        },
+        {
+          "english": "Can I pay by card here?",
+          "vietnamese": "Ở đây tôi thanh toán bằng thẻ được không?"
+        },
+        {
+          "english": "Could I have a receipt, please?",
+          "vietnamese": "Cho tôi xin hóa đơn được không?"
+        },
+        {
+          "english": "What's your return policy?",
+          "vietnamese": "Chính sách trả hàng của cửa hàng là gì?"
+        },
+        {
+          "english": "I'd like to exchange this shirt.",
+          "vietnamese": "Tôi muốn đổi chiếc áo này."
+        },
+        {
+          "english": "The price is higher than I expected.",
+          "vietnamese": "Giá cao hơn tôi dự tính."
+        },
+        {
+          "english": "Do you sell reusable bags?",
+          "vietnamese": "Bạn có bán túi tái sử dụng không?"
+        },
+        {
+          "english": "When will this be back in stock?",
+          "vietnamese": "Khi nào mặt hàng này có lại?"
         }
       ]
     },
@@ -122,6 +290,62 @@
         {
           "english": "How long does it take?",
           "vietnamese": "Mất bao lâu?"
+        },
+        {
+          "english": "Which bus goes to the city centre?",
+          "vietnamese": "Xe buýt nào đi đến trung tâm thành phố?"
+        },
+        {
+          "english": "Where can I buy a ticket?",
+          "vietnamese": "Tôi có thể mua vé ở đâu?"
+        },
+        {
+          "english": "I'd like a return ticket.",
+          "vietnamese": "Tôi muốn một vé khứ hồi."
+        },
+        {
+          "english": "How often does the train run?",
+          "vietnamese": "Bao lâu có một chuyến tàu?"
+        },
+        {
+          "english": "Is this seat available?",
+          "vietnamese": "Chỗ này còn trống không?"
+        },
+        {
+          "english": "Does this bus stop at the museum?",
+          "vietnamese": "Xe buýt này có dừng ở bảo tàng không?"
+        },
+        {
+          "english": "Please let me know when we arrive.",
+          "vietnamese": "Khi đến nơi, làm ơn báo cho tôi."
+        },
+        {
+          "english": "I need to change trains here.",
+          "vietnamese": "Tôi cần đổi tàu ở đây."
+        },
+        {
+          "english": "The next train is delayed.",
+          "vietnamese": "Chuyến tàu tiếp theo bị trễ."
+        },
+        {
+          "english": "How long will the journey take?",
+          "vietnamese": "Chuyến đi sẽ mất bao lâu?"
+        },
+        {
+          "english": "Could you stop near the entrance?",
+          "vietnamese": "Bạn dừng gần lối vào được không?"
+        },
+        {
+          "english": "Please use the meter.",
+          "vietnamese": "Vui lòng bật đồng hồ tính cước."
+        },
+        {
+          "english": "Is there a bike lane here?",
+          "vietnamese": "Ở đây có làn đường dành cho xe đạp không?"
+        },
+        {
+          "english": "I'll walk from the station.",
+          "vietnamese": "Tôi sẽ đi bộ từ nhà ga."
         }
       ]
     },
@@ -153,6 +377,62 @@
         {
           "english": "I need a doctor.",
           "vietnamese": "Tôi cần bác sĩ."
+        },
+        {
+          "english": "I'd like to book a flight to Hanoi.",
+          "vietnamese": "Tôi muốn đặt vé máy bay đến Hà Nội."
+        },
+        {
+          "english": "Can I take this bag on board?",
+          "vietnamese": "Tôi có thể mang túi này lên máy bay không?"
+        },
+        {
+          "english": "Where is the check-in counter?",
+          "vietnamese": "Quầy làm thủ tục ở đâu?"
+        },
+        {
+          "english": "May I have a window seat?",
+          "vietnamese": "Cho tôi ghế cạnh cửa sổ được không?"
+        },
+        {
+          "english": "What time does boarding start?",
+          "vietnamese": "Mấy giờ bắt đầu lên máy bay?"
+        },
+        {
+          "english": "My luggage hasn't arrived.",
+          "vietnamese": "Hành lý của tôi chưa đến."
+        },
+        {
+          "english": "I'm here on holiday.",
+          "vietnamese": "Tôi đến đây để nghỉ dưỡng."
+        },
+        {
+          "english": "I'll be staying for one week.",
+          "vietnamese": "Tôi sẽ ở lại một tuần."
+        },
+        {
+          "english": "Is there a tourist information centre?",
+          "vietnamese": "Ở đây có trung tâm thông tin du lịch không?"
+        },
+        {
+          "english": "Could you recommend a local attraction?",
+          "vietnamese": "Bạn có thể gợi ý một điểm tham quan địa phương không?"
+        },
+        {
+          "english": "Do I need to book in advance?",
+          "vietnamese": "Tôi có cần đặt trước không?"
+        },
+        {
+          "english": "I'd like to join a guided tour.",
+          "vietnamese": "Tôi muốn tham gia một chuyến tham quan có hướng dẫn viên."
+        },
+        {
+          "english": "May I take photos here?",
+          "vietnamese": "Tôi chụp ảnh ở đây được không?"
+        },
+        {
+          "english": "What should I bring for the trip?",
+          "vietnamese": "Tôi nên mang gì cho chuyến đi?"
         }
       ]
     },
@@ -184,6 +464,62 @@
         {
           "english": "Let me introduce my brother.",
           "vietnamese": "Để tôi giới thiệu anh trai tôi."
+        },
+        {
+          "english": "I have an older sister.",
+          "vietnamese": "Tôi có một chị gái."
+        },
+        {
+          "english": "My younger brother is still at school.",
+          "vietnamese": "Em trai tôi vẫn đang đi học."
+        },
+        {
+          "english": "We live with our grandparents.",
+          "vietnamese": "Chúng tôi sống cùng ông bà."
+        },
+        {
+          "english": "How many people are in your family?",
+          "vietnamese": "Gia đình bạn có bao nhiêu người?"
+        },
+        {
+          "english": "My parents live in the countryside.",
+          "vietnamese": "Bố mẹ tôi sống ở nông thôn."
+        },
+        {
+          "english": "We visit our relatives during the holidays.",
+          "vietnamese": "Chúng tôi thăm họ hàng vào các dịp lễ."
+        },
+        {
+          "english": "I call my mother every weekend.",
+          "vietnamese": "Tôi gọi điện cho mẹ mỗi cuối tuần."
+        },
+        {
+          "english": "My cousin is getting married.",
+          "vietnamese": "Anh chị em họ của tôi sắp kết hôn."
+        },
+        {
+          "english": "I'm looking after my niece today.",
+          "vietnamese": "Hôm nay tôi trông cháu gái của mình."
+        },
+        {
+          "english": "Who does the cooking at home?",
+          "vietnamese": "Ở nhà ai nấu ăn?"
+        },
+        {
+          "english": "We share the housework.",
+          "vietnamese": "Chúng tôi chia sẻ việc nhà."
+        },
+        {
+          "english": "My son has just started school.",
+          "vietnamese": "Con trai tôi vừa bắt đầu đi học."
+        },
+        {
+          "english": "Let's plan a family picnic.",
+          "vietnamese": "Mình lên kế hoạch đi dã ngoại cùng gia đình nhé."
+        },
+        {
+          "english": "I miss my family.",
+          "vietnamese": "Tôi nhớ gia đình mình."
         }
       ]
     },
@@ -215,6 +551,62 @@
         {
           "english": "Thanks for being there for me.",
           "vietnamese": "Cảm ơn bạn đã ở bên tôi."
+        },
+        {
+          "english": "Would you like to hang out this weekend?",
+          "vietnamese": "Cuối tuần này bạn muốn đi chơi không?"
+        },
+        {
+          "english": "Let's meet at our usual café.",
+          "vietnamese": "Mình gặp ở quán cà phê quen nhé."
+        },
+        {
+          "english": "I'll introduce you to my friends.",
+          "vietnamese": "Tôi sẽ giới thiệu bạn với bạn bè của tôi."
+        },
+        {
+          "english": "We've known each other for years.",
+          "vietnamese": "Chúng tôi đã quen nhau nhiều năm."
+        },
+        {
+          "english": "Thanks for listening to me.",
+          "vietnamese": "Cảm ơn bạn đã lắng nghe tôi."
+        },
+        {
+          "english": "You can count on me.",
+          "vietnamese": "Bạn có thể tin cậy ở tôi."
+        },
+        {
+          "english": "How did you two meet?",
+          "vietnamese": "Hai bạn quen nhau như thế nào?"
+        },
+        {
+          "english": "We became friends at university.",
+          "vietnamese": "Chúng tôi trở thành bạn bè ở đại học."
+        },
+        {
+          "english": "Would you like to come along?",
+          "vietnamese": "Bạn có muốn đi cùng không?"
+        },
+        {
+          "english": "Let me know when you're free.",
+          "vietnamese": "Khi nào rảnh thì cho tôi biết nhé."
+        },
+        {
+          "english": "I'm sorry I couldn't make it.",
+          "vietnamese": "Tôi xin lỗi vì đã không đến được."
+        },
+        {
+          "english": "Let's keep in touch.",
+          "vietnamese": "Mình giữ liên lạc nhé."
+        },
+        {
+          "english": "That sounds like a great idea.",
+          "vietnamese": "Ý tưởng đó nghe hay đấy."
+        },
+        {
+          "english": "I'm happy for you!",
+          "vietnamese": "Tôi mừng cho bạn!"
         }
       ]
     },
@@ -246,6 +638,62 @@
         {
           "english": "Thank you for your feedback.",
           "vietnamese": "Cảm ơn bạn đã góp ý."
+        },
+        {
+          "english": "What time does the meeting start?",
+          "vietnamese": "Cuộc họp bắt đầu lúc mấy giờ?"
+        },
+        {
+          "english": "Could you attach the file to your email?",
+          "vietnamese": "Bạn đính kèm tệp vào email được không?"
+        },
+        {
+          "english": "I'm working on a new project.",
+          "vietnamese": "Tôi đang làm một dự án mới."
+        },
+        {
+          "english": "We need to finish this by Friday.",
+          "vietnamese": "Chúng ta cần hoàn thành việc này trước hoặc trong thứ Sáu."
+        },
+        {
+          "english": "I need a little more time.",
+          "vietnamese": "Tôi cần thêm một chút thời gian."
+        },
+        {
+          "english": "Let's discuss this after lunch.",
+          "vietnamese": "Mình thảo luận việc này sau bữa trưa nhé."
+        },
+        {
+          "english": "I'll check and get back to you.",
+          "vietnamese": "Tôi sẽ kiểm tra và phản hồi bạn."
+        },
+        {
+          "english": "Could you clarify this point?",
+          "vietnamese": "Bạn làm rõ điểm này được không?"
+        },
+        {
+          "english": "I'm available for a call this afternoon.",
+          "vietnamese": "Chiều nay tôi có thể trao đổi qua điện thoại."
+        },
+        {
+          "english": "Please keep me updated.",
+          "vietnamese": "Vui lòng cập nhật tình hình cho tôi."
+        },
+        {
+          "english": "I'd like to take a day off.",
+          "vietnamese": "Tôi muốn xin nghỉ một ngày."
+        },
+        {
+          "english": "Who's responsible for this task?",
+          "vietnamese": "Ai phụ trách nhiệm vụ này?"
+        },
+        {
+          "english": "Thanks for your feedback.",
+          "vietnamese": "Cảm ơn bạn đã góp ý."
+        },
+        {
+          "english": "Let's review the progress together.",
+          "vietnamese": "Mình cùng xem lại tiến độ nhé."
         }
       ]
     },
@@ -277,6 +725,62 @@
         {
           "english": "I need more time to finish.",
           "vietnamese": "Tôi cần thêm thời gian để hoàn thành."
+        },
+        {
+          "english": "Which subject do you enjoy most?",
+          "vietnamese": "Bạn thích môn học nào nhất?"
+        },
+        {
+          "english": "Could you explain this exercise?",
+          "vietnamese": "Bạn giải thích bài tập này được không?"
+        },
+        {
+          "english": "I forgot to bring my notebook.",
+          "vietnamese": "Tôi quên mang vở."
+        },
+        {
+          "english": "May I borrow your dictionary?",
+          "vietnamese": "Tôi mượn từ điển của bạn được không?"
+        },
+        {
+          "english": "When is the assignment due?",
+          "vietnamese": "Khi nào phải nộp bài tập?"
+        },
+        {
+          "english": "Let's study together after class.",
+          "vietnamese": "Mình cùng học sau giờ lên lớp nhé."
+        },
+        {
+          "english": "I need to prepare for an exam.",
+          "vietnamese": "Tôi cần ôn thi."
+        },
+        {
+          "english": "How do you spell this word?",
+          "vietnamese": "Từ này đánh vần thế nào?"
+        },
+        {
+          "english": "What does this sentence mean?",
+          "vietnamese": "Câu này có nghĩa là gì?"
+        },
+        {
+          "english": "Could you write it on the board?",
+          "vietnamese": "Thầy cô viết lên bảng được không ạ?"
+        },
+        {
+          "english": "I have a question about the homework.",
+          "vietnamese": "Tôi có câu hỏi về bài tập về nhà."
+        },
+        {
+          "english": "The library closes at six.",
+          "vietnamese": "Thư viện đóng cửa lúc sáu giờ."
+        },
+        {
+          "english": "We have a group presentation tomorrow.",
+          "vietnamese": "Ngày mai chúng tôi có bài thuyết trình nhóm."
+        },
+        {
+          "english": "I'd like to join the English club.",
+          "vietnamese": "Tôi muốn tham gia câu lạc bộ tiếng Anh."
         }
       ]
     },
@@ -308,6 +812,62 @@
         {
           "english": "I think I am lost.",
           "vietnamese": "Tôi nghĩ mình bị lạc rồi."
+        },
+        {
+          "english": "Excuse me, how do I get to the station?",
+          "vietnamese": "Xin lỗi, tôi đi đến nhà ga bằng cách nào?"
+        },
+        {
+          "english": "Go straight ahead for two blocks.",
+          "vietnamese": "Đi thẳng qua hai dãy nhà."
+        },
+        {
+          "english": "Turn left at the traffic lights.",
+          "vietnamese": "Rẽ trái ở chỗ đèn giao thông."
+        },
+        {
+          "english": "Turn right after the bridge.",
+          "vietnamese": "Qua cầu rồi rẽ phải."
+        },
+        {
+          "english": "It's opposite the supermarket.",
+          "vietnamese": "Nó ở đối diện siêu thị."
+        },
+        {
+          "english": "The bank is next to the pharmacy.",
+          "vietnamese": "Ngân hàng ở cạnh nhà thuốc."
+        },
+        {
+          "english": "How far is it from here?",
+          "vietnamese": "Từ đây đến đó bao xa?"
+        },
+        {
+          "english": "Am I going the right way?",
+          "vietnamese": "Tôi đang đi đúng đường chứ?"
+        },
+        {
+          "english": "Is there a shortcut to the park?",
+          "vietnamese": "Có đường tắt đến công viên không?"
+        },
+        {
+          "english": "I've missed the turning.",
+          "vietnamese": "Tôi đã đi quá chỗ rẽ."
+        },
+        {
+          "english": "Take the second exit at the roundabout.",
+          "vietnamese": "Ra ở lối thứ hai tại vòng xuyến."
+        },
+        {
+          "english": "The entrance is around the corner.",
+          "vietnamese": "Lối vào ở ngay sau góc đường."
+        },
+        {
+          "english": "Cross the road at the pedestrian crossing.",
+          "vietnamese": "Hãy sang đường ở vạch dành cho người đi bộ."
+        },
+        {
+          "english": "You'll see it on your left.",
+          "vietnamese": "Bạn sẽ thấy nó ở bên trái."
         }
       ]
     },
@@ -339,6 +899,62 @@
         {
           "english": "Could you store my luggage?",
           "vietnamese": "Bạn giữ hành lý giúp tôi được không?"
+        },
+        {
+          "english": "Could I see the room before booking?",
+          "vietnamese": "Tôi xem phòng trước khi đặt được không?"
+        },
+        {
+          "english": "Could I check in early?",
+          "vietnamese": "Tôi nhận phòng sớm được không?"
+        },
+        {
+          "english": "Is breakfast included in the room rate?",
+          "vietnamese": "Giá phòng đã bao gồm bữa sáng chưa?"
+        },
+        {
+          "english": "Is late check-out available?",
+          "vietnamese": "Tôi có thể trả phòng muộn không?"
+        },
+        {
+          "english": "Could I have a quiet room?",
+          "vietnamese": "Cho tôi phòng yên tĩnh được không?"
+        },
+        {
+          "english": "The air conditioning isn't working.",
+          "vietnamese": "Máy điều hòa không hoạt động."
+        },
+        {
+          "english": "Could you send up some extra towels?",
+          "vietnamese": "Bạn mang thêm khăn lên phòng được không?"
+        },
+        {
+          "english": "How do I connect to the Wi-Fi?",
+          "vietnamese": "Tôi kết nối Wi-Fi bằng cách nào?"
+        },
+        {
+          "english": "Is there a safe in the room?",
+          "vietnamese": "Trong phòng có két an toàn không?"
+        },
+        {
+          "english": "I'd like to extend my stay.",
+          "vietnamese": "Tôi muốn ở thêm."
+        },
+        {
+          "english": "Could you arrange a taxi for me?",
+          "vietnamese": "Bạn đặt giúp tôi một chiếc taxi được không?"
+        },
+        {
+          "english": "Can I leave my luggage here?",
+          "vietnamese": "Tôi gửi hành lý ở đây được không?"
+        },
+        {
+          "english": "I've lost my room key.",
+          "vietnamese": "Tôi làm mất chìa khóa phòng rồi."
+        },
+        {
+          "english": "Could you give me an itemised bill?",
+          "vietnamese": "Bạn cho tôi hóa đơn chi tiết được không?"
         }
       ]
     },
@@ -370,6 +986,62 @@
         {
           "english": "Where is the nearest pharmacy?",
           "vietnamese": "Hiệu thuốc gần nhất ở đâu?"
+        },
+        {
+          "english": "I'd like to make an appointment with a doctor.",
+          "vietnamese": "Tôi muốn đặt lịch khám bác sĩ."
+        },
+        {
+          "english": "I've had a headache since yesterday.",
+          "vietnamese": "Tôi bị đau đầu từ hôm qua."
+        },
+        {
+          "english": "My throat feels sore.",
+          "vietnamese": "Tôi thấy đau họng."
+        },
+        {
+          "english": "I feel dizzy when I stand up.",
+          "vietnamese": "Tôi thấy chóng mặt khi đứng dậy."
+        },
+        {
+          "english": "I'm taking these medicines.",
+          "vietnamese": "Tôi đang dùng những loại thuốc này."
+        },
+        {
+          "english": "I have an allergy to this medicine.",
+          "vietnamese": "Tôi bị dị ứng với loại thuốc này."
+        },
+        {
+          "english": "Could you explain the instructions?",
+          "vietnamese": "Bạn giải thích hướng dẫn được không?"
+        },
+        {
+          "english": "Do I need a follow-up appointment?",
+          "vietnamese": "Tôi có cần hẹn tái khám không?"
+        },
+        {
+          "english": "Where is the nearest clinic?",
+          "vietnamese": "Phòng khám gần nhất ở đâu?"
+        },
+        {
+          "english": "I'd like to speak to a pharmacist.",
+          "vietnamese": "Tôi muốn trao đổi với dược sĩ."
+        },
+        {
+          "english": "Could you tell me where to wait?",
+          "vietnamese": "Bạn cho tôi biết nên chờ ở đâu được không?"
+        },
+        {
+          "english": "I don't understand this form.",
+          "vietnamese": "Tôi không hiểu mẫu đơn này."
+        },
+        {
+          "english": "Can someone interpret for me?",
+          "vietnamese": "Có ai phiên dịch giúp tôi được không?"
+        },
+        {
+          "english": "I'm feeling better today.",
+          "vietnamese": "Hôm nay tôi cảm thấy khỏe hơn."
         }
       ]
     },
@@ -401,6 +1073,62 @@
         {
           "english": "I will call you back later.",
           "vietnamese": "Tôi sẽ gọi lại cho bạn sau."
+        },
+        {
+          "english": "Hello, is this a good time to call?",
+          "vietnamese": "Xin chào, bây giờ gọi có tiện không?"
+        },
+        {
+          "english": "Could I speak to Ms Nguyen, please?",
+          "vietnamese": "Cho tôi gặp cô Nguyễn được không?"
+        },
+        {
+          "english": "Who's calling, please?",
+          "vietnamese": "Xin hỏi ai đang gọi vậy?"
+        },
+        {
+          "english": "Please hold for a moment.",
+          "vietnamese": "Vui lòng giữ máy một lát."
+        },
+        {
+          "english": "I'll put you through.",
+          "vietnamese": "Tôi sẽ chuyển máy cho bạn."
+        },
+        {
+          "english": "She's not available right now.",
+          "vietnamese": "Hiện giờ cô ấy không tiện nghe máy."
+        },
+        {
+          "english": "Would you like to leave a message?",
+          "vietnamese": "Bạn có muốn để lại lời nhắn không?"
+        },
+        {
+          "english": "Could you ask him to call me back?",
+          "vietnamese": "Bạn nhắn anh ấy gọi lại cho tôi được không?"
+        },
+        {
+          "english": "The line is breaking up.",
+          "vietnamese": "Đường truyền bị chập chờn."
+        },
+        {
+          "english": "I can't hear you clearly.",
+          "vietnamese": "Tôi không nghe rõ bạn nói."
+        },
+        {
+          "english": "Let me call you back in ten minutes.",
+          "vietnamese": "Mười phút nữa tôi gọi lại nhé."
+        },
+        {
+          "english": "I think you've got the wrong number.",
+          "vietnamese": "Tôi nghĩ bạn gọi nhầm số rồi."
+        },
+        {
+          "english": "Could you send me a text instead?",
+          "vietnamese": "Bạn nhắn tin cho tôi được không?"
+        },
+        {
+          "english": "My phone battery is almost dead.",
+          "vietnamese": "Điện thoại tôi sắp hết pin."
         }
       ]
     },
@@ -432,6 +1160,62 @@
         {
           "english": "See you at three o’clock.",
           "vietnamese": "Hẹn gặp bạn lúc ba giờ."
+        },
+        {
+          "english": "Are you free on Friday afternoon?",
+          "vietnamese": "Chiều thứ Sáu bạn có rảnh không?"
+        },
+        {
+          "english": "Could we meet at half past two?",
+          "vietnamese": "Mình gặp lúc hai giờ rưỡi được không?"
+        },
+        {
+          "english": "That time works for me.",
+          "vietnamese": "Giờ đó phù hợp với tôi."
+        },
+        {
+          "english": "I'm afraid I have another appointment.",
+          "vietnamese": "Rất tiếc, tôi có một cuộc hẹn khác."
+        },
+        {
+          "english": "Could we reschedule for next week?",
+          "vietnamese": "Mình dời lịch sang tuần sau được không?"
+        },
+        {
+          "english": "I'd like to cancel my appointment.",
+          "vietnamese": "Tôi muốn hủy cuộc hẹn."
+        },
+        {
+          "english": "Please confirm the date and time.",
+          "vietnamese": "Vui lòng xác nhận ngày giờ."
+        },
+        {
+          "english": "I'll send you a calendar invitation.",
+          "vietnamese": "Tôi sẽ gửi bạn lời mời trên lịch."
+        },
+        {
+          "english": "Where shall we meet?",
+          "vietnamese": "Mình sẽ gặp nhau ở đâu?"
+        },
+        {
+          "english": "I'm running about ten minutes late.",
+          "vietnamese": "Tôi sẽ trễ khoảng mười phút."
+        },
+        {
+          "english": "Thanks for waiting for me.",
+          "vietnamese": "Cảm ơn bạn đã chờ tôi."
+        },
+        {
+          "english": "Let's move the meeting online.",
+          "vietnamese": "Mình chuyển sang họp trực tuyến nhé."
+        },
+        {
+          "english": "How long should I allow for the meeting?",
+          "vietnamese": "Tôi nên dành bao nhiêu thời gian cho cuộc họp?"
+        },
+        {
+          "english": "I'll set a reminder.",
+          "vietnamese": "Tôi sẽ đặt lời nhắc."
         }
       ]
     },
@@ -463,6 +1247,62 @@
         {
           "english": "How often do you go swimming?",
           "vietnamese": "Bạn đi bơi bao lâu một lần?"
+        },
+        {
+          "english": "What do you like doing in your free time?",
+          "vietnamese": "Bạn thích làm gì lúc rảnh?"
+        },
+        {
+          "english": "I've recently taken up photography.",
+          "vietnamese": "Gần đây tôi bắt đầu học chụp ảnh."
+        },
+        {
+          "english": "I enjoy reading novels.",
+          "vietnamese": "Tôi thích đọc tiểu thuyết."
+        },
+        {
+          "english": "Do you play any musical instruments?",
+          "vietnamese": "Bạn có chơi nhạc cụ nào không?"
+        },
+        {
+          "english": "I'm learning to play the guitar.",
+          "vietnamese": "Tôi đang học chơi đàn ghi-ta."
+        },
+        {
+          "english": "Let's go for a bike ride.",
+          "vietnamese": "Mình đi đạp xe nhé."
+        },
+        {
+          "english": "I go swimming twice a week.",
+          "vietnamese": "Tôi đi bơi hai lần một tuần."
+        },
+        {
+          "english": "Would you recommend a good film?",
+          "vietnamese": "Bạn gợi ý một bộ phim hay được không?"
+        },
+        {
+          "english": "I prefer outdoor activities.",
+          "vietnamese": "Tôi thích các hoạt động ngoài trời hơn."
+        },
+        {
+          "english": "Cooking helps me relax.",
+          "vietnamese": "Nấu ăn giúp tôi thư giãn."
+        },
+        {
+          "english": "I'd like to try pottery.",
+          "vietnamese": "Tôi muốn thử làm gốm."
+        },
+        {
+          "english": "How long have you been doing yoga?",
+          "vietnamese": "Bạn tập yoga được bao lâu rồi?"
+        },
+        {
+          "english": "I'm a beginner, so I'm still practising.",
+          "vietnamese": "Tôi mới bắt đầu nên vẫn đang luyện tập."
+        },
+        {
+          "english": "It's a great way to meet people.",
+          "vietnamese": "Đó là cách rất hay để gặp gỡ mọi người."
         }
       ]
     },
@@ -494,6 +1334,62 @@
         {
           "english": "Shall we stay indoors?",
           "vietnamese": "Chúng ta ở trong nhà nhé?"
+        },
+        {
+          "english": "What's the forecast for tomorrow?",
+          "vietnamese": "Dự báo thời tiết ngày mai thế nào?"
+        },
+        {
+          "english": "It looks like it's going to rain.",
+          "vietnamese": "Có vẻ trời sắp mưa."
+        },
+        {
+          "english": "You might want to bring an umbrella.",
+          "vietnamese": "Có lẽ bạn nên mang theo ô."
+        },
+        {
+          "english": "It's quite humid today.",
+          "vietnamese": "Hôm nay trời khá ẩm."
+        },
+        {
+          "english": "The temperature has dropped.",
+          "vietnamese": "Nhiệt độ đã giảm."
+        },
+        {
+          "english": "There's a cool breeze this evening.",
+          "vietnamese": "Chiều tối nay có gió mát."
+        },
+        {
+          "english": "It's much colder than yesterday.",
+          "vietnamese": "Trời lạnh hơn hôm qua nhiều."
+        },
+        {
+          "english": "The sun is coming out.",
+          "vietnamese": "Mặt trời đang ló ra."
+        },
+        {
+          "english": "We had heavy rain last night.",
+          "vietnamese": "Tối qua có mưa lớn."
+        },
+        {
+          "english": "The roads are slippery after the rain.",
+          "vietnamese": "Đường trơn sau cơn mưa."
+        },
+        {
+          "english": "Is it usually this hot in summer?",
+          "vietnamese": "Mùa hè ở đây thường nóng thế này sao?"
+        },
+        {
+          "english": "Let's wait until the storm passes.",
+          "vietnamese": "Mình đợi đến khi cơn bão qua nhé."
+        },
+        {
+          "english": "It's a lovely day for a walk.",
+          "vietnamese": "Thời tiết thật đẹp để đi dạo."
+        },
+        {
+          "english": "The rainy season starts in May.",
+          "vietnamese": "Mùa mưa bắt đầu vào tháng Năm."
         }
       ]
     },
@@ -525,6 +1421,62 @@
         {
           "english": "Please keep the noise down.",
           "vietnamese": "Vui lòng giữ yên lặng."
+        },
+        {
+          "english": "I'm looking for a flat to rent.",
+          "vietnamese": "Tôi đang tìm một căn hộ để thuê."
+        },
+        {
+          "english": "How much is the security deposit?",
+          "vietnamese": "Tiền đặt cọc là bao nhiêu?"
+        },
+        {
+          "english": "Are the bills included?",
+          "vietnamese": "Giá thuê đã bao gồm các hóa đơn sinh hoạt chưa?"
+        },
+        {
+          "english": "How many bedrooms does it have?",
+          "vietnamese": "Căn hộ có bao nhiêu phòng ngủ?"
+        },
+        {
+          "english": "Is the flat furnished?",
+          "vietnamese": "Căn hộ đã có nội thất chưa?"
+        },
+        {
+          "english": "Is there a lift in the building?",
+          "vietnamese": "Tòa nhà có thang máy không?"
+        },
+        {
+          "english": "The washing machine needs repairing.",
+          "vietnamese": "Máy giặt cần được sửa."
+        },
+        {
+          "english": "Could you turn down the music?",
+          "vietnamese": "Bạn vặn nhỏ nhạc được không?"
+        },
+        {
+          "english": "Where should I put the recycling?",
+          "vietnamese": "Tôi nên để đồ tái chế ở đâu?"
+        },
+        {
+          "english": "I'll take out the rubbish tonight.",
+          "vietnamese": "Tối nay tôi sẽ mang rác đi đổ."
+        },
+        {
+          "english": "We need to clean the living room.",
+          "vietnamese": "Chúng ta cần dọn phòng khách."
+        },
+        {
+          "english": "Please take off your shoes at the door.",
+          "vietnamese": "Vui lòng cởi giày ở cửa."
+        },
+        {
+          "english": "Make yourself at home.",
+          "vietnamese": "Cứ tự nhiên như ở nhà nhé."
+        },
+        {
+          "english": "Our neighbours are very friendly.",
+          "vietnamese": "Hàng xóm của chúng tôi rất thân thiện."
         }
       ]
     },
@@ -556,6 +1508,62 @@
         {
           "english": "Could you check the address?",
           "vietnamese": "Bạn kiểm tra địa chỉ giúp tôi được không?"
+        },
+        {
+          "english": "I'd like to open a bank account.",
+          "vietnamese": "Tôi muốn mở tài khoản ngân hàng."
+        },
+        {
+          "english": "Where can I withdraw cash?",
+          "vietnamese": "Tôi có thể rút tiền mặt ở đâu?"
+        },
+        {
+          "english": "I'd like to send this parcel overseas.",
+          "vietnamese": "Tôi muốn gửi bưu kiện này ra nước ngoài."
+        },
+        {
+          "english": "How long will delivery take?",
+          "vietnamese": "Giao hàng sẽ mất bao lâu?"
+        },
+        {
+          "english": "Can I track the parcel online?",
+          "vietnamese": "Tôi theo dõi bưu kiện trực tuyến được không?"
+        },
+        {
+          "english": "I'd like to get my hair cut.",
+          "vietnamese": "Tôi muốn cắt tóc."
+        },
+        {
+          "english": "Could you repair this zip?",
+          "vietnamese": "Bạn sửa khóa kéo này được không?"
+        },
+        {
+          "english": "When will it be ready to collect?",
+          "vietnamese": "Khi nào tôi có thể đến lấy?"
+        },
+        {
+          "english": "I'd like to pay my electricity bill.",
+          "vietnamese": "Tôi muốn thanh toán hóa đơn điện."
+        },
+        {
+          "english": "There's a problem with my internet connection.",
+          "vietnamese": "Kết nối internet của tôi đang có vấn đề."
+        },
+        {
+          "english": "Could you give me a quote for the repair?",
+          "vietnamese": "Bạn báo giá sửa chữa giúp tôi được không?"
+        },
+        {
+          "english": "Is there a laundry service nearby?",
+          "vietnamese": "Gần đây có dịch vụ giặt là không?"
+        },
+        {
+          "english": "What are your opening hours?",
+          "vietnamese": "Giờ mở cửa của bạn là khi nào?"
+        },
+        {
+          "english": "Do I need to bring any documents?",
+          "vietnamese": "Tôi có cần mang giấy tờ gì không?"
         }
       ]
     },
@@ -587,6 +1595,62 @@
         {
           "english": "Can you tell me your location?",
           "vietnamese": "Bạn cho tôi biết vị trí của bạn được không?"
+        },
+        {
+          "english": "Can you call the emergency services?",
+          "vietnamese": "Bạn gọi lực lượng cứu hộ được không?"
+        },
+        {
+          "english": "There has been an accident.",
+          "vietnamese": "Đã xảy ra tai nạn."
+        },
+        {
+          "english": "Someone needs urgent help.",
+          "vietnamese": "Có người cần được giúp đỡ khẩn cấp."
+        },
+        {
+          "english": "I can't find my passport.",
+          "vietnamese": "Tôi không tìm thấy hộ chiếu."
+        },
+        {
+          "english": "My wallet has been stolen.",
+          "vietnamese": "Ví của tôi bị đánh cắp."
+        },
+        {
+          "english": "Where is the nearest police station?",
+          "vietnamese": "Đồn cảnh sát gần nhất ở đâu?"
+        },
+        {
+          "english": "I need to contact my embassy.",
+          "vietnamese": "Tôi cần liên hệ với đại sứ quán của mình."
+        },
+        {
+          "english": "Please help me find my child.",
+          "vietnamese": "Làm ơn giúp tôi tìm con."
+        },
+        {
+          "english": "There is smoke in the building.",
+          "vietnamese": "Có khói trong tòa nhà."
+        },
+        {
+          "english": "I need to report a missing person.",
+          "vietnamese": "Tôi cần trình báo một người mất tích."
+        },
+        {
+          "english": "Please stay with me until help arrives.",
+          "vietnamese": "Làm ơn ở lại với tôi đến khi có người hỗ trợ."
+        },
+        {
+          "english": "I don't know the exact address.",
+          "vietnamese": "Tôi không biết địa chỉ chính xác."
+        },
+        {
+          "english": "We are near the main entrance.",
+          "vietnamese": "Chúng tôi đang ở gần lối vào chính."
+        },
+        {
+          "english": "Can you describe what happened?",
+          "vietnamese": "Bạn có thể mô tả chuyện đã xảy ra không?"
         }
       ]
     },
@@ -618,6 +1682,62 @@
         {
           "english": "That is a good suggestion.",
           "vietnamese": "Đó là một gợi ý hay."
+        },
+        {
+          "english": "In my opinion, we should start earlier.",
+          "vietnamese": "Theo tôi, chúng ta nên bắt đầu sớm hơn."
+        },
+        {
+          "english": "I understand your concern.",
+          "vietnamese": "Tôi hiểu mối lo ngại của bạn."
+        },
+        {
+          "english": "I'm not sure I agree with that.",
+          "vietnamese": "Tôi chưa chắc mình đồng ý với điều đó."
+        },
+        {
+          "english": "Could you explain why you think so?",
+          "vietnamese": "Bạn giải thích vì sao bạn nghĩ vậy được không?"
+        },
+        {
+          "english": "That's an interesting perspective.",
+          "vietnamese": "Đó là một góc nhìn thú vị."
+        },
+        {
+          "english": "I agree to some extent.",
+          "vietnamese": "Tôi đồng ý ở một mức độ nào đó."
+        },
+        {
+          "english": "Let's consider another option.",
+          "vietnamese": "Mình cân nhắc một lựa chọn khác nhé."
+        },
+        {
+          "english": "What matters most to you?",
+          "vietnamese": "Điều gì quan trọng nhất với bạn?"
+        },
+        {
+          "english": "I'd prefer to wait until tomorrow.",
+          "vietnamese": "Tôi muốn đợi đến ngày mai hơn."
+        },
+        {
+          "english": "There are advantages and disadvantages.",
+          "vietnamese": "Có cả ưu điểm lẫn nhược điểm."
+        },
+        {
+          "english": "It depends on the situation.",
+          "vietnamese": "Điều đó còn tùy tình huống."
+        },
+        {
+          "english": "Could we find a compromise?",
+          "vietnamese": "Chúng ta tìm phương án dung hòa được không?"
+        },
+        {
+          "english": "You've changed my mind.",
+          "vietnamese": "Bạn đã khiến tôi thay đổi suy nghĩ."
+        },
+        {
+          "english": "Let's agree to disagree.",
+          "vietnamese": "Mình chấp nhận có ý kiến khác nhau nhé."
         }
       ]
     }

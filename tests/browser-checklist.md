@@ -38,3 +38,8 @@
 24. Góp ý: gửi ba loại, tải lại thấy góp ý của mình, tài khoản khác không thấy. Nội dung trống hoặc <10 ký tự bị từ chối.
 
 Với AI, frontend vẫn chỉ gọi /api của app; backend kết nối nhà cung cấp được chọn. Các kiểm tra này chưa thay thế biên bản chạy thực tế.
+
+25. Trang tổng quan: tìm `an uong` phải thấy Ăn uống; `duong` phải thấy Hỏi đường. Các bộ lọc Đang học/Chưa học/Đã thuộc dùng tiến độ thực của tài khoản. Khi tất cả đã thuộc, gợi ý ôn quiz; khi API lỗi có nút thử lại.
+26. Ở 390px, mở menu học tập, chọn mục rồi xác nhận menu thu lại; Escape đóng và trả focus về nút mở menu. Dùng bàn phím đi qua liên kết Đến nội dung học.
+27. Flashcard của tôi: mở bộ mẫu CNTT, xác nhận 30 thẻ với nghĩa/ví dụ; lật thẻ, ghép cặp và gõ từ. Sửa một thẻ rồi mở bộ mẫu đó lần nữa: không tạo trùng hoặc ghi đè nội dung đã sửa. Tài khoản khác có bộ riêng.
+28. IELTS/chuyên ngành: mỗi khóa có 30 từ. Mở Từ vựng nền tảng, tìm tiếng Việt không dấu, xem thêm 10 từ và thử từ khóa không khớp. Từ qua ảnh có 6 từ trong mỗi nhóm, vẫn dùng 6 ảnh có ghi công hiện có.

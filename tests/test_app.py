@@ -19,7 +19,7 @@ def test_password_hash():
 
 def test_sample():
     payload=json.loads((ROOT/"database/sample.vi-en.json").read_text())
-    assert sum(len(t["phrases"]) for t in manage.normalize(payload))==120
+    assert sum(len(t["phrases"]) for t in manage.normalize(payload))==400
 
 def test_upstream_requires_reviewed_vietnamese():
     payload={"schema_version":1,"languages":{"en-GB":[{"id":"hello","situation":"Hello","phrases":[{"text":"Hello","context":"Greeting"}]}]}}
@@ -56,13 +56,14 @@ def test_real_database_restart_and_account_isolation():
         cookies=dict(client.cookies)
         assert len(client.get('/api/topics').json())==20
         lesson_list=client.get('/api/lessons').json()
-        assert len(lesson_list)==20 and sum(t['total'] for t in lesson_list)==120
+        assert len(lesson_list)==20 and sum(t['total'] for t in lesson_list)==400
         assert all(t['mastered']==0 for t in lesson_list)
         greeting=client.get('/api/lessons/greetings').json()
-        assert greeting['total']==6 and len(greeting['phrases'])==6
+        assert greeting['total']==20 and len(greeting['phrases'])==20
         assert client.get('/api/lessons/unknown-topic').status_code==404
         assert client.get('/api/lessons/greetings?offset=-1').status_code==422
-        assert len(client.get('/api/phrases').json())==120
+        all_phrases=client.get('/api/phrases?limit=200').json()+client.get('/api/phrases?limit=200&offset=200').json()
+        assert len(all_phrases)==400 and len({p['id'] for p in all_phrases})==400
         first=client.get('/api/phrases',params={"limit":7,"offset":0}).json()
         second=client.get('/api/phrases',params={"limit":7,"offset":7}).json()
         assert len(first)==len(second)==7
@@ -81,7 +82,7 @@ def test_real_database_restart_and_account_isolation():
         draft_url='/api/quizzes/'+quiz['id']+'/draft'
         assert client.put(draft_url,json={"answers":['']*5}).status_code==200
         assert client.put(draft_url,json={"answers":['injected']*5}).status_code==422
-        lookup={p['english']:p['vietnamese'] for p in client.get('/api/phrases').json()}
+        lookup={p['english']:p['vietnamese'] for p in all_phrases}
         answers=[lookup[q['english']] for q in quiz['questions']]
         url='/api/quizzes/'+quiz['id']+'/submit'
         assert client.post(url,json={"answers":answers}).json()['score']==5
@@ -101,6 +102,20 @@ def test_real_database_restart_and_account_isolation():
         card=client.post(deck_path+'/cards',json={'english':'reliable','vietnamese':'đáng tin cậy','example':'The service is reliable.'}).json()
         assert client.put(deck_path,json={'name':'Work words'}).status_code==200
         assert client.put(deck_path+'/cards/'+card['id'],json={'english':'reliable','vietnamese':'đáng tin cậy','example':'','mastered':True}).status_code==200
+        templates=client.get('/api/decks/templates').json()
+        assert len(templates)==6 and all(t['total']==30 for t in templates)
+        imported=client.post('/api/decks/templates/ielts',json={}).json()
+        assert imported['created'] is True
+        imported_path='/api/decks/'+imported['id']
+        imported_cards=client.get(imported_path+'/cards').json()
+        assert len(imported_cards)==30 and all(c['example'] and not c['mastered'] for c in imported_cards)
+        edited=imported_cards[0]
+        assert client.put(imported_path+'/cards/'+edited['id'],json={**edited,'example':'My own example.','mastered':True}).status_code==200
+        retry=client.post('/api/decks/templates/ielts',json={}).json()
+        assert retry['id']==imported['id'] and retry['created'] is False
+        saved_cards=client.get(imported_path+'/cards').json()
+        assert len(saved_cards)==30
+        assert next(c for c in saved_cards if c['id']==edited['id'])['example']=='My own example.'
         work_path='/api/courses/lessons/ielts-listening/work'
         assert client.put(work_path,json={'answers':[0,1,2],'completed':True}).status_code==200
         assert client.post('/api/courses/lessons/ielts-listening/review',json={'answers':[0,1,2]}).json()['score']==3
@@ -113,7 +128,7 @@ def test_real_database_restart_and_account_isolation():
         progress=second.get('/api/progress').json()
         assert progress['favorites']==1 and progress['mastered']==1
         assert sum(t['mastered'] for t in second.get('/api/lessons').json())==1
-        assert progress['history'][0]['score']==5 and progress['total']==120
+        assert progress['history'][0]['score']==5 and progress['total']==400
         assert progress['quiz_count']==1
         assert sum(t['mastered'] for t in progress['topics'])==1
         restored=second.get('/api/quizzes/active',params={"topic":"food"}).json()
@@ -145,6 +160,10 @@ def test_real_database_restart_and_account_isolation():
         assert second.put(deck_path,json={'name':'Stolen'}).status_code==404
         assert second.request('DELETE',deck_path,json={}).status_code==404
         assert second.request('DELETE',deck_path+'/cards/'+card['id'],json={}).status_code==404
+        assert second.get(imported_path+'/cards').status_code==404
+        other_template=second.post('/api/decks/templates/ielts',json={}).json()
+        assert other_template['id']!=imported['id']
+        assert len(second.get('/api/decks/'+other_template['id']+'/cards').json())==30
         own_deck=second.post('/api/decks',json={'name':'Disposable'}).json()
         own_path='/api/decks/'+own_deck['id']
         own_card=second.post(own_path+'/cards',json={'english':'hello','vietnamese':'xin chào'}).json()

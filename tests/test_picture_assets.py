@@ -4,8 +4,10 @@ ROOT=Path(__file__).resolve().parents[1]
 class PictureAssetsTests(unittest.TestCase):
     def test_all_picture_words_use_existing_local_licensed_assets(self):
         words=json.loads((ROOT/'frontend/app/data/picture-vocabulary.json').read_text())
-        self.assertEqual(len(words),12)
+        self.assertEqual(len(words),24)
         self.assertEqual(len({w['topic'] for w in words}),4)
+        self.assertEqual(len({w['id'] for w in words}),len(words))
+        self.assertTrue(all(sum(w['topic']==topic for w in words)==6 for topic in {w['topic'] for w in words}))
         manifest=json.loads((ROOT/'assets/picture-vocabulary/manifest.json').read_text())
         known={m['file'] for m in manifest}
         for word in words:

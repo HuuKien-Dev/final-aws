@@ -6,15 +6,153 @@
     "lexicon": [
       [
         "whereas",
-        "trong khi đó"
+        "trong khi đó",
+        "City rents rose, whereas rural rents fell."
       ],
       [
         "contribute to",
-        "góp phần vào"
+        "góp phần vào",
+        "Public transport can contribute to cleaner air."
       ],
       [
         "maintenance",
-        "việc bảo trì"
+        "việc bảo trì",
+        "The park needs regular maintenance."
+      ],
+      [
+        "significant",
+        "đáng kể",
+        "There was a significant increase in cycling."
+      ],
+      [
+        "evidence",
+        "bằng chứng",
+        "The report provides evidence for this claim."
+      ],
+      [
+        "trend",
+        "xu hướng",
+        "The chart shows a downward trend."
+      ],
+      [
+        "proportion",
+        "tỷ lệ",
+        "A large proportion of students walk to school."
+      ],
+      [
+        "fluctuate",
+        "dao động",
+        "Energy prices fluctuate throughout the year."
+      ],
+      [
+        "considerable",
+        "đáng kể; lớn",
+        "The project requires considerable investment."
+      ],
+      [
+        "approximately",
+        "xấp xỉ",
+        "Approximately half of the respondents agreed."
+      ],
+      [
+        "in contrast",
+        "ngược lại",
+        "Bus use fell; in contrast, cycling increased."
+      ],
+      [
+        "consequently",
+        "do đó",
+        "The road closed; consequently, traffic increased elsewhere."
+      ],
+      [
+        "nevertheless",
+        "tuy nhiên; dù vậy",
+        "The solution is costly; nevertheless, it may be effective."
+      ],
+      [
+        "sustainable",
+        "bền vững",
+        "Cities need sustainable transport systems."
+      ],
+      [
+        "urbanisation",
+        "sự đô thị hóa",
+        "Urbanisation can increase demand for housing."
+      ],
+      [
+        "accessible",
+        "dễ tiếp cận",
+        "Libraries should be accessible to everyone."
+      ],
+      [
+        "beneficial",
+        "có lợi",
+        "Regular reading is beneficial for language learners."
+      ],
+      [
+        "drawback",
+        "nhược điểm",
+        "One drawback is the high initial cost."
+      ],
+      [
+        "implement",
+        "thực hiện; triển khai",
+        "The council plans to implement the proposal."
+      ],
+      [
+        "allocate",
+        "phân bổ",
+        "Schools must allocate time for independent study."
+      ],
+      [
+        "consumption",
+        "sự tiêu thụ",
+        "Water consumption rises during hot weather."
+      ],
+      [
+        "renewable",
+        "có thể tái tạo",
+        "Solar power is a renewable energy source."
+      ],
+      [
+        "hypothesis",
+        "giả thuyết",
+        "The researchers tested their hypothesis."
+      ],
+      [
+        "correlation",
+        "mối tương quan",
+        "Correlation alone does not prove causation."
+      ],
+      [
+        "respondent",
+        "người trả lời khảo sát",
+        "Each respondent answered ten questions."
+      ],
+      [
+        "reliable",
+        "đáng tin cậy",
+        "The essay should use reliable sources."
+      ],
+      [
+        "justify",
+        "đưa ra lý do thuyết phục cho",
+        "Give examples to justify your opinion."
+      ],
+      [
+        "coherent",
+        "mạch lạc",
+        "A coherent essay develops its ideas logically."
+      ],
+      [
+        "assessment",
+        "sự đánh giá",
+        "The assessment includes a short writing task."
+      ],
+      [
+        "commute",
+        "đi lại giữa nhà và nơi làm việc",
+        "I commute by train three days a week."
       ]
     ],
     "lessons": [
@@ -149,15 +287,153 @@
     "lexicon": [
       [
         "reproduce",
-        "tái hiện"
+        "tái hiện",
+        "Can you reproduce the error on another device?"
       ],
       [
         "regression",
-        "lỗi hồi quy"
+        "lỗi hồi quy",
+        "The test caught a regression in the login flow."
       ],
       [
         "deployment",
-        "việc triển khai"
+        "việc triển khai",
+        "The deployment is scheduled for Friday."
+      ],
+      [
+        "repository",
+        "kho mã nguồn",
+        "Push your changes to the shared repository."
+      ],
+      [
+        "branch",
+        "nhánh mã nguồn",
+        "Create a branch for the new feature."
+      ],
+      [
+        "commit",
+        "bản ghi thay đổi mã nguồn",
+        "This commit fixes the search bug."
+      ],
+      [
+        "merge",
+        "hợp nhất mã nguồn",
+        "We can merge the change after review."
+      ],
+      [
+        "dependency",
+        "thư viện hoặc thành phần phụ thuộc",
+        "Update the dependency before running the tests."
+      ],
+      [
+        "framework",
+        "khung phát triển phần mềm",
+        "The team uses a web framework."
+      ],
+      [
+        "database",
+        "cơ sở dữ liệu",
+        "The database stores learning progress."
+      ],
+      [
+        "query",
+        "truy vấn",
+        "This query returns the latest orders."
+      ],
+      [
+        "backup",
+        "bản sao lưu",
+        "Create a backup before the migration."
+      ],
+      [
+        "authentication",
+        "xác thực danh tính",
+        "Authentication confirms who the user is."
+      ],
+      [
+        "authorisation",
+        "phân quyền truy cập",
+        "Authorisation controls which records a user can edit."
+      ],
+      [
+        "encryption",
+        "mã hóa",
+        "Encryption protects data during transmission."
+      ],
+      [
+        "vulnerability",
+        "lỗ hổng bảo mật",
+        "The update addresses a security vulnerability."
+      ],
+      [
+        "endpoint",
+        "điểm truy cập API",
+        "This endpoint returns a list of lessons."
+      ],
+      [
+        "request",
+        "yêu cầu gửi đến hệ thống",
+        "The server received a valid request."
+      ],
+      [
+        "response",
+        "phản hồi của hệ thống",
+        "The response contains five records."
+      ],
+      [
+        "latency",
+        "độ trễ",
+        "Caching can reduce response latency."
+      ],
+      [
+        "throughput",
+        "lượng công việc xử lý trong một đơn vị thời gian",
+        "We measured throughput under heavy load."
+      ],
+      [
+        "cache",
+        "bộ nhớ đệm",
+        "The browser loads the image from its cache."
+      ],
+      [
+        "bandwidth",
+        "băng thông",
+        "Video calls require sufficient bandwidth."
+      ],
+      [
+        "scalable",
+        "có khả năng mở rộng",
+        "We need a scalable storage solution."
+      ],
+      [
+        "debug",
+        "gỡ lỗi",
+        "Use the logs to debug the problem."
+      ],
+      [
+        "breakpoint",
+        "điểm dừng khi gỡ lỗi",
+        "Set a breakpoint before the function returns."
+      ],
+      [
+        "exception",
+        "ngoại lệ trong chương trình",
+        "The application handles this exception gracefully."
+      ],
+      [
+        "unit test",
+        "kiểm thử đơn vị",
+        "Write a unit test for the calculation."
+      ],
+      [
+        "code review",
+        "việc rà soát mã nguồn",
+        "Code review helps the team find mistakes."
+      ],
+      [
+        "rollback",
+        "việc quay về phiên bản trước",
+        "We prepared a rollback plan for the release."
       ]
     ],
     "lessons": [
@@ -278,15 +554,153 @@
     "lexicon": [
       [
         "scope",
-        "phạm vi"
+        "phạm vi",
+        "We agreed on the scope of the project."
       ],
       [
         "quotation",
-        "báo giá"
+        "báo giá",
+        "Please send a quotation for fifty units."
       ],
       [
         "working days",
-        "ngày làm việc"
+        "ngày làm việc",
+        "Delivery takes three working days."
+      ],
+      [
+        "revenue",
+        "doanh thu",
+        "The company's revenue increased this year."
+      ],
+      [
+        "profit",
+        "lợi nhuận",
+        "Profit is calculated after deducting expenses."
+      ],
+      [
+        "budget",
+        "ngân sách",
+        "We need to stay within the agreed budget."
+      ],
+      [
+        "expense",
+        "chi phí",
+        "Travel is our largest expense this month."
+      ],
+      [
+        "invoice",
+        "hóa đơn yêu cầu thanh toán",
+        "Please include the order number on the invoice."
+      ],
+      [
+        "payment terms",
+        "điều khoản thanh toán",
+        "The payment terms are thirty days from the invoice date."
+      ],
+      [
+        "purchase order",
+        "đơn đặt hàng",
+        "We received your purchase order yesterday."
+      ],
+      [
+        "supplier",
+        "nhà cung cấp",
+        "The supplier confirmed the delivery date."
+      ],
+      [
+        "stakeholder",
+        "bên liên quan",
+        "Each stakeholder will receive a project update."
+      ],
+      [
+        "negotiation",
+        "sự đàm phán",
+        "The negotiation focused on price and delivery."
+      ],
+      [
+        "contract",
+        "hợp đồng",
+        "Please review the contract before signing."
+      ],
+      [
+        "proposal",
+        "bản đề xuất",
+        "Our proposal includes a detailed timeline."
+      ],
+      [
+        "deadline",
+        "hạn chót",
+        "The deadline for applications is Monday."
+      ],
+      [
+        "deliverable",
+        "sản phẩm hoặc kết quả cần bàn giao",
+        "The final report is a key deliverable."
+      ],
+      [
+        "forecast",
+        "bản dự báo",
+        "The sales forecast covers the next quarter."
+      ],
+      [
+        "market share",
+        "thị phần",
+        "The company aims to increase its market share."
+      ],
+      [
+        "customer retention",
+        "việc giữ chân khách hàng",
+        "Good support can improve customer retention."
+      ],
+      [
+        "break-even point",
+        "điểm hòa vốn",
+        "We expect to reach the break-even point next year."
+      ],
+      [
+        "cash flow",
+        "dòng tiền",
+        "Late payments can affect cash flow."
+      ],
+      [
+        "inventory",
+        "hàng tồn kho",
+        "We check inventory at the end of each month."
+      ],
+      [
+        "wholesale",
+        "bán buôn",
+        "They sell office furniture at wholesale prices."
+      ],
+      [
+        "retail",
+        "bán lẻ",
+        "The retail price includes packaging."
+      ],
+      [
+        "refund",
+        "khoản hoàn tiền",
+        "Your refund will appear within five working days."
+      ],
+      [
+        "partnership",
+        "quan hệ hợp tác",
+        "The partnership will support local suppliers."
+      ],
+      [
+        "competitive advantage",
+        "lợi thế cạnh tranh",
+        "Fast delivery gives us a competitive advantage."
+      ],
+      [
+        "performance indicator",
+        "chỉ số đánh giá hiệu quả",
+        "Response time is one performance indicator."
+      ],
+      [
+        "annual report",
+        "báo cáo thường niên",
+        "The annual report summarises the company's results."
       ]
     ],
     "lessons": [
@@ -407,15 +821,153 @@
     "lexicon": [
       [
         "itinerary",
-        "lịch trình"
+        "lịch trình",
+        "Your itinerary includes a visit to the old town."
       ],
       [
         "step-free access",
-        "lối tiếp cận không có bậc thang"
+        "lối tiếp cận không có bậc thang",
+        "The museum provides step-free access."
       ],
       [
         "destination",
-        "điểm đến"
+        "điểm đến",
+        "Da Nang is a popular coastal destination."
+      ],
+      [
+        "landmark",
+        "địa danh nổi bật",
+        "The bridge is a famous local landmark."
+      ],
+      [
+        "heritage",
+        "di sản",
+        "The tour explores the city's cultural heritage."
+      ],
+      [
+        "guided tour",
+        "chuyến tham quan có hướng dẫn viên",
+        "The guided tour lasts two hours."
+      ],
+      [
+        "excursion",
+        "chuyến đi ngắn tham quan",
+        "We booked a day excursion to the island."
+      ],
+      [
+        "admission fee",
+        "phí vào cửa",
+        "The admission fee includes access to the garden."
+      ],
+      [
+        "reservation",
+        "việc đặt chỗ",
+        "Your reservation is confirmed."
+      ],
+      [
+        "departure",
+        "sự khởi hành",
+        "Departure is at eight in the morning."
+      ],
+      [
+        "arrival",
+        "sự đến nơi",
+        "Please call us on arrival."
+      ],
+      [
+        "boarding pass",
+        "thẻ lên máy bay",
+        "Keep your boarding pass with your passport."
+      ],
+      [
+        "layover",
+        "thời gian chờ nối chuyến",
+        "We have a two-hour layover in Singapore."
+      ],
+      [
+        "carry-on luggage",
+        "hành lý xách tay",
+        "Check the size limit for carry-on luggage."
+      ],
+      [
+        "checked baggage",
+        "hành lý ký gửi",
+        "One piece of checked baggage is included."
+      ],
+      [
+        "customs",
+        "hải quan",
+        "We collected our bags before going through customs."
+      ],
+      [
+        "travel insurance",
+        "bảo hiểm du lịch",
+        "Read the terms of your travel insurance."
+      ],
+      [
+        "exchange rate",
+        "tỷ giá hối đoái",
+        "Check the exchange rate before changing money."
+      ],
+      [
+        "local cuisine",
+        "ẩm thực địa phương",
+        "The market is a good place to try local cuisine."
+      ],
+      [
+        "souvenir",
+        "đồ lưu niệm",
+        "I bought a small souvenir for my sister."
+      ],
+      [
+        "peak season",
+        "mùa cao điểm",
+        "Rooms cost more during peak season."
+      ],
+      [
+        "off-season",
+        "mùa thấp điểm",
+        "The town is quieter in the off-season."
+      ],
+      [
+        "scenic route",
+        "tuyến đường có cảnh đẹp",
+        "We took the scenic route along the coast."
+      ],
+      [
+        "viewpoint",
+        "điểm ngắm cảnh",
+        "The viewpoint overlooks the valley."
+      ],
+      [
+        "walking distance",
+        "khoảng cách có thể đi bộ",
+        "The beach is within walking distance."
+      ],
+      [
+        "round trip",
+        "chuyến đi khứ hồi",
+        "The ticket covers a round trip."
+      ],
+      [
+        "cancellation policy",
+        "chính sách hủy đặt chỗ",
+        "Please read the cancellation policy before booking."
+      ],
+      [
+        "boarding gate",
+        "cửa lên máy bay",
+        "Our boarding gate has changed."
+      ],
+      [
+        "tour operator",
+        "đơn vị tổ chức tour",
+        "The tour operator arranged our transport."
+      ],
+      [
+        "responsible tourism",
+        "du lịch có trách nhiệm",
+        "Responsible tourism respects local communities."
       ]
     ],
     "lessons": [
@@ -536,15 +1088,153 @@
     "lexicon": [
       [
         "inconvenience",
-        "sự bất tiện"
+        "sự bất tiện",
+        "We apologise for the inconvenience."
       ],
       [
         "availability",
-        "tình trạng còn chỗ"
+        "tình trạng còn chỗ",
+        "Let me check room availability for tonight."
       ],
       [
         "maintenance team",
-        "đội bảo trì"
+        "đội bảo trì",
+        "The maintenance team will check the air conditioner."
+      ],
+      [
+        "front desk",
+        "quầy lễ tân",
+        "Please collect your key at the front desk."
+      ],
+      [
+        "concierge",
+        "nhân viên hỗ trợ khách tại khách sạn",
+        "The concierge can help arrange a city tour."
+      ],
+      [
+        "housekeeping",
+        "bộ phận dọn phòng",
+        "Housekeeping will bring fresh towels."
+      ],
+      [
+        "room service",
+        "dịch vụ phục vụ tại phòng",
+        "Room service is available until ten."
+      ],
+      [
+        "complimentary",
+        "được cung cấp miễn phí",
+        "We offer complimentary drinking water."
+      ],
+      [
+        "amenities",
+        "tiện nghi",
+        "The room amenities include a kettle and a safe."
+      ],
+      [
+        "occupancy",
+        "tình trạng hoặc mức sử dụng phòng",
+        "Hotel occupancy is high this weekend."
+      ],
+      [
+        "single room",
+        "phòng đơn",
+        "I'd like to book a single room for one night."
+      ],
+      [
+        "twin room",
+        "phòng có hai giường đơn",
+        "The guests requested a twin room."
+      ],
+      [
+        "suite",
+        "phòng hạng suite",
+        "The suite has a separate living area."
+      ],
+      [
+        "late check-out",
+        "việc trả phòng muộn",
+        "Late check-out is subject to availability."
+      ],
+      [
+        "security deposit",
+        "tiền đặt cọc bảo đảm",
+        "A security deposit is required at check-in."
+      ],
+      [
+        "room rate",
+        "giá phòng",
+        "The room rate includes breakfast."
+      ],
+      [
+        "itemised bill",
+        "hóa đơn chi tiết từng khoản",
+        "Would you like an itemised bill?"
+      ],
+      [
+        "allergen",
+        "chất gây dị ứng",
+        "The menu lists common allergens."
+      ],
+      [
+        "dietary requirement",
+        "yêu cầu về chế độ ăn",
+        "Please tell us about any dietary requirements."
+      ],
+      [
+        "vegetarian",
+        "ăn chay; dành cho người ăn chay",
+        "We have several vegetarian dishes."
+      ],
+      [
+        "vegan",
+        "thuần chay",
+        "This vegan dish contains no animal products."
+      ],
+      [
+        "gluten-free",
+        "không chứa gluten",
+        "Do you offer gluten-free bread?"
+      ],
+      [
+        "starter",
+        "món khai vị",
+        "Would you like a starter before the main course?"
+      ],
+      [
+        "main course",
+        "món chính",
+        "The main course will arrive shortly."
+      ],
+      [
+        "dessert",
+        "món tráng miệng",
+        "We have fruit and cake for dessert."
+      ],
+      [
+        "buffet",
+        "bữa ăn tự chọn",
+        "The breakfast buffet opens at six thirty."
+      ],
+      [
+        "table setting",
+        "cách bày bàn ăn",
+        "Please check the table setting before guests arrive."
+      ],
+      [
+        "service charge",
+        "phí phục vụ",
+        "The bill includes a service charge."
+      ],
+      [
+        "booking confirmation",
+        "xác nhận đặt chỗ",
+        "We sent the booking confirmation by email."
+      ],
+      [
+        "guest feedback",
+        "ý kiến phản hồi của khách",
+        "We use guest feedback to improve our service."
       ]
     ],
     "lessons": [
@@ -665,15 +1355,153 @@
     "lexicon": [
       [
         "interpreter",
-        "thông dịch viên"
+        "thông dịch viên",
+        "The patient requested an interpreter."
       ],
       [
         "confidentiality",
-        "bảo mật thông tin"
+        "bảo mật thông tin",
+        "Staff must respect patient confidentiality."
       ],
       [
         "appointment reminder",
-        "thông báo nhắc lịch hẹn"
+        "thông báo nhắc lịch hẹn",
+        "You will receive an appointment reminder tomorrow."
+      ],
+      [
+        "patient",
+        "bệnh nhân",
+        "The patient is waiting at reception."
+      ],
+      [
+        "receptionist",
+        "nhân viên lễ tân",
+        "The receptionist will check your appointment."
+      ],
+      [
+        "consultation",
+        "buổi tư vấn hoặc khám",
+        "Please arrive early for your consultation."
+      ],
+      [
+        "medical history",
+        "tiền sử bệnh",
+        "The doctor asked about my medical history."
+      ],
+      [
+        "symptom",
+        "triệu chứng",
+        "Please describe when the symptom started."
+      ],
+      [
+        "allergy",
+        "dị ứng",
+        "Tell the clinician about any known allergy."
+      ],
+      [
+        "prescription",
+        "đơn thuốc",
+        "The pharmacist checked the prescription."
+      ],
+      [
+        "pharmacist",
+        "dược sĩ",
+        "Ask the pharmacist to explain the label."
+      ],
+      [
+        "dosage",
+        "liều dùng",
+        "The label lists the prescribed dosage."
+      ],
+      [
+        "side effect",
+        "tác dụng phụ",
+        "The leaflet describes each possible side effect."
+      ],
+      [
+        "referral",
+        "giấy hoặc việc chuyển khám",
+        "I have a referral from my doctor."
+      ],
+      [
+        "specialist",
+        "bác sĩ chuyên khoa",
+        "The appointment is with a specialist."
+      ],
+      [
+        "follow-up",
+        "việc theo dõi hoặc tái khám",
+        "The clinic will arrange a follow-up visit."
+      ],
+      [
+        "blood pressure",
+        "huyết áp",
+        "The nurse recorded my blood pressure."
+      ],
+      [
+        "temperature",
+        "nhiệt độ; thân nhiệt",
+        "The nurse checked the patient's temperature."
+      ],
+      [
+        "blood test",
+        "xét nghiệm máu",
+        "Where do I go for my blood test?"
+      ],
+      [
+        "laboratory",
+        "phòng xét nghiệm",
+        "The samples were sent to the laboratory."
+      ],
+      [
+        "scan",
+        "việc chụp khảo sát bằng thiết bị y tế",
+        "The receptionist confirmed the time of the scan."
+      ],
+      [
+        "consent form",
+        "mẫu chấp thuận",
+        "Please ask if anything on the consent form is unclear."
+      ],
+      [
+        "insurance card",
+        "thẻ bảo hiểm",
+        "Do I need to bring my insurance card?"
+      ],
+      [
+        "emergency contact",
+        "người liên hệ trong trường hợp khẩn cấp",
+        "Please provide an emergency contact."
+      ],
+      [
+        "waiting room",
+        "phòng chờ",
+        "You can wait in the waiting room."
+      ],
+      [
+        "ward",
+        "khoa hoặc khu điều trị nội trú",
+        "Visitors should check the ward's visiting hours."
+      ],
+      [
+        "discharge",
+        "việc cho xuất viện",
+        "The team will explain the discharge paperwork."
+      ],
+      [
+        "accessible entrance",
+        "lối vào thuận tiện cho người khuyết tật",
+        "The accessible entrance is on the left."
+      ],
+      [
+        "health record",
+        "hồ sơ sức khỏe",
+        "The clinic updated my health record."
+      ],
+      [
+        "appointment slot",
+        "khung giờ hẹn",
+        "Is there an appointment slot available on Friday?"
       ]
     ],
     "lessons": [
