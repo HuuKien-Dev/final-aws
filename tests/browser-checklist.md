@@ -9,12 +9,12 @@
    Thử gửi lại cùng payload nộp bài trong DevTools: trả cùng kết quả, không thêm lịch sử; sửa đáp án rồi gửi lại phải bị từ chối.
 6. Làm dở một quiz, chọn vài đáp án rồi bấm **Lưu bài để làm tiếp**. Tải lại trang, mở lại Luyện tập cùng chủ đề và xác nhận đáp án được khôi phục.
 7. Khởi động lại backend bằng systemctl hoặc dừng/chạy uvicorn; tải lại Tiến độ.
-   Phiên, yêu thích, đã thuộc và điểm phải còn. Với AWS, kiểm tra request qua hai backend khác nhau.
+   Phiên, yêu thích, đã thuộc và điểm phải còn. Với AWS, restart service trên EC2 backend rồi xác nhận cùng phiên vẫn đọc được dữ liệu RDS.
 8. DevTools → Network → Preserve log. Thực hiện toàn bộ thao tác trên.
-   Chỉ có tên miền app; API có đường dẫn /api/…, ảnh /freelingo-assets/….
-   Không có DNS Internal ALB, API AI, S3 private, CDN hay dịch vụ giọng nói trong request trình duyệt.
+   Chỉ có tên miền app; API có đường dẫn /api/…, ảnh/logo qua /api/media/… hoặc /api/picture-assets/….
+   Không có IP/DNS private backend, API AI hoặc URL S3 private trong request học tập của trình duyệt.
 9. Thử tài khoản thứ hai: không thấy tiến độ, yêu thích hoặc quiz của tài khoản thứ nhất.
-10. Trên AWS, xác nhận cả hai target group Healthy; kiểm tra HTTPS và redirect HTTP sang HTTPS.
+10. Trên AWS, xác nhận target group frontend Healthy; kiểm tra HTTPS. Nếu đã bật listener HTTP redirect, kiểm tra thêm chuyển hướng HTTP sang HTTPS.
 
 Đây là checklist bàn giao, không phải biên bản đã kiểm thử. Xem TESTING.md cho kết quả thực tế.
 

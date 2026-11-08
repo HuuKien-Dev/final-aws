@@ -1,8 +1,0 @@
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {"Effect":"Allow","Action":"s3:GetObjectVersion","Resource":"arn:aws:s3:::REPLACE_RELEASE_BUCKET/releases/REPLACE_RELEASE_ID.tar.gz"},
-    {"Effect":"Allow","Action":"s3:GetObject","Resource":"arn:aws:s3:::REPLACE_IMAGE_BUCKET/REPLACE_IMAGE_PREFIX/*"},
-    {"Effect":"Allow","Action":"secretsmanager:GetSecretValue","Resource":"REPLACE_BACKEND_SECRET_ARN"}
-  ]
-}

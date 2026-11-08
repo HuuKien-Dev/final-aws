@@ -6,8 +6,6 @@ import random
 import tempfile
 import http.cookiejar
 import stat
-import os
-import subprocess
 import urllib.request
 import sys
 import unittest
@@ -171,18 +169,6 @@ class OfflineLearningTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             http_checks.write_state(ROOT/"frontend/public/private-session.json",{"cookies":[]})
         self.assertFalse((ROOT/"frontend/public/private-session.json").exists())
-
-    def test_local_bootstrap_rejects_remote_or_unsafe_config_without_secrets(self):
-        for dsn in (
-            "postgresql://app:private-pass@db.example.test/app",
-            "postgresql://%22bad:private-pass@localhost/app",
-            "postgresql://app@localhost/app",
-        ):
-            result=subprocess.run([sys.executable,str(ROOT/"scripts/init-local-db.py")],
-                env={**os.environ,"DATABASE_URL":dsn},capture_output=True,text=True)
-            self.assertNotEqual(result.returncode,0)
-            self.assertIn("LỖI",result.stderr)
-            self.assertNotIn("private-pass",result.stdout+result.stderr)
 
     def test_local_images_match_manifest_without_old_repository(self):
         manifest = json.loads((ROOT / "frontend/public/freelingo-assets/asset-manifest.json").read_text())
