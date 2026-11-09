@@ -662,6 +662,32 @@ audio{min-height:54px}
 @media(max-width:560px){.hero-art{min-height:460px;gap:16px}}
 
 /* A large green companion welcomes learners before they sign in. */
+.guest-header{padding:20px 36px}
+.guest-header-inner{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:28px;width:100%;max-width:1240px;margin-inline:auto}
+.guest-brand{min-width:0;width:fit-content;gap:12px;font-size:28px;color:#193f2d}
+.guest-brand img{display:block;width:44px;height:44px;object-fit:contain}
+.guest-brand>span{min-width:0}
+.guest-brand .brand-sub{font-size:16px;letter-spacing:.5px;color:#476332}
+.guest-nav{display:flex;align-items:center;justify-content:flex-end;gap:8px;min-width:0}
+.guest-nav-link{border:0;border-radius:10px;background:transparent;color:#476332;padding:12px 16px;min-height:48px;font-size:18px;line-height:1.5;white-space:nowrap}
+.guest-nav-link:hover,.guest-nav-link[aria-current=page]{background:#eaf2e1;color:#254f2b}
+.guest-nav-link[aria-current=page]{font-weight:700}
+.guest-login{white-space:nowrap;border-color:#b8ccae;color:#254f2b}
+@media(max-width:900px){
+ .guest-header-inner{grid-template-columns:minmax(0,1fr) auto;gap:16px}
+ .guest-brand{grid-column:1;grid-row:1}
+ .guest-login{grid-column:2;grid-row:1}
+ .guest-nav{grid-column:1/-1;grid-row:2;justify-content:center;border-top:1px solid var(--line);padding-top:12px}
+}
+@media(max-width:560px){
+ .guest-header{padding:16px}
+ .guest-header-inner{gap:12px}
+ .guest-brand{font-size:24px;gap:10px}
+ .guest-brand img{width:36px;height:36px}
+ .guest-brand .brand-sub{display:none}
+ .guest-nav-link{padding:10px 12px;font-size:16px}
+ .guest-login{min-height:48px;padding:10px 14px;font-size:18px}
+}
 .guest-shell .content{max-width:1440px}
 .entry-intro.entry-with-mascot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);width:100%;max-width:1240px;margin:32px auto 64px;padding:0;border:1px solid #dce7d6;border-radius:30px;background:#fff;overflow:hidden}
 .entry-visual,.auth-visual{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;padding:32px 26px;background:#e9f3d9;text-align:center}

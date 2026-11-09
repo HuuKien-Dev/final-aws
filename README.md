@@ -1,4 +1,4 @@
-# Mỗi ngày — English Learning App
+# Vươn Xa — English Learning App
 
 Ứng dụng học tiếng Anh dành cho người Việt, giúp luyện tập mỗi ngày, lưu bài học và theo dõi tiến độ cá nhân. Nội dung gồm giao tiếp theo chủ đề, flashcard, quiz, IELTS và tiếng Anh chuyên ngành.
 
