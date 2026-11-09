@@ -6,7 +6,7 @@ async function proxy(request: NextRequest, context: {params: Promise<{path: stri
   const base = process.env.BACKEND_URL || 'http://127.0.0.1:8000'
   const url = new URL('/api/' + path.map(encodeURIComponent).join('/') + request.nextUrl.search, base)
   const headers = new Headers()
-  for (const name of ['content-type','cookie','origin']) {
+  for (const name of ['content-type','cookie','origin','range']) {
     const value = request.headers.get(name)
     if (value) headers.set(name,value)
   }
@@ -16,6 +16,10 @@ async function proxy(request: NextRequest, context: {params: Promise<{path: stri
       cache:'no-store',redirect:'manual',signal:AbortSignal.timeout(path[0]==='ai'?90000:20000)})
     const output = new Headers({'Cache-Control':'no-store'})
     output.set('Content-Type', upstream.headers.get('content-type') || 'application/json')
+    for (const name of ['accept-ranges','content-range','content-length','content-disposition']) {
+      const value=upstream.headers.get(name)
+      if(value)output.set(name,value)
+    }
     for (const cookie of upstream.headers.getSetCookie()) output.append('Set-Cookie',cookie)
     return new Response(upstream.body,{status:upstream.status,headers:output})
   } catch {

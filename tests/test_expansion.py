@@ -47,7 +47,7 @@ def test_curriculum_has_all_skills_answer_keys_and_real_audio():
             for q in public['questions']:assert 'correct' not in q and 'explanation' not in q
             if lesson['skill']=='listening':
                 assert 'text' not in public
-                with wave.open(str(ROOT/'frontend/public/audio'/(lesson['id']+'.wav'))) as audio:
+                with wave.open(str(ROOT/'assets/audio'/(lesson['id']+'.wav'))) as audio:
                     assert audio.getnframes()/audio.getframerate()>15
             if lesson['questions']:
                 correct=[q['correct'] for q in lesson['questions']]
@@ -180,6 +180,33 @@ def test_all_logos_read_through_backend_in_local_mode(monkeypatch):
     monkeypatch.setenv('PICTURE_ASSET_STORAGE','local')
     for name in ['logo.png','docs-logo.png','logo_large.png','green-mascot.png']:
         assert picture_assets.read_asset(name).startswith(b'\x89PNG')
+
+def test_s3_audio_uses_private_bucket_prefix_and_range(monkeypatch):
+    import io
+    from app import picture_assets
+    monkeypatch.setenv('ASSET_STORAGE','s3')
+    monkeypatch.setenv('S3_ASSET_BUCKET','private-assets')
+    monkeypatch.setenv('S3_AUDIO_PREFIX','releases/current/audio')
+    calls=[];stream=io.BytesIO(b'audio-data')
+    class Client:
+        def get_object(self,**kwargs):
+            calls.append(kwargs)
+            return {'ContentLength':10,'ContentRange':'bytes 0-9/100','AcceptRanges':'bytes','Body':stream}
+    monkeypatch.setattr(picture_assets,'s3_client',lambda:Client())
+    data,mime,status,headers=picture_assets.read_audio('ielts-listening.wav','bytes=0-9')
+    assert data==b'audio-data' and mime=='audio/wav' and status==206
+    assert headers['Content-Range']=='bytes 0-9/100'
+    assert calls==[{'Bucket':'private-assets','Key':'releases/current/audio/ielts-listening.wav','Range':'bytes=0-9'}]
+    assert stream.closed
+
+def test_local_audio_supports_range_and_rejects_unknown_files(monkeypatch):
+    from app import picture_assets
+    monkeypatch.setenv('ASSET_STORAGE','local')
+    data,mime,status,headers=picture_assets.read_audio('ielts-listening.wav','bytes=0-15')
+    assert status==206 and mime=='audio/wav' and len(data)==16
+    assert headers['Content-Range'].startswith('bytes 0-15/')
+    with pytest.raises(HTTPException) as error:picture_assets.read_audio('not-allowed.wav')
+    assert error.value.status_code==404
 
 
 def test_unknown_template_does_not_reach_storage():

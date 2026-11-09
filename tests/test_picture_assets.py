@@ -35,3 +35,14 @@ class PictureAssetsTests(unittest.TestCase):
     def test_no_image_binaries_are_left_in_frontend_public(self):
         files=[p for p in (ROOT/'frontend/public').rglob('*') if p.suffix.lower() in {'.png','.jpg','.jpeg','.webp','.gif','.svg','.ico'}]
         self.assertEqual(files,[])
+
+    def test_lesson_audio_is_allowlisted_and_owned_by_backend(self):
+        manifest=json.loads((ROOT/'backend/app/audio-assets-manifest.json').read_text())
+        files={item['file'] for item in manifest}
+        self.assertEqual(len(files),6)
+        self.assertFalse(any((ROOT/'frontend/public/audio').glob('*.wav')))
+        for item in manifest:
+            path=ROOT/'assets/audio'/item['file']
+            self.assertTrue(path.is_file())
+            self.assertEqual(path.stat().st_size,item['bytes'])
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(),item['sha256'])

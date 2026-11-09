@@ -22,6 +22,10 @@ Trang tổng quan gợi ý chủ đề chưa học hoặc đang học dở dựa
 
 Giao diện sử dụng **Next.js, React và TypeScript**; API sử dụng **FastAPI/Python**; **PostgreSQL** lưu tài khoản, phiên đăng nhập, bài làm và tiến độ. Frontend gọi API backend; backend xử lý nghiệp vụ, truy cập dữ liệu và phục vụ ảnh. Tích hợp AI nằm ở backend.
 
+## Docker
+
+Frontend và backend có Dockerfile riêng để triển khai độc lập. Frontend nhận địa chỉ backend qua `BACKEND_URL`; backend nhận địa chỉ PostgreSQL cloud qua `DATABASE_URL`. Xem [hướng dẫn Docker](DOCKER_DEPLOY.md) để build image, chạy migration/seed và cấu hình IP hoặc domain.
+
 ## Giấy phép và ghi công
 
 Mã nguồn theo [AGPL-3.0](LICENSE). Logo và ảnh có nguồn/giấy phép riêng; xem [NOTICE](NOTICE) và [ASSETS.md](ASSETS.md).

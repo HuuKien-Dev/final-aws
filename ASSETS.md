@@ -2,7 +2,7 @@
 
 ## Lưu trữ và đường đi
 
-Toàn bộ ảnh của bản AWS, kể cả logo, nằm trong S3 private. Frontend chỉ giữ URL endpoint cùng origin. Ví dụ `/api/media/logo.png`, `/api/picture-assets/leaf.jpg`. Backend đọc S3 bằng IAM Role, không trả AWS credentials hoặc redirect public bucket cho browser. Xem `HUONG_DAN_TRIEN_KHAI_AWS.md` và `scripts/upload-images-s3.sh`.
+Toàn bộ ảnh, logo và audio của bản AWS nằm trong S3 private. Frontend chỉ giữ URL endpoint cùng origin. Ví dụ `/api/media/logo.png`, `/api/picture-assets/leaf.jpg`, `/api/audio/ielts-listening.wav`. Backend đọc S3 bằng IAM Role qua S3 Gateway Endpoint, không trả AWS credentials hoặc redirect public bucket cho browser. Dùng `scripts/upload-assets-s3.sh` để tải tài nguyên lên bucket.
 
 Ảnh nguồn trên máy nằm riêng ở `assets/`, ngoài frontend. Local backend có thể đọc nguồn bằng chế độ local; artifact production không đóng gói nguồn ảnh. Source archive mã ứng dụng không chứa ảnh gốc; ảnh/ZIP và license được tải riêng qua endpoint.
 
@@ -37,4 +37,4 @@ Nguồn/tên gốc/hash/license đầy đủ ở `assets/picture-vocabulary/mani
 
 ## Âm thanh bài học
 
-Sáu tệp `frontend/public/audio/*-listening.wav` được tổng hợp cục bộ bằng eSpeak NG từ đoạn tự soạn trong `backend/app/curriculum.json`, giọng en-gb, tốc độ 145 từ/phút. Đây là **âm thanh**, không phải ảnh; yêu cầu lưu ảnh S3 không đổi vị trí các tệp audio. Không phải ghi âm người thật hay đề IELTS chính thức. Không phân phối chương trình eSpeak trong app. Có script `scripts/generate-course-audio.py` để tạo lại khi công cụ có sẵn.
+Sáu tệp `assets/audio/*-listening.wav` được tổng hợp cục bộ bằng eSpeak NG từ đoạn tự soạn trong `backend/app/curriculum.json`, giọng en-gb, tốc độ 145 từ/phút. Trên AWS, các tệp nằm dưới prefix `audio/` trong cùng bucket private và được backend phục vụ qua `/api/audio/{filename}`. Trình phát hỗ trợ HTTP Range để nghe và tua mà không công khai S3. Không phải ghi âm người thật hay đề IELTS chính thức. Không phân phối chương trình eSpeak trong app. Có script `scripts/generate-course-audio.py` để tạo lại khi công cụ có sẵn.

@@ -15,7 +15,7 @@ def callback(samples,count,events):
  return 0
 lib.espeak_SetSynthCallback(callback)
 lib.espeak_Synth.argtypes=[c.c_void_p,c.c_size_t,c.c_uint,c.c_int,c.c_uint,c.c_uint,c.c_void_p,c.c_void_p]
-root=ROOT/'frontend/public/audio';root.mkdir(exist_ok=True)
+root=ROOT/'assets/audio';root.mkdir(parents=True,exist_ok=True)
 for course in json.loads((ROOT/'backend/app/curriculum.json').read_text()):
  for lesson in course['lessons']:
   if lesson['skill']!='listening':continue

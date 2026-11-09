@@ -1,0 +1,35 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    image: vuon-xa-backend:latest
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL in .env.docker}
+      APP_ORIGIN: ${APP_ORIGIN:-http://localhost:3000}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      ASSET_STORAGE: ${ASSET_STORAGE:-local}
+      S3_ASSET_BUCKET: ${S3_ASSET_BUCKET:-}
+      S3_IMAGE_PREFIX: ${S3_IMAGE_PREFIX:-media}
+      S3_AUDIO_PREFIX: ${S3_AUDIO_PREFIX:-audio}
+      AWS_REGION: ${AWS_REGION:-ap-southeast-1}
+      AI_PROVIDER: ${AI_PROVIDER:-openai}
+      AI_API_KEY: ${AI_API_KEY:-}
+      AI_DAILY_LIMIT: ${AI_DAILY_LIMIT:-30}
+      AI_AUDIO_ENABLED: ${AI_AUDIO_ENABLED:-false}
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: vuon-xa-frontend:latest
+    restart: unless-stopped
+    environment:
+      BACKEND_URL: ${BACKEND_URL:-http://backend:8000}
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      - backend

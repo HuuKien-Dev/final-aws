@@ -1,0 +1,8 @@
+[
+  {"file":"business-listening.wav","bytes":984918,"sha256":"95493c49d0d6977ea745313026a1ed22a42dfd18ed8b8473ba606cf738fc57fa"},
+  {"file":"hospitality-listening.wav","bytes":1016988,"sha256":"f9322b7800e8b63d5296099a86436e8f90d3a5bc13104e71ec9e07c3c7315c7e"},
+  {"file":"ielts-listening.wav","bytes":1854232,"sha256":"9457c4ee2f8e7083ac5c9972f6a3743d3ce53c09c6509ff188a97e0ffa709c4b"},
+  {"file":"it-listening.wav","bytes":1032884,"sha256":"707a500ed08cf9ef6a6366e803e082568452b66014c35ae570d2f0a5562df954"},
+  {"file":"medical-listening.wav","bytes":1238042,"sha256":"306e1b8ac60acbae11830e3f9a00915b6cdebec64bb468f390197c019d3caa70"},
+  {"file":"tourism-listening.wav","bytes":1057112,"sha256":"0bdd7ff53c4b971b6d74d9f0f3e25510bd1e3c89a5584e23fc4274ab2f982d1e"}
+]

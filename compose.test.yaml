@@ -1,0 +1,17 @@
+services:
+  database:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: english_app_test
+      POSTGRES_USER: english_app
+      POSTGRES_PASSWORD: docker-test-password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U english_app -d english_app_test"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  backend:
+    depends_on:
+      database:
+        condition: service_healthy
