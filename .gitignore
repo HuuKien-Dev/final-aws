@@ -6,6 +6,8 @@ node_modules/
 .env.*
 !.env.example
 !.env.docker.example
+!.env.backend.example
+!.env.frontend.example
 __pycache__/
 .pytest_cache/
 *.tar.gz

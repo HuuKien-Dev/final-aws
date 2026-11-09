@@ -16,29 +16,54 @@ docker build -t vuon-xa-frontend:latest -f frontend/Dockerfile frontend
 docker build -t vuon-xa-backend:latest -f backend/Dockerfile .
 ```
 
-## Chạy bằng Docker Compose
+## Chạy bằng hai Docker Compose độc lập
 
-Tạo file cấu hình từ mẫu và sửa các địa chỉ:
+Backend và frontend có file Compose và file biến môi trường riêng. Hai project có tên
+khác nhau nên có thể khởi động, cập nhật hoặc dừng độc lập, kể cả khi chạy trên cùng
+một máy.
+
+Tạo file cấu hình từ mẫu:
 
 ```bash
-cp .env.docker.example .env.docker
-docker compose --env-file .env.docker build
+cp .env.backend.example .env.backend
+cp .env.frontend.example .env.frontend
+```
+
+Sửa `.env.backend` trên máy backend và `.env.frontend` trên máy frontend. Sau đó build:
+
+```bash
+docker compose --env-file .env.backend -f compose.backend.yaml build
+docker compose --env-file .env.frontend -f compose.frontend.yaml build
 ```
 
 Khởi tạo database trước lần chạy đầu tiên:
 
 ```bash
-docker compose --env-file .env.docker run --rm backend \
+docker compose --env-file .env.backend -f compose.backend.yaml run --rm backend \
   python /app/database/manage.py migrate
-docker compose --env-file .env.docker run --rm backend \
+docker compose --env-file .env.backend -f compose.backend.yaml run --rm backend \
   python /app/database/manage.py seed
 ```
 
-Sau đó khởi động hai dịch vụ:
+Khởi động backend và frontend độc lập:
 
 ```bash
-docker compose --env-file .env.docker up -d
+docker compose --env-file .env.backend -f compose.backend.yaml up -d
+docker compose --env-file .env.frontend -f compose.frontend.yaml up -d
 ```
+
+Khi triển khai trên hai máy, chỉ cần chép source/image và file tương ứng sang từng máy:
+
+- Máy backend: `compose.backend.yaml` và `.env.backend`.
+- Máy frontend: `compose.frontend.yaml` và `.env.frontend`.
+
+`BACKEND_URL` trong `.env.frontend` phải là địa chỉ mà chính container frontend truy
+cập được, ví dụ `http://10.0.2.15:8000` hoặc `https://api.example.com`. Không dùng
+`http://backend:8000` khi hai Compose độc lập, trừ khi bạn tự cấu hình Docker network
+dùng chung và DNS alias tương ứng.
+
+File `compose.yaml` chung vẫn được giữ cho môi trường phát triển và bài kiểm thử Docker
+tự động; triển khai production sử dụng hai file Compose ở trên.
 
 ## Chạy riêng trên hai máy hoặc hai dịch vụ cloud
 
