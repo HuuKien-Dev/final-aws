@@ -18,5 +18,11 @@ services:
       database:
         condition: service_healthy
 
+  migration:
+    container_name: vuon-xa-test-migration
+    depends_on:
+      database:
+        condition: service_healthy
+
   frontend:
     container_name: vuon-xa-test-frontend

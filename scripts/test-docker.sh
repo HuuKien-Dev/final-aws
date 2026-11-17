@@ -42,10 +42,10 @@ wait_for_url() {
 command -v docker >/dev/null
 command -v curl >/dev/null
 
-"${compose[@]}" build --pull
+"${compose[@]}" --profile tools build --pull
 "${compose[@]}" up -d database
-"${compose[@]}" run --rm backend python /app/database/manage.py migrate
-"${compose[@]}" run --rm backend python /app/database/manage.py seed
+"${compose[@]}" run --rm migration migrate
+"${compose[@]}" run --rm migration seed
 "${compose[@]}" up -d backend frontend
 
 wait_for_url 'http://127.0.0.1:38000/health' 'Backend và database'

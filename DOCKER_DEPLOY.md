@@ -1,19 +1,24 @@
 # Triển khai frontend và backend bằng Docker
 
-Ứng dụng có hai image độc lập:
+Ứng dụng có hai image dịch vụ độc lập:
 
 - `frontend` (tên image và container): Next.js, cổng `3000`. Container này nhận `BACKEND_URL` và chuyển tiếp các yêu cầu `/api/*` sang backend.
 - `backend` (tên image và container): FastAPI, cổng `8000`. Container này nhận `DATABASE_URL` để kết nối PostgreSQL.
 
+Image thứ ba, `migration`, không phải dịch vụ chạy thường trực: container này chạy một lệnh (`migrate` hoặc `seed`) trên PostgreSQL rồi thoát. Image `backend` không chứa công cụ migration.
+
 Trình duyệt chỉ gọi frontend. Vì vậy `BACKEND_URL` có thể là IP private, DNS nội bộ hoặc tên service mà container frontend truy cập được; không cần công khai địa chỉ database cho frontend.
 
-## Build hai image riêng
+Hạ tầng AWS nhiều máy (Route 53, load balancer, Auto Scaling, CloudWatch, Bedrock) được mô tả trong [hướng dẫn triển khai AWS](AWS_DEPLOY.md).
+
+## Build các image riêng
 
 Chạy tại thư mục gốc dự án:
 
 ```bash
 docker build -t frontend:latest -f frontend/Dockerfile frontend
 docker build -t backend:latest -f backend/Dockerfile .
+docker build -t migration:latest -f database/Dockerfile database
 ```
 
 ## Chạy bằng hai Docker Compose độc lập
@@ -34,18 +39,19 @@ Sửa `.env.backend` trên máy backend và `.env.frontend` trên máy frontend.
 ```bash
 docker compose --env-file .env.backend -f compose.backend.yaml build
 docker compose --env-file .env.frontend -f compose.frontend.yaml build
+docker compose --env-file .env.backend -f compose.migration.yaml build
 ```
 
-Khởi tạo database trước lần chạy đầu tiên:
+Khởi tạo database trước lần chạy đầu tiên bằng container `migration`. Container này chỉ cần `DATABASE_URL`, nên dùng luôn `.env.backend` (hoặc một file env riêng chỉ có biến đó):
 
 ```bash
-docker compose --env-file .env.backend -f compose.backend.yaml run --rm backend \
-  python /app/database/manage.py migrate
-docker compose --env-file .env.backend -f compose.backend.yaml run --rm backend \
-  python /app/database/manage.py seed
+docker compose --env-file .env.backend -f compose.migration.yaml run --rm migration migrate
+docker compose --env-file .env.backend -f compose.migration.yaml run --rm migration seed
 ```
 
-**Khi cập nhật phiên bản:** build image backend mới rồi chạy lại lệnh `migrate` ở trên **trước khi** khởi động container backend mới. Lệnh chỉ áp dụng migration còn thiếu (bản này thêm `004_progress_indexes.sql` và `005_spaced_review.sql`), không xóa dữ liệu. Backend mới báo `/health` lỗi 503 cho tới khi database đã có migration 005.
+Không có Compose thì chạy trực tiếp: `docker run --rm --name migration -e DATABASE_URL=... migration:latest migrate`.
+
+**Khi cập nhật phiên bản:** build image `migration` và `backend` mới rồi chạy lại lệnh `migrate` ở trên **trước khi** khởi động container backend mới. Lệnh chỉ áp dụng các file migration còn thiếu và không xóa dữ liệu; chạy lại khi không có file mới thì không thay đổi gì. Backend mới báo `/health` lỗi 503 cho tới khi database có đủ migration của bản đó.
 
 Khởi động backend và frontend độc lập:
 
@@ -57,6 +63,7 @@ docker compose --env-file .env.frontend -f compose.frontend.yaml up -d
 Khi triển khai trên hai máy, chỉ cần chép source/image và file tương ứng sang từng máy:
 
 - Máy backend: `compose.backend.yaml` và `.env.backend`.
+- Máy chạy migration (thường chính là máy backend, vì cần tới được PostgreSQL): `compose.migration.yaml` và file env có `DATABASE_URL`.
 - Máy frontend: `compose.frontend.yaml` và `.env.frontend`.
 
 `BACKEND_URL` trong `.env.frontend` phải là địa chỉ mà chính container frontend truy
@@ -142,7 +149,7 @@ Gắn quyền mẫu [IAM đọc S3](deploy/iam-backend-s3-read.json) vào role b
 
 - Cho phép người dùng hoặc load balancer truy cập cổng frontend.
 - Chỉ cho phép máy/container frontend hoặc load balancer nội bộ truy cập cổng backend.
-- Chỉ cho phép backend truy cập PostgreSQL cổng `5432`.
+- Chỉ cho phép backend truy cập PostgreSQL cổng `5432`. Container `migration` cũng kết nối PostgreSQL, nên chạy nó trên máy backend hoặc máy có cùng quyền mạng.
 - Không mở PostgreSQL cho frontend hoặc Internet công cộng.
 
 Kiểm tra trạng thái:
@@ -156,10 +163,10 @@ Health check backend chỉ trả thành công khi kết nối được database,
 
 ## Build và kiểm tra Docker tự động
 
-Lệnh sau tạo PostgreSQL tạm, build lại hai image, chạy migration/seed và kiểm tra toàn bộ luồng frontend → backend → database:
+Lệnh sau tạo PostgreSQL tạm, build lại ba image, chạy migration/seed bằng container `migration` và kiểm tra toàn bộ luồng frontend → backend → database:
 
 ```bash
 bash scripts/test-docker.sh
 ```
 
-Database và container thử nghiệm được xóa sau khi kiểm tra; hai image đã build được giữ lại. Frontend thử nghiệm dùng cổng `33000`, backend dùng cổng `38000` để tránh trùng với dịch vụ local thông thường.
+Database và container thử nghiệm được xóa sau khi kiểm tra; các image đã build được giữ lại. Frontend thử nghiệm dùng cổng `33000`, backend dùng cổng `38000` để tránh trùng với dịch vụ local thông thường.

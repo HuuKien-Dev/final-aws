@@ -26,6 +26,19 @@ services:
     ports:
       - "${BACKEND_PORT:-8000}:8000"
 
+  # Không khởi động cùng `up`; chỉ chạy khi gọi rõ:
+  #   docker compose run --rm migration migrate   (hoặc seed)
+  migration:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    image: migration:latest
+    container_name: migration
+    profiles: ["tools"]
+    restart: "no"
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL in .env.docker}
+
   frontend:
     build:
       context: ./frontend

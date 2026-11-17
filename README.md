@@ -33,7 +33,9 @@ Giao diện sử dụng **Next.js, React và TypeScript**; API sử dụng **Fas
 
 ## Docker
 
-Frontend và backend có Dockerfile riêng để triển khai độc lập. Frontend nhận địa chỉ backend qua `BACKEND_URL`; backend nhận địa chỉ PostgreSQL cloud qua `DATABASE_URL`. Xem [hướng dẫn Docker](DOCKER_DEPLOY.md) để build image, chạy migration/seed và cấu hình IP hoặc domain.
+Frontend và backend có Dockerfile riêng để triển khai độc lập; migration và seed chạy bằng image `migration` riêng (`database/Dockerfile`). Frontend nhận địa chỉ backend qua `BACKEND_URL`; backend nhận địa chỉ PostgreSQL cloud qua `DATABASE_URL`. Xem [hướng dẫn Docker](DOCKER_DEPLOY.md) để build image, chạy migration/seed và cấu hình IP hoặc domain.
+
+Để chạy production trên AWS với tên miền Route 53, Auto Scaling, giám sát CloudWatch và gia sư AI qua Bedrock, xem [hướng dẫn triển khai AWS](AWS_DEPLOY.md).
 
 ## Giấy phép và ghi công
 

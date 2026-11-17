@@ -8,7 +8,6 @@ COPY backend/requirements.txt ./backend/requirements.txt
 RUN pip install --no-cache-dir --requirement backend/requirements.txt
 
 COPY backend ./backend
-COPY database ./database
 COPY assets ./assets
 
 RUN addgroup --system --gid 10001 app && \
