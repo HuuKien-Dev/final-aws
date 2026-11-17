@@ -3,7 +3,8 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
-    image: vuon-xa-backend:latest
+    image: backend:latest
+    container_name: backend
     restart: unless-stopped
     environment:
       DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL in .env.docker}
@@ -16,6 +17,10 @@ services:
       AWS_REGION: ${AWS_REGION:-ap-southeast-1}
       AI_PROVIDER: ${AI_PROVIDER:-openai}
       AI_API_KEY: ${AI_API_KEY:-}
+      AI_MODEL: ${AI_MODEL:-}
+      AI_BASE_URL: ${AI_BASE_URL:-}
+      BEDROCK_REGION: ${BEDROCK_REGION:-}
+      AI_MAX_TOKENS: ${AI_MAX_TOKENS:-}
       AI_DAILY_LIMIT: ${AI_DAILY_LIMIT:-30}
       AI_AUDIO_ENABLED: ${AI_AUDIO_ENABLED:-false}
     ports:
@@ -25,7 +30,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    image: vuon-xa-frontend:latest
+    image: frontend:latest
+    container_name: frontend
     restart: unless-stopped
     environment:
       BACKEND_URL: ${BACKEND_URL:-http://backend:8000}

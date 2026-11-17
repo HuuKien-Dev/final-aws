@@ -1,5 +1,5 @@
 """Unit tests run without PostgreSQL; integration requires a disposable TEST_DATABASE_URL."""
-import importlib.util, json, os, subprocess, sys
+import asyncio, importlib.util, json, os, subprocess, sys
 from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
@@ -69,13 +69,45 @@ def test_real_database_restart_and_account_isolation():
         assert len(first)==len(second)==7
         assert not ({p['id'] for p in first}&{p['id'] for p in second})
         assert client.get('/api/phrases',params={"limit":201}).status_code==422
-        for q in ["Hello","Xin chào"]:
+        for q in ["Hello","Xin chào","xin chao","CAM ON"]:
             assert client.get('/api/phrases',params={"q":q}).json()
         assert not client.get('/api/phrases',params={"q":"%"}).json()
         phrase=client.get('/api/phrases').json()[0]
         pid=phrase['id']
         assert client.put('/api/favorites/'+pid,json={"value":True}).status_code==200
-        assert client.put('/api/flashcards/'+pid,json={"value":True}).status_code==200
+        learned=client.put('/api/flashcards/'+pid,json={"value":True}).json()
+        assert learned['ok'] is True and learned['reviews']==0 and learned['due_at']
+        # Spaced review: not due yet; once due, "still know it" lengthens the interval.
+        assert client.get('/api/phrases',params={"due":"true"}).json()==[]
+        assert client.get('/api/progress').json()['due']==0
+        async def make_due():
+            import asyncpg
+            connection=await asyncpg.connect(dsn)
+            try: await connection.execute("UPDATE flashcards SET due_at=now()-interval '1 hour'")
+            finally: await connection.close()
+        def days_until(value):
+            from datetime import datetime,timezone
+            return round((datetime.fromisoformat(value)-datetime.now(timezone.utc)).total_seconds()/86400)
+        assert days_until(learned['due_at'])==1
+        asyncio.run(make_due())
+        assert [p['id'] for p in client.get('/api/phrases',params={"due":"true"}).json()]==[pid]
+        assert client.get('/api/progress').json()['due']==1
+        reviewed=client.put('/api/flashcards/'+pid,json={"value":True}).json()
+        assert reviewed['reviews']==1 and days_until(reviewed['due_at'])==3
+        # Repeating the click before the phrase is due again changes nothing.
+        assert client.put('/api/flashcards/'+pid,json={"value":True}).json()['reviews']==1
+        assert client.get('/api/phrases',params={"due":"true"}).json()==[]
+        asyncio.run(make_due())
+        again=client.put('/api/flashcards/'+pid,json={"value":True}).json()
+        assert again['reviews']==2 and days_until(again['due_at'])==7
+        forgotten=client.put('/api/flashcards/'+pid,json={"value":False}).json()
+        assert forgotten['reviews']==0 and forgotten['due_at'] is None
+        relearned=client.put('/api/flashcards/'+pid,json={"value":True}).json()
+        assert relearned['reviews']==0 and days_until(relearned['due_at'])==1
+        long_quiz=client.post('/api/quizzes',json={"topic":"travel","count":10}).json()
+        assert len(long_quiz['questions'])==10
+        assert client.put('/api/quizzes/'+long_quiz['id']+'/draft',json={"answers":['']*10}).status_code==200
+        assert client.post('/api/quizzes',json={"topic":"travel","count":7}).status_code==422
         quiz=client.post('/api/quizzes',json={"topic":"greetings"}).json()
         assert all('correct' not in q for q in quiz['questions'])
         assert client.get('/api/quizzes/'+quiz['id']).json()['result'] is None
@@ -101,6 +133,11 @@ def test_real_database_restart_and_account_isolation():
         deck_path='/api/decks/'+deck['id']
         card=client.post(deck_path+'/cards',json={'english':'reliable','vietnamese':'đáng tin cậy','example':'The service is reliable.'}).json()
         assert client.put(deck_path,json={'name':'Work words'}).status_code==200
+        batch=[{'english':f'word {i}','vietnamese':f'từ {i}','example':''} for i in range(3)]
+        assert client.post(deck_path+'/cards/bulk',json={'cards':batch}).json()=={'added':3}
+        assert [c['english'] for c in client.get(deck_path+'/cards').json()]==['reliable','word 0','word 1','word 2']
+        assert client.post(deck_path+'/cards/bulk',json={'cards':batch*67}).status_code==422
+        assert client.post(deck_path+'/cards/bulk',json={'cards':[{'english':' ','vietnamese':'x'}]}).status_code==422
         assert client.put(deck_path+'/cards/'+card['id'],json={'english':'reliable','vietnamese':'đáng tin cậy','example':'','mastered':True}).status_code==200
         templates=client.get('/api/decks/templates').json()
         assert len(templates)==6 and all(t['total']==30 for t in templates)
@@ -131,6 +168,8 @@ def test_real_database_restart_and_account_isolation():
         assert progress['history'][0]['score']==5 and progress['total']==400
         assert progress['quiz_count']==1
         assert sum(t['mastered'] for t in progress['topics'])==1
+        assert progress['streak']==1 and progress['studied_today'] is True and progress['accuracy']==100
+        assert len(progress['week'])==7 and progress['week'][-1]['active'] is True
         restored=second.get('/api/quizzes/active',params={"topic":"food"}).json()
         assert restored['id']==pending['id'] and restored['answers']==partial
         assert all('correct' not in q for q in restored['questions'])
@@ -148,6 +187,12 @@ def test_real_database_restart_and_account_isolation():
         assert second.post('/api/auth/register',json={"email":"second@example.com","password":"strong-password"}).status_code==200
         progress=second.get('/api/progress').json()
         assert progress['favorites']==0 and progress['mastered']==0 and not progress['history']
+        assert progress['streak']==0 and progress['accuracy'] is None
+        assert second.put('/api/auth/password',json={"current_password":"strong-password","new_password":"newer-strong-password"}).status_code==200
+        assert second.get('/api/auth/me').status_code==200
+        second.cookies.clear()
+        assert second.post('/api/auth/login',json={"email":"second@example.com","password":"strong-password"}).status_code==401
+        assert second.post('/api/auth/login',json={"email":"second@example.com","password":"newer-strong-password"}).status_code==200
         assert second.post(url,json={"answers":answers}).status_code==404
         assert second.get('/api/quizzes/'+quiz['id']).status_code==404
         assert second.get('/api/quizzes/active').json() is None
@@ -158,6 +203,8 @@ def test_real_database_restart_and_account_isolation():
         assert second.get(work_path).json()['completed'] is False
         assert second.get(deck_path+'/cards').status_code==404
         assert second.put(deck_path,json={'name':'Stolen'}).status_code==404
+        assert second.post(deck_path+'/cards/bulk',json={'cards':[{'english':'a','vietnamese':'b'}]}).status_code==404
+        assert second.get('/api/phrases',params={"due":"true"}).json()==[]
         assert second.request('DELETE',deck_path,json={}).status_code==404
         assert second.request('DELETE',deck_path+'/cards/'+card['id'],json={}).status_code==404
         assert second.get(imported_path+'/cards').status_code==404

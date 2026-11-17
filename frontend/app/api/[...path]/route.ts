@@ -6,7 +6,7 @@ async function proxy(request: NextRequest, context: {params: Promise<{path: stri
   const base = process.env.BACKEND_URL || 'http://127.0.0.1:8000'
   const url = new URL('/api/' + path.map(encodeURIComponent).join('/') + request.nextUrl.search, base)
   const headers = new Headers()
-  for (const name of ['content-type','cookie','origin','range']) {
+  for (const name of ['content-type','cookie','origin','range','if-none-match']) {
     const value = request.headers.get(name)
     if (value) headers.set(name,value)
   }
@@ -14,14 +14,15 @@ async function proxy(request: NextRequest, context: {params: Promise<{path: stri
     const upstream = await fetch(url, {method:request.method,headers,
       body:['GET','HEAD'].includes(request.method) ? undefined : await request.arrayBuffer(),
       cache:'no-store',redirect:'manual',signal:AbortSignal.timeout(path[0]==='ai'?90000:20000)})
-    const output = new Headers({'Cache-Control':'no-store'})
+    // Backend marks only allowlisted media as cacheable; everything else stays no-store.
+    const output = new Headers({'Cache-Control':upstream.headers.get('cache-control')||'no-store'})
     output.set('Content-Type', upstream.headers.get('content-type') || 'application/json')
-    for (const name of ['accept-ranges','content-range','content-length','content-disposition']) {
+    for (const name of ['accept-ranges','content-range','content-length','content-disposition','etag']) {
       const value=upstream.headers.get(name)
       if(value)output.set(name,value)
     }
     for (const cookie of upstream.headers.getSetCookie()) output.append('Set-Cookie',cookie)
-    return new Response(upstream.body,{status:upstream.status,headers:output})
+    return new Response([204,304].includes(upstream.status)?null:upstream.body,{status:upstream.status,headers:output})
   } catch {
     return Response.json({detail:'Máy chủ học tập tạm thời chưa sẵn sàng. Hãy thử lại.'},{status:503})
   }

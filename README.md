@@ -13,6 +13,15 @@
 - **Gia sư AI tùy chọn:** hỏi bài, luyện hội thoại, nhận góp ý bài viết hoặc bản chép lời, gợi ý trình độ và lộ trình học. Khả năng âm thanh tùy nhà cung cấp; ứng dụng chưa chấm phát âm từ âm thanh.
 - **Tài khoản cá nhân:** đăng ký/đăng nhập bằng email và mật khẩu, lưu phiên và dữ liệu học riêng cho từng người. Màn hình đăng nhập có nhân vật mầm xanh đồng hành.
 - **Góp ý:** gửi lỗi, đề xuất tính năng hoặc góp ý nội dung và xem lại phản hồi đã gửi.
+- **Nghe phát âm:** nút 🔊 (tốc độ thường) và 🐢 (đọc chậm) ở câu giao tiếp, bài học và flashcard, dùng giọng đọc có sẵn của trình duyệt — không cần khóa AI.
+- **Chuỗi ngày học:** tổng quan và trang tiến độ hiển thị số ngày học liên tiếp, kỷ lục, lịch 7 ngày gần nhất và tỉ lệ đúng quiz.
+- **Flashcard:** trộn thứ tự thẻ và thanh vị trí thẻ.
+- **Ôn tập ngắt quãng:** câu đã thuộc tự "đến hạn ôn" sau 1, 3, 7, 14, 30 rồi 60 ngày; tổng quan báo số câu đến hạn, bấm "Vẫn nhớ" để giãn khoảng cách hoặc "Quên rồi" để học lại.
+- **Luyện nói theo câu:** đọc câu thành tiếng, trình duyệt nhận diện và tô màu từ đã nghe được/từ còn thiếu (trình duyệt có hỗ trợ nhận diện giọng nói, ví dụ Chrome, Edge, Safari). Là so khớp từ, không chấm ngữ điệu.
+- **Quiz linh hoạt:** chọn 5 hoặc 10 câu, chế độ nghe (ẩn câu tiếng Anh, chỉ nghe rồi chọn nghĩa).
+- **Flashcard cá nhân nâng cao:** dán nhiều thẻ cùng lúc (mỗi dòng một thẻ, dán được từ Excel/Google Sheets), xuất CSV, trò chơi "Nghe và gõ", và **tạo thẻ bằng AI** theo chủ đề khi backend đã cấu hình AI.
+- **Tìm kiếm không dấu:** gõ `cam on` vẫn tìm được "Cảm ơn".
+- **Bảo mật tài khoản:** đổi mật khẩu (đăng xuất các thiết bị khác) và giới hạn 10 lần đăng nhập sai/15 phút cho mỗi tài khoản.
 
 Các bài học có sẵn, flashcard và trò chơi không yêu cầu khóa AI. Giao diện tiếng Việt hỗ trợ máy tính và thiết bị di động.
 
@@ -20,7 +29,7 @@ Trang tổng quan gợi ý chủ đề chưa học hoặc đang học dở dựa
 
 ## Công nghệ
 
-Giao diện sử dụng **Next.js, React và TypeScript**; API sử dụng **FastAPI/Python**; **PostgreSQL** lưu tài khoản, phiên đăng nhập, bài làm và tiến độ. Frontend gọi API backend; backend xử lý nghiệp vụ, truy cập dữ liệu và phục vụ ảnh. Tích hợp AI nằm ở backend.
+Giao diện sử dụng **Next.js, React và TypeScript**; API sử dụng **FastAPI/Python**; **PostgreSQL** lưu tài khoản, phiên đăng nhập, bài làm và tiến độ. Frontend gọi API backend; backend xử lý nghiệp vụ, truy cập dữ liệu và phục vụ ảnh. Tích hợp AI nằm ở backend; hỗ trợ OpenAI, Gemini, DeepSeek, Anthropic, endpoint tương thích OpenAI và **Amazon Bedrock** (Converse API, xác thực bằng IAM Role hoặc Bedrock API key — xem [hướng dẫn Docker](DOCKER_DEPLOY.md#gia-sư-ai-qua-amazon-bedrock)).
 
 ## Docker
 

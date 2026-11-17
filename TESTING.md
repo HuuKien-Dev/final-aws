@@ -41,3 +41,23 @@ Kiểm chứng: **62 test Python đạt, 1 test tích hợp ban đầu bỏ qua*
 Firefox thật với bản production trên localhost và database tạm: đăng nhập qua form, tìm `an uong`, menu điện thoại, mở bộ CNTT 30 thẻ, lật thẻ, phân trang từ IELTS và hiển thị 24 từ qua ảnh đều đạt. Kiểm tra không tràn ngang trên desktop và viewport **390px** (WebDriver BiDi); ảnh được lưu ở `.tools/ui-review/`. Các server kiểm thử và trình duyệt đã được dừng sau kiểm tra.
 
 Đây là kết quả trên mã nguồn local và database thử; chưa triển khai lên AWS hoặc cập nhật database đang phục vụ người dùng. File `database/sample.vi-en.json` đã có 400 câu để dùng với lệnh seed hiện có khi cập nhật môi trường thật. Git của workspace báo `bad object HEAD` do object rỗng; không thể dùng Git diff/commit để xác minh. Bản sao các tệp trước thay đổi được lưu ở `/tmp/english-app-before-optimization-20261109`.
+
+## Bedrock, chuỗi ngày học và tối ưu — 14/11/2026
+
+- **Amazon Bedrock:** `AI_PROVIDER=bedrock` gọi Converse API; không có `AI_API_KEY` thì dùng IAM Role (boto3), có key thì gọi bearer token qua HTTPS. Test mô phỏng cả hai đường, ánh xạ lỗi AWS (không lộ chi tiết lỗi gốc) và phản hồi bị cắt. Chưa gọi Bedrock thật.
+- **Tối ưu:** `/api/progress` gộp 4 truy vấn đếm thành 1; migration `004_progress_indexes.sql` thêm index cho lịch sử/tiến độ; ảnh, logo, audio trả `Cache-Control: public, max-age=86400` qua cả backend và proxy Next (API vẫn `no-store`).
+- **Tính năng:** chuỗi ngày học (múi giờ Asia/Ho_Chi_Minh), tỉ lệ đúng quiz, đổi mật khẩu, giới hạn đăng nhập sai, nút nghe phát âm, trộn flashcard.
+
+Kiểm chứng: **72 test Python đạt, 1 bỏ qua** khi không có database; chạy riêng `tests/test_app.py` với PostgreSQL 16 tạm (Docker): **5/5 đạt**, gồm migration 001–004, streak/accuracy và đổi mật khẩu. **45 test Node đạt**; TypeScript và production build đạt. Smoke HTTP qua frontend production + backend thật: header cache ảnh, đăng ký, `/api/progress`, lần đăng nhập sai thứ 11 trả 429. Chưa kiểm tra bố cục mới bằng trình duyệt thật khi đã đăng nhập.
+
+## Tính năng nâng cao và kiểm thử giao diện — 14/11/2026
+
+- **Tính năng:** ôn tập ngắt quãng (migration `005_spaced_review.sql`, chu kỳ 1/3/7/14/30/60 ngày), quiz 5/10 câu và chế độ nghe, luyện nói so khớp từ bằng nhận diện giọng nói của trình duyệt, nhập nhiều thẻ/xuất CSV/trò "Nghe và gõ", tạo thẻ bằng AI, tìm câu không dấu.
+- **Tối ưu:** bỏ 114 quy tắc CSS không còn dùng (72 KB → 66 KB trước khi thêm tính năng mới), ảnh có ETag/304 và cache ngắn trong bộ nhớ backend, nút không còn bị khóa chờ tải lại tiến độ.
+- **Sửa trải nghiệm tìm được khi test bằng trình duyệt:** menu trái vừa màn hình 1366×768 (trước đó 4 mục cuối bị khuất), bộ lọc gọn một hàng, trên điện thoại thẻ flashcard hiện sớm hơn (~1370px → ~820px), header điện thoại một dòng và có nút đổi mật khẩu, thông báo tự ẩn và luôn nhìn thấy khi cuộn, sau đăng nhập trang về đầu, quiz báo "Đã chọn x/n câu", tổng quan/tiến độ tải lại số liệu khi mở, phụ đề riêng cho từng mục.
+
+Kiểm chứng tự động: **77 test Python đạt, 1 bỏ qua** khi không có database; `tests/test_app.py` với PostgreSQL 16 tạm: **5/5 đạt** (migration 001–005, chu kỳ ôn 1→3→7 ngày, quiz 10 câu, nhập hàng loạt giữ thứ tự, đổi mật khẩu). Đường nâng cấp 004 → 005 trên database có sẵn dữ liệu: câu đã thuộc được gán hạn ôn. **51 test Node đạt**; TypeScript và production build đạt.
+
+Kiểm thử giao diện bằng Firefox thật (WebDriver, headless) trên **hai container riêng** build từ `frontend/Dockerfile` và `backend/Dockerfile` (`compose.yaml` + `compose.test.yaml`, PostgreSQL tạm): 15 luồng người học ở cả 1366×768 và 390×844 — đăng ký, tìm chủ đề không dấu, bài học, câu giao tiếp, flashcard và phím tắt, ôn đến hạn, quiz 10 câu có lưu nháp và tải lại trang, tiến độ, flashcard cá nhân (thêm/sửa/xóa, nhập hàng loạt, CSV, ba trò chơi, bộ mẫu), từ qua ảnh, IELTS, gia sư AI khi chưa cấu hình, góp ý, đổi mật khẩu, liên kết trực tiếp. **15/15 đạt ở cả hai kích thước, không có lỗi JavaScript**; không tràn ngang, không có ảnh hỏng hay ô nhập thiếu nhãn. Container, database và volume thử nghiệm đã được xóa sau khi kiểm tra.
+
+Chưa kiểm chứng: gọi AI thật (Bedrock và các nhà cung cấp khác, kể cả tạo thẻ bằng AI) — chỉ có test với phản hồi mô phỏng; luyện nói bằng micro thật (Firefox không có nhận diện giọng nói nên phần này chỉ được kiểm tra bằng unit test của thuật toán so khớp); âm thanh phát ra từ nút nghe; trình duyệt Chrome/Safari; triển khai AWS.

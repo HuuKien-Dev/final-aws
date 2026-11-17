@@ -2,8 +2,8 @@
 
 Ứng dụng có hai image độc lập:
 
-- `vuon-xa-frontend`: Next.js, cổng `3000`. Container này nhận `BACKEND_URL` và chuyển tiếp các yêu cầu `/api/*` sang backend.
-- `vuon-xa-backend`: FastAPI, cổng `8000`. Container này nhận `DATABASE_URL` để kết nối PostgreSQL.
+- `frontend` (tên image và container): Next.js, cổng `3000`. Container này nhận `BACKEND_URL` và chuyển tiếp các yêu cầu `/api/*` sang backend.
+- `backend` (tên image và container): FastAPI, cổng `8000`. Container này nhận `DATABASE_URL` để kết nối PostgreSQL.
 
 Trình duyệt chỉ gọi frontend. Vì vậy `BACKEND_URL` có thể là IP private, DNS nội bộ hoặc tên service mà container frontend truy cập được; không cần công khai địa chỉ database cho frontend.
 
@@ -12,8 +12,8 @@ Trình duyệt chỉ gọi frontend. Vì vậy `BACKEND_URL` có thể là IP pr
 Chạy tại thư mục gốc dự án:
 
 ```bash
-docker build -t vuon-xa-frontend:latest -f frontend/Dockerfile frontend
-docker build -t vuon-xa-backend:latest -f backend/Dockerfile .
+docker build -t frontend:latest -f frontend/Dockerfile frontend
+docker build -t backend:latest -f backend/Dockerfile .
 ```
 
 ## Chạy bằng hai Docker Compose độc lập
@@ -45,6 +45,8 @@ docker compose --env-file .env.backend -f compose.backend.yaml run --rm backend 
   python /app/database/manage.py seed
 ```
 
+**Khi cập nhật phiên bản:** build image backend mới rồi chạy lại lệnh `migrate` ở trên **trước khi** khởi động container backend mới. Lệnh chỉ áp dụng migration còn thiếu (bản này thêm `004_progress_indexes.sql` và `005_spaced_review.sql`), không xóa dữ liệu. Backend mới báo `/health` lỗi 503 cho tới khi database đã có migration 005.
+
 Khởi động backend và frontend độc lập:
 
 ```bash
@@ -70,28 +72,49 @@ tự động; triển khai production sử dụng hai file Compose ở trên.
 Backend kết nối database cloud:
 
 ```bash
-docker run -d --name vuon-xa-backend --restart unless-stopped \
+docker run -d --name backend --restart unless-stopped \
   -p 8000:8000 \
   -e 'DATABASE_URL=postgresql://USER:PASSWORD@DB_HOST:5432/DB_NAME?ssl=require' \
   -e 'APP_ORIGIN=https://learn.example.com' \
   -e COOKIE_SECURE=true \
-  vuon-xa-backend:latest
+  backend:latest
 ```
 
 Frontend gọi backend qua IP private hoặc DNS nội bộ:
 
 ```bash
-docker run -d --name vuon-xa-frontend --restart unless-stopped \
+docker run -d --name frontend --restart unless-stopped \
   -p 3000:3000 \
   -e BACKEND_URL=http://10.0.2.15:8000 \
-  vuon-xa-frontend:latest
+  frontend:latest
 ```
 
 Nếu backend có HTTPS và domain riêng, dùng `BACKEND_URL=https://api.example.com`. Không thêm `/api` ở cuối vì frontend tự nối đường dẫn này.
 
 `APP_ORIGIN` phải khớp chính xác địa chỉ public của frontend, gồm giao thức và cổng nếu có. Ví dụ người dùng mở `https://learn.example.com` thì backend phải có `APP_ORIGIN=https://learn.example.com`. Khi dùng HTTPS, đặt `COOKIE_SECURE=true`.
 
-Nếu dùng model hoặc endpoint AI tùy chỉnh, thêm `AI_BASE_URL` và `AI_MODEL` vào phần `environment` của backend. Với các nhà cung cấp mặc định, không khai báo hai biến này để backend sử dụng cấu hình mặc định.
+Nếu dùng model hoặc endpoint AI tùy chỉnh, đặt `AI_MODEL` và `AI_BASE_URL` trong `.env.backend`. Để trống hai biến này thì backend dùng cấu hình mặc định của nhà cung cấp.
+
+### Gia sư AI qua Amazon Bedrock
+
+Backend gọi Bedrock bằng Converse API, nên dùng được mọi model hỗ trợ Converse (Claude, Amazon Nova, Llama, Mistral…). Không cần đổi image hay cách chạy container.
+
+1. Trong Bedrock console, bật quyền truy cập model và ghi lại **model ID** hoặc **inference profile ID** (ví dụ dạng `apac.…` / `global.…`).
+2. Chọn một trong hai cách xác thực:
+   - **IAM Role (khuyến nghị):** gắn policy [`deploy/iam-backend-bedrock-invoke.json`](deploy/iam-backend-bedrock-invoke.json) (thay `ACCOUNT_ID`, có thể giới hạn ARN model) vào instance profile EC2 hoặc task role ECS của backend. Để trống `AI_API_KEY`.
+   - **Bedrock API key:** đặt `AI_API_KEY=<Bedrock API key>`; backend gửi key dạng bearer token tới `bedrock-runtime`.
+3. Cấu hình `.env.backend`:
+
+```env
+AI_PROVIDER=bedrock
+AI_MODEL=<model hoặc inference profile ID>
+BEDROCK_REGION=ap-southeast-1
+AI_API_KEY=
+# Claude 5.x tự suy luận trước khi trả lời; phần này tính vào giới hạn token.
+AI_MAX_TOKENS=16000
+```
+
+Backend trong subnet private không có NAT cần VPC **Interface Endpoint** `com.amazonaws.<region>.bedrock-runtime` (bật Private DNS). Khi dùng endpoint DNS riêng, đặt `AI_BASE_URL=https://<endpoint>`. Bedrock không hỗ trợ ghi âm/đọc mẫu của gia sư AI; nút 🔊 trong bài học dùng giọng đọc của trình duyệt nên vẫn hoạt động.
 
 ## Ảnh, logo và audio qua S3 Gateway Endpoint
 

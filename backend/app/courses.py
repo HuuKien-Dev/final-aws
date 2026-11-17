@@ -20,3 +20,10 @@ def review(lesson,answers):
         raise HTTPException(422,'Đáp án không hợp lệ')
     rows=[{**q,'answer':a,'is_correct':a==q['correct']} for a,q in zip(answers,questions)]
     return {'score':sum(q['is_correct'] for q in rows),'total':len(rows),'review':rows,'transcript':lesson.get('text','')}
+
+# Role-play scenes: the model receives the English brief; the browser only gets the public fields.
+SCENARIOS={scenario['id']:scenario for scenario in json.loads(Path(__file__).with_name('roleplay.json').read_text())}
+PUBLIC_SCENARIO=('id','icon','title','level','summary','learner_role','partner','goals','opening','opening_vi','starters')
+
+def public_scenario(scenario):
+    return {key:scenario[key] for key in PUBLIC_SCENARIO}

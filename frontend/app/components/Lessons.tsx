@@ -1,13 +1,16 @@
 'use client'
 import {useEffect,useRef,useState} from 'react'
 import {api} from '../lib/api'
+import SpeakButton from './SpeakButton'
+import SpeakingCheck from './SpeakingCheck'
+import ExplainPhrase from './ExplainPhrase'
 
 type Summary = {id:string; name:string; description:string; total:number; mastered:number}
 type Sentence = {id:string; english:string; vietnamese:string; mastered:boolean; favorite:boolean}
 type Lesson = Summary & {phrases:Sentence[]; offset:number; has_more:boolean}
-type Props = {topic:string; onSelect:(id:string)=>void; onPractice:()=>void; onProgress:()=>Promise<void>}
+type Props = {topic:string; onSelect:(id:string)=>void; onPractice:()=>void; onProgress:()=>Promise<void>; aiReady?:boolean}
 
-export default function Lessons({topic,onSelect,onPractice,onProgress}:Props) {
+export default function Lessons({topic,onSelect,onPractice,onProgress,aiReady=false}:Props) {
   const [lessons,setLessons]=useState<Summary[]>([])
   const [lesson,setLesson]=useState<Lesson|null>(null)
   const [reload,setReload]=useState(0)
@@ -46,7 +49,7 @@ export default function Lessons({topic,onSelect,onPractice,onProgress}:Props) {
           phrases:old.phrases.map(p=>p.id===sentence.id?{...p,[kind==='flashcards'?'mastered':'favorite']:value}:p)
         }:old)
       }
-      await onProgress()
+      void onProgress()
     } catch(e) {
       if(active.current&&request===requestId.current)setError(e instanceof Error?e.message:'Không lưu được câu học. Thử lại nhé.')
     } finally {if(active.current)setSaving(false)}
@@ -65,9 +68,12 @@ export default function Lessons({topic,onSelect,onPractice,onProgress}:Props) {
     {sentence?<article className="lesson-reader">
       <div className="lesson-heading"><span className="eyebrow">CÂU {offset+index+1} / {lesson.total}</span><button className={sentence.favorite?'favorite selected':'favorite'} disabled={saving} onClick={()=>change(sentence,'favorites')} aria-label={sentence.favorite?'Bỏ yêu thích':'Lưu yêu thích'}>{sentence.favorite?'♥':'♡'}</button></div>
       <h3 lang="en">{sentence.english}</h3>
+      <div className="speak-row"><SpeakButton text={sentence.english}/><SpeakButton text={sentence.english} slow/></div>
       <p>Thử nhớ nghĩa tiếng Việt trước khi mở đáp án nhé.</p>
       <button className="small-button" aria-expanded={showMeaning} onClick={()=>setShowMeaning(!showMeaning)}>{showMeaning?'Ẩn nghĩa tiếng Việt':'Xem nghĩa tiếng Việt'}</button>
       {showMeaning&&<p className="lesson-meaning" role="status">{sentence.vietnamese}</p>}
+      <SpeakingCheck text={sentence.english}/>
+      {aiReady&&<ExplainPhrase phraseId={sentence.id}/>}
       <div className="lesson-reader-controls"><button className="primary" disabled={saving} onClick={()=>change(sentence,'flashcards')}>{sentence.mastered?'Đã thuộc ✓ · Đánh dấu cần ôn':'Tôi đã thuộc câu này ✓'}</button><span className="muted">Trạng thái được lưu vào tài khoản của bạn.</span></div>
       <div className="pagination"><button className="small-button" disabled={saving||(index===0&&offset===0)} onClick={()=>{setShowMeaning(false);if(index>0)setIndex(index-1);else {startIndex.current=19;setOffset(Math.max(0,offset-20))}}}>← Câu trước</button><span>{offset+index+1} / {lesson.total}</span><button className="small-button" disabled={saving||(index===lesson.phrases.length-1&&!lesson.has_more)} onClick={()=>{setShowMeaning(false);if(index<lesson.phrases.length-1)setIndex(index+1);else setOffset(offset+20)}}>Câu tiếp →</button></div>
     </article>:<p className="empty">Bài học chưa có câu giao tiếp. <button className="text-button" onClick={()=>onSelect('')}>Chọn bài khác</button></p>}

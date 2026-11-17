@@ -2,16 +2,17 @@
 import {useMemo,useState} from 'react'
 import {filterTopics,recommendTopic,studyTopics,type Topic,type TopicFilter,type TopicProgress} from '../lib/learning'
 import type {LearningTab} from '../learning-route'
+import StudyStreak,{type StreakInfo} from './StudyStreak'
 
 type Props={
   topics:Topic[]; loading:boolean; topicsError:string; onReload:()=>void
-  progress:{mastered:number;total:number;quiz_count:number;topics:TopicProgress[]}|null
+  progress:(Partial<StreakInfo>&{accuracy?:number|null;due?:number;mastered:number;total:number;quiz_count:number;topics:TopicProgress[]})|null
   progressError:string; onRetryProgress:()=>void
-  onTopic:(id:string)=>void; onNavigate:(tab:LearningTab)=>void
+  onTopic:(id:string)=>void; onNavigate:(tab:LearningTab)=>void; onReview?:()=>void
 }
 const filters:{id:TopicFilter;label:string}[]=[{id:'all',label:'Tất cả'},{id:'started',label:'Đang học'},{id:'new',label:'Chưa học'},{id:'completed',label:'Đã thuộc'}]
 
-export default function Dashboard({topics,loading,topicsError,onReload,progress,progressError,onRetryProgress,onTopic,onNavigate}:Props){
+export default function Dashboard({topics,loading,topicsError,onReload,progress,progressError,onRetryProgress,onTopic,onNavigate,onReview}:Props){
   const [query,setQuery]=useState('')
   const [filter,setFilter]=useState<TopicFilter>('all')
   const rows=useMemo(()=>studyTopics(topics,progress?.topics??[]),[topics,progress])
@@ -24,6 +25,8 @@ export default function Dashboard({topics,loading,topicsError,onReload,progress,
       <div className="next-lesson"><span className="eyebrow">{suggested?.mastered?'TIẾP TỤC CHỦ ĐỀ ĐANG HỌC':complete?'BẠN ĐÃ ĐI ĐƯỢC MỘT CHẶNG DÀI':'MỘT ĐIỂM BẮT ĐẦU NHỎ'}</span><h2>{suggested?.name??(complete?'Ôn lại để nhớ lâu':'Sẵn sàng học một bài?')}</h2><p>{suggested?(suggested.mastered?`Bạn đã thuộc ${suggested.mastered}/${suggested.total} câu. Cùng học tiếp nhé.`:suggested.description):complete?'Thử một bài quiz để kiểm tra những câu bạn đã học.':'Khám phá các bài học giao tiếp theo chủ đề.'}</p>{suggested&&<progress value={suggested.mastered} max={Math.max(1,suggested.total)} aria-label={'Tiến độ '+suggested.name}/>}<button className="primary" onClick={()=>suggested?onTopic(suggested.id):onNavigate(complete?'quiz':'lessons')}>{suggested?.mastered?'Học tiếp':complete?'Luyện một bài quiz':'Bắt đầu học'} →</button></div>
     </section>
     <section className="stats" aria-label="Thống kê học tập"><div><strong>{loading||topicsError?'—':topics.reduce((sum,topic)=>sum+topic.count,0)}</strong><span>Câu giao tiếp</span></div><div><strong>{progress?.mastered??'—'}</strong><span>Câu đã thuộc</span></div><div><strong>{progress?.quiz_count??'—'}</strong><span>Bài đã luyện</span></div></section>
+    {progress?.week&&<StudyStreak info={progress as StreakInfo} accuracy={progress.accuracy}/>}
+    {!!progress?.due&&onReview&&<div className="review-banner" role="status"><div><strong>{progress.due} câu đến hạn ôn hôm nay</strong><span>Ôn đúng lúc sắp quên giúp nhớ lâu hơn.</span></div><button className="primary" onClick={onReview}>Ôn ngay →</button></div>}
     {progressError&&<div className="notice" role="status">{progressError} <button className="text-button" onClick={onRetryProgress}>Tải lại tiến độ</button></div>}
     <section className="study-shortcuts" aria-label="Cách học nhanh">{[
       {tab:'pictures' as const,symbol:'▧',title:'Nhìn hình, nhớ từ',text:'Khám phá từ qua ảnh và ví dụ.'},

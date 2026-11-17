@@ -182,3 +182,126 @@ class OfflineLearningTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_study_streak_counts_consecutive_days_and_keeps_yesterday():
+    from datetime import date
+    from app.learning import study_streak
+    today=date(2026,11,14)
+    days=[date(2026,11,13),date(2026,11,12),date(2026,11,11),date(2026,11,5),date(2026,11,4)]
+    result=study_streak(days,today)
+    assert result["streak"]==3 and result["best_streak"]==3 and result["studied_today"] is False
+    assert len(result["week"])==7 and result["week"][-1]=={"date":"2026-11-14","active":False}
+    assert study_streak(days+[today],today)["streak"]==4
+    assert study_streak([date(2026,11,10)],today)["streak"]==0
+    assert study_streak([],today)=={"streak":0,"best_streak":0,"studied_today":False,"week":study_streak([],today)["week"]}
+
+
+def test_login_failures_are_limited_per_account_and_expire():
+    from app import main
+    main._login_failures.clear()
+    for i in range(main.LOGIN_MAX_FAILURES):
+        assert not main.login_blocked("a@example.com",now=100.0+i)
+        main.record_login_failure("a@example.com",now=100.0+i)
+    assert main.login_blocked("a@example.com",now=120.0)
+    assert not main.login_blocked("b@example.com",now=120.0)
+    assert not main.login_blocked("a@example.com",now=100.0+main.LOGIN_WINDOW+20)
+    main._login_failures.clear()
+
+
+def test_media_is_cacheable_but_api_errors_are_not():
+    from fastapi.testclient import TestClient
+    from app.main import app
+    client=TestClient(app)
+    assert client.get("/api/media/logo.png").headers["cache-control"]=="public, max-age=86400"
+    assert client.get("/api/media/not-allowlisted.png").headers["cache-control"]=="no-store"
+
+
+def test_media_revalidates_with_etag_and_reuses_small_objects(monkeypatch):
+    from fastapi.testclient import TestClient
+    from app import picture_assets
+    from app.main import app
+    monkeypatch.setenv("ASSET_STORAGE","local")
+    picture_assets._cache.clear()
+    reads=[]
+    original=picture_assets.read_object
+    def counting(kind,filename,range_header=None):
+        reads.append(filename);return original(kind,filename,range_header)
+    monkeypatch.setattr(picture_assets,"read_object",counting)
+    client=TestClient(app)
+    first=client.get("/api/media/logo.png")
+    etag=first.headers["etag"]
+    assert first.status_code==200 and etag.startswith('"')
+    again=client.get("/api/media/logo.png")
+    assert again.content==first.content and reads==["logo.png"]  # served from memory
+    cached=client.get("/api/media/logo.png",headers={"If-None-Match":etag})
+    assert cached.status_code==304 and cached.content==b"" and cached.headers["cache-control"]=="public, max-age=86400"
+    assert client.get("/api/media/logo.png",headers={"If-None-Match":'"other"'}).status_code==200
+    # Originals above the per-item limit keep only an ETag: no bytes held, 304 still free.
+    big=client.get("/api/picture-assets/forest.jpg")
+    assert big.status_code==200 and len(big.content)>picture_assets.CACHE_ITEM_MAX
+    assert client.get("/api/picture-assets/forest.jpg",headers={"If-None-Match":big.headers["etag"]}).status_code==304
+    assert reads==["logo.png","forest.jpg"]
+    assert client.get("/api/audio/ielts-listening.wav",headers={"Range":"bytes=0-9"}).status_code==206
+    assert client.get("/api/media/../main.py").status_code in (404,405)
+    picture_assets._cache.clear()
+
+
+def test_search_folding_matches_vietnamese_without_diacritics():
+    from app.learning import FOLD_FROM, FOLD_TO, fold_text
+    assert fold_text("Cảm ơn bạn Đức") == "cam on ban duc"
+    assert fold_text("thank YOU") == "thank you"
+    assert len(FOLD_FROM) == len(FOLD_TO) and "đ" in FOLD_FROM and "ệ" in FOLD_FROM
+    table = str.maketrans(FOLD_FROM, FOLD_TO)
+    sample = "xin chào, rất vui được gặp bạn — tôi muốn đặt bàn lúc bảy giờ tối; ưu tiên chỗ yên tĩnh"
+    assert sample.translate(table) == fold_text(sample)
+
+
+PRACTICE=[{"kind":"choice","prompt":"She ___ to work.","options":["go","goes","going","gone"],"correct":"goes","accept":[],"hint":"","explanation":"She + V-s."},
+          {"kind":"gap","prompt":"I ___ like tea.","options":[],"correct":"don't","accept":["don't","do not"],"hint":"Tôi không thích trà.","explanation":"I + do not."}]
+
+
+def test_typed_answers_ignore_case_spacing_quotes_and_edge_punctuation():
+    from app.learning import answer_key, exercise_correct
+    assert answer_key("  Don’t   Worry! ") == "don't worry"
+    assert answer_key("“Go”.") == "go" and answer_key("o'clock") == "o'clock"
+    for answer in ["don't", "Don’t", " DO  NOT. ", "don`t"]:
+        assert exercise_correct(PRACTICE[1], answer)
+    for answer in ["dont", "do", "does not"]:
+        assert not exercise_correct(PRACTICE[1], answer)
+    # A choice must match its option exactly; near matches are not silently accepted.
+    assert exercise_correct(PRACTICE[0], "goes") and not exercise_correct(PRACTICE[0], "Goes ")
+
+
+def test_practice_sets_are_graded_on_the_server_and_hide_the_key_until_submitted():
+    import pytest
+    from app.learning import exercise_view, grade_exercises, public_exercises
+    assert all(set(question) == {"kind", "prompt", "options", "hint"} for question in public_exercises(PRACTICE))
+    draft = exercise_view("id-1", "Bài tập", PRACTICE)
+    assert draft["result"] is None and "explanation" not in str(draft) and "accept" not in str(draft)
+    result = grade_exercises(PRACTICE, ["go", "Do not"])
+    assert result["score"] == 1 and result["total"] == 2
+    assert [row["is_correct"] for row in result["review"]] == [False, True]
+    assert result["review"][0]["correct"] == "goes" and result["review"][1]["explanation"] == "I + do not."
+    for answers in (["goes"], ["goes", ""], ["went", "do not"], ["goes", "x" * 201], ["goes", "do not", "extra"]):
+        with pytest.raises(ValueError):
+            grade_exercises(PRACTICE, answers)
+    done = exercise_view("id-1", "Bài tập", PRACTICE, ["goes", "do not"], 2, "2026-11-14T00:00:00Z")
+    assert done["result"]["score"] == 2 and done["result"]["review"][1]["answer"] == "do not"
+
+
+def test_quiz_insights_rank_topics_and_only_keep_unresolved_mistakes():
+    from app.learning import quiz_insights
+    def attempt(*rows):
+        return {"questions": [{"phrase_id": pid, "english": pid.upper(), "correct": "đúng"} for pid, _ in rows],
+                "answers": ["đúng" if right else "sai" for _, right in rows]}
+    topics = {"a": "food", "b": "food", "c": "travel", "d": "travel"}
+    # Newest first: "a" was wrong twice and is still wrong, "b" is fixed, "c" is newly wrong, "z" has no topic.
+    stats = quiz_insights([attempt(("a", False), ("b", True), ("c", False), ("z", False)),
+                           attempt(("a", False), ("b", False), ("d", True)),
+                           attempt(("a", True))], topics)
+    assert stats["topics"] == {"food": {"answered": 5, "correct": 2}, "travel": {"answered": 2, "correct": 1}}
+    assert (stats["answered"], stats["correct"]) == (7, 3)
+    assert [(row["phrase_id"], row["wrong"], row["topic_id"]) for row in stats["missed"]] == [("a", 2, "food"), ("c", 1, "travel"), ("z", 1, "")]
+    assert stats["missed"][0]["english"] == "A" and stats["missed"][0]["vietnamese"] == "đúng"
+    assert quiz_insights([], {}) == {"topics": {}, "answered": 0, "correct": 0, "missed": []}

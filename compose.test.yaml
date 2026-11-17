@@ -11,7 +11,12 @@ services:
       timeout: 3s
       retries: 30
 
+  # Test containers get their own names so they never clash with a running `backend` / `frontend`.
   backend:
+    container_name: vuon-xa-test-backend
     depends_on:
       database:
         condition: service_healthy
+
+  frontend:
+    container_name: vuon-xa-test-frontend

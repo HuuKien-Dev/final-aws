@@ -51,3 +51,72 @@ test('AI corrections render original, improved sentence and full rewrite as esca
  assert.doesNotMatch(html,/<script>/)
  assert.match(html,/&lt;script&gt;/)
 })
+test('study streak shows seven days, the record and quiz accuracy',()=>{
+ const StudyStreak=require('../frontend/app/components/StudyStreak.tsx').default
+ const week=Array.from({length:7},(_,i)=>({date:`2026-11-${String(8+i).padStart(2,'0')}`,active:i>3}))
+ const html=renderToStaticMarkup(React.createElement(StudyStreak,{info:{streak:3,best_streak:5,studied_today:true,week},accuracy:80}))
+ assert.match(html,/3 ngày liên tiếp/)
+ assert.equal((html.match(/<li /g)||[]).length,7)
+ assert.match(html,/5 ngày/)
+ assert.match(html,/80%/)
+})
+test('header streak distinguishes zero days from loading and links to progress',()=>{
+ const {StreakBadge}=require('../frontend/app/components/StudyStreak.tsx')
+ const render=props=>renderToStaticMarkup(React.createElement(StreakBadge,{onClick(){},...props}))
+ assert.match(render({streak:0}),/aria-label="0 ngày học liên tục/)
+ assert.match(render({streak:0}),/<strong>0<\/strong>/)
+ assert.match(render({streak:7,studiedToday:true}),/7 ngày học liên tục\. Hôm nay đã học/)
+ assert.match(render({}),/Đang tải chuỗi ngày học/)
+ assert.match(render({}),/<strong>—<\/strong>/)
+})
+test('speech button renders nothing on the server and shuffle keeps every card',()=>{
+ const SpeakButton=require('../frontend/app/components/SpeakButton.tsx').default
+ assert.equal(renderToStaticMarkup(React.createElement(SpeakButton,{text:'Hello'})),'')
+ const {shuffled}=require('../frontend/app/lib/learning.ts')
+ const items=[1,2,3,4,5]
+ const result=shuffled(items,()=>0)
+ assert.deepEqual([...result].sort(),items)
+ assert.deepEqual(items,[1,2,3,4,5])
+})
+test('password dialog asks for current, new and confirmed password',()=>{
+ const PasswordDialog=require('../frontend/app/components/PasswordDialog.tsx').default
+ const html=renderToStaticMarkup(React.createElement(PasswordDialog,{onClose:()=>{},onDone:()=>{}}))
+ assert.match(html,/role="dialog"/)
+ assert.equal((html.match(/type="password"/g)||[]).length,3)
+ assert.match(html,/autoComplete="current-password"/i)
+})
+test('dashboard offers due reviews only when some phrases are due',()=>{
+ const Dashboard=require('../frontend/app/components/Dashboard.tsx').default
+ const base={topics:[],loading:false,topicsError:'',onReload(){},progressError:'',onRetryProgress(){},onTopic(){},onNavigate(){},onReview(){}}
+ const progress={mastered:3,total:400,quiz_count:1,topics:[],due:4}
+ assert.match(renderToStaticMarkup(React.createElement(Dashboard,{...base,progress})),/4 câu đến hạn ôn hôm nay/)
+ assert.doesNotMatch(renderToStaticMarkup(React.createElement(Dashboard,{...base,progress:{...progress,due:0}})),/đến hạn ôn/)
+})
+test('speaking practice stays hidden until the browser supports recognition',()=>{
+ const SpeakingCheck=require('../frontend/app/components/SpeakingCheck.tsx').default
+ assert.equal(renderToStaticMarkup(React.createElement(SpeakingCheck,{text:'Hello'})),'')
+})
+
+test('AI-written explanations, plans and reports render as escaped text',()=>{
+ const {ExplanationView}=require('../frontend/app/components/ExplainPhrase.tsx')
+ const {PlanView}=require('../frontend/app/components/AICoach.tsx')
+ const {RoleplayReportView}=require('../frontend/app/components/Roleplay.tsx')
+ const {ExerciseReview}=require('../frontend/app/components/AIExercises.tsx')
+ const attack='<img src=x onerror=alert(1)>'
+ const explained=renderToStaticMarkup(React.createElement(ExplanationView,{value:{meaning:attack,parts:[{text:attack,meaning:'nghĩa',note:''}],grammar:'',usage:'Khi chào hỏi.',formality:'formal',pronunciation:'',alternatives:[],mistakes:[],dialogue:[]}}))
+ assert.match(explained,/Sắc thái: Trang trọng/)
+ assert.doesNotMatch(explained,/<img/)
+ assert.doesNotMatch(explained,/Cấu trúc|Mẹo phát âm|Cách nói khác|Hội thoại mẫu/,'empty sections stay hidden')
+ const plan={summary:attack,strengths:[],weaknesses:[],focus_topics:['food','deleted-topic'],plan:[{day:1,focus:'Ôn',tasks:[attack],minutes:15}],encouragement:''}
+ const planned=renderToStaticMarkup(React.createElement(PlanView,{plan,topics:[{id:'food',name:'Ăn uống'}],onOpenTopic(){}}))
+ assert.equal((planned.match(/class="small-button"/g)||[]).length,1,'a plan links only to topics that exist')
+ assert.doesNotMatch(planned,/<img/)
+ const report={summary:'Ổn.',score:null,estimated_level:'',goals_done:[],strengths:[],fixes:[{original:attack,improved:'I want',reason:'x'}],useful_phrases:[],next_steps:[],limitations:'Chưa đánh giá phát âm.'}
+ const reviewed=renderToStaticMarkup(React.createElement(RoleplayReportView,{saved:{report,scenario:{id:'custom',title:attack,goals:[]},messages:[{role:'user',content:attack}]}}))
+ assert.match(reviewed,/Nhận xét cho bạn/)
+ assert.doesNotMatch(reviewed,/điểm luyện tập|<img|chat-goals/)
+ const graded=renderToStaticMarkup(React.createElement(ExerciseReview,{result:{score:0,total:1,review:[{kind:'gap',prompt:'I ___ tea.',options:[],hint:'',answer:attack,correct:'like',is_correct:false,explanation:'I + like.'}]}}))
+ assert.match(graded,/0 \/ 1 câu đúng/)
+ assert.match(graded,/class="gap-blank"/)
+ assert.doesNotMatch(graded,/<img|___/)
+})

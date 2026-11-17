@@ -17,3 +17,18 @@ test('cancelled phrase searches abort fetch while retaining timeout and request 
   await assert.rejects(request,{name:'AbortError'})
   assert.ok(signal.aborted)
 })
+
+test('completed AI exercises and saved course work refresh the header streak',async context=>{
+ const events=[]
+ const original=Object.getOwnPropertyDescriptor(globalThis,'window')
+ Object.defineProperty(globalThis,'window',{configurable:true,value:{dispatchEvent:event=>events.push(event.type)}})
+ context.after(()=>{if(original)Object.defineProperty(globalThis,'window',original);else delete globalThis.window})
+ context.mock.method(globalThis,'fetch',async()=>({ok:true,status:200,json:async()=>({ok:true})}))
+ await api('/ai/exercises/example/submit','POST',{answers:['tea']})
+ await api('/courses/lessons/ielts-writing/work','PUT',{completed:true})
+ await api('/ai/status')
+ assert.deepEqual(events,['study-progress','study-progress'])
+ context.mock.method(globalThis,'fetch',async()=>({ok:false,status:422,json:async()=>({detail:'Invalid answers'})}))
+ await assert.rejects(api('/ai/exercises/example/submit','POST',{}),/Invalid answers/)
+ assert.equal(events.length,2)
+})

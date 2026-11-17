@@ -1,5 +1,6 @@
 """Serve allowlisted images, logos and lesson audio from local files or private S3."""
-import asyncio,json,os,re
+import asyncio,hashlib,json,os,re,threading,time
+from collections import OrderedDict
 from functools import lru_cache
 from pathlib import Path
 import boto3
@@ -106,6 +107,43 @@ def read_object(kind,filename,range_header=None):
     if content_range:headers['Content-Range']=content_range
     return data,content_type,206 if byte_range else 200,headers
 
+# Whole-object reads are reused briefly so a logo shown on every page is not a
+# fresh S3 GET each time, and browsers can revalidate with If-None-Match.
+CACHE_TTL=600
+CACHE_ITEM_MAX=2*1024*1024
+CACHE_TOTAL_MAX=16*1024*1024
+_cache=OrderedDict()
+_cache_lock=threading.Lock()
+
+def etag_matches(header,etag):
+    if not header:return False
+    return any(part.strip().removeprefix('W/')==etag or part.strip()=='*' for part in header.split(','))
+
+def cached_object(kind,filename,if_none_match=None):
+    """Returns (data, content_type, status, headers); 304 carries no data."""
+    content_type,_=asset_definition(kind,filename)
+    key=(kind,filename,storage_settings(kind));now=time.monotonic()
+    with _cache_lock:
+        entry=_cache.get(key)
+        if entry and entry[0]<=now:
+            del _cache[key];entry=None
+        if entry:_cache.move_to_end(key)
+    if entry:
+        _,etag,data=entry
+        if etag_matches(if_none_match,etag):return b'',content_type,304,{'ETag':etag}
+        if data is not None:
+            return data,content_type,200,{'Accept-Ranges':'bytes','Content-Length':str(len(data)),'ETag':etag}
+    data,content_type,status,headers=read_object(kind,filename)
+    etag='"'+hashlib.sha256(data).hexdigest()[:32]+'"'
+    with _cache_lock:
+        # Large originals keep only their ETag, so revalidation is still free.
+        _cache[key]=(now+CACHE_TTL,etag,data if len(data)<=CACHE_ITEM_MAX else None)
+        _cache.move_to_end(key)
+        while sum(len(item[2] or b'') for item in _cache.values())>CACHE_TOTAL_MAX or len(_cache)>256:
+            _cache.popitem(last=False)
+    headers['ETag']=etag
+    return data,content_type,status,headers
+
 def read_asset(filename):
     """Compatibility helper used by existing image checks."""
     return read_object('image',filename)[0]
@@ -116,14 +154,16 @@ def read_audio(filename,range_header=None):
 def install(app):
     @app.get('/api/media/{filename}')
     @app.get('/api/picture-assets/{filename}')
-    async def picture_asset(filename:str):
-        data,content_type,status,headers=await asyncio.to_thread(read_object,'image',filename)
+    async def picture_asset(filename:str,request:Request):
+        data,content_type,status,headers=await asyncio.to_thread(cached_object,'image',filename,request.headers.get('if-none-match'))
         headers['X-Content-Type-Options']='nosniff'
         if filename.endswith('.zip'):headers['Content-Disposition']='attachment; filename="vocabulary-images.zip"'
         return Response(content=data,media_type=content_type,status_code=status,headers=headers)
 
     @app.get('/api/audio/{filename}')
     async def audio_asset(filename:str,request:Request):
-        data,content_type,status,headers=await asyncio.to_thread(read_audio,filename,request.headers.get('range'))
+        byte_range=request.headers.get('range')
+        if byte_range:data,content_type,status,headers=await asyncio.to_thread(read_audio,filename,byte_range)
+        else:data,content_type,status,headers=await asyncio.to_thread(cached_object,'audio',filename,request.headers.get('if-none-match'))
         headers['X-Content-Type-Options']='nosniff'
         return Response(content=data,media_type=content_type,status_code=status,headers=headers)

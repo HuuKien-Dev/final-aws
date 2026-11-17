@@ -1,11 +1,12 @@
-name: vuon-xa-frontend
+name: frontend
 
 services:
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    image: vuon-xa-frontend:latest
+    image: frontend:latest
+    container_name: frontend
     restart: unless-stopped
     environment:
       BACKEND_URL: ${BACKEND_URL:?Set BACKEND_URL in .env.frontend}

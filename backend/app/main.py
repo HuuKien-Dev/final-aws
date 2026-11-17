@@ -1,15 +1,36 @@
-import asyncio, hashlib, json, os, secrets, uuid
+import asyncio, hashlib, json, os, secrets, time, uuid
+from collections import deque
 from contextlib import asynccontextmanager
 from datetime import datetime, timedelta, timezone
+from typing import Literal
 import asyncpg
 from fastapi import FastAPI, Depends, HTTPException, Request, Response
 from pydantic import BaseModel, Field
 from .learning import (DUMMY_PASSWORD_HASH, hash_password, verify_password,
-                       build_questions, public_questions, validate_answers, grade_answers, quiz_view, replay_submission, latest_mistake_ids)
+                       build_questions, public_questions, validate_answers, grade_answers, quiz_view, replay_submission, latest_mistake_ids,
+                       study_streak, REVIEW_INTERVALS, fold_text, FOLD_FROM, FOLD_TO)
 
 COOKIE = "english_session"
 SECURE = os.getenv("COOKIE_SECURE", "true").lower() == "true"
 ORIGIN = os.getenv("APP_ORIGIN", "http://localhost:3000").rstrip("/")
+# Allowlisted media never changes for a release; let browsers reuse it.
+MEDIA_PREFIXES = ("/api/media/", "/api/picture-assets/", "/api/audio/")
+MEDIA_CACHE = "public, max-age=86400"
+LOGIN_WINDOW, LOGIN_MAX_FAILURES = 15*60, 10
+_login_failures: dict[str, deque] = {}
+
+def login_blocked(email: str, now: float | None = None) -> bool:
+    """Per-process limit on failed logins for one account (brute-force guard)."""
+    now = time.monotonic() if now is None else now
+    attempts = _login_failures.get(email)
+    while attempts and now-attempts[0] > LOGIN_WINDOW: attempts.popleft()
+    return bool(attempts) and len(attempts) >= LOGIN_MAX_FAILURES
+
+def record_login_failure(email: str, now: float | None = None):
+    now = time.monotonic() if now is None else now
+    if len(_login_failures) > 10000:
+        for key in [k for k,v in _login_failures.items() if not v or now-v[-1] > LOGIN_WINDOW]: del _login_failures[key]
+    _login_failures.setdefault(email, deque(maxlen=LOGIN_MAX_FAILURES)).append(now)
 
 @asynccontextmanager
 async def lifespan(app):
@@ -40,7 +61,8 @@ async def protect(request: Request, call_next):
             chunks.append(chunk)
         request._body=b"".join(chunks)
     response = await call_next(request)
-    response.headers["Cache-Control"] = "no-store"
+    cacheable = request.method == "GET" and response.status_code in (200, 206, 304) and request.url.path.startswith(MEDIA_PREFIXES)
+    response.headers["Cache-Control"] = MEDIA_CACHE if cacheable else "no-store"
     response.headers["X-Content-Type-Options"] = "nosniff"
     return response
 
@@ -75,6 +97,8 @@ async def health(connection=Depends(db)):
         await connection.execute("SELECT topic_id FROM quizzes LIMIT 0")
         await connection.execute("SELECT lesson_id FROM course_work LIMIT 0")
         await connection.execute("SELECT id FROM vocabulary_decks LIMIT 0")
+        await connection.execute("SELECT due_at FROM flashcards LIMIT 0")
+        await connection.execute("SELECT e.id,x.phrase_id FROM ai_exercises e,ai_explanations x LIMIT 0")
         ready=await connection.fetchval("SELECT EXISTS(SELECT 1 FROM phrases)")
     except asyncpg.PostgresError:
         raise HTTPException(503,"Database chưa sẵn sàng; kiểm tra migration.")
@@ -96,16 +120,39 @@ async def register(body: Credentials,response: Response,connection=Depends(db)):
 
 @app.post("/api/auth/login")
 async def login(body: Credentials,response: Response,connection=Depends(db)):
-    row=await connection.fetchrow("SELECT * FROM users WHERE email=$1",body.email.strip().lower())
+    email=body.email.strip().lower()
+    if login_blocked(email): raise HTTPException(429,"Bạn đã nhập sai nhiều lần. Vui lòng thử lại sau 15 phút.")
+    row=await connection.fetchrow("SELECT * FROM users WHERE email=$1",email)
     # Equal scrypt work for unknown accounts.
     encoded=row["password_hash"] if row else DUMMY_PASSWORD_HASH
     valid=await asyncio.to_thread(verify_password,body.password,encoded)
-    if not row or not valid: raise HTTPException(401,"Email hoặc mật khẩu không đúng")
+    if not row or not valid:
+        record_login_failure(email)
+        raise HTTPException(401,"Email hoặc mật khẩu không đúng")
+    _login_failures.pop(email,None)
     await issue_session(connection,response,row["id"])
     return {"email":row["email"]}
 
 @app.get("/api/auth/me")
 async def me(current=Depends(user)): return {"email":current["email"]}
+
+class PasswordChange(BaseModel):
+    current_password: str = Field(min_length=1,max_length=128)
+    new_password: str = Field(min_length=10,max_length=128)
+
+@app.put("/api/auth/password")
+async def change_password(body: PasswordChange,response: Response,current=Depends(user),connection=Depends(db)):
+    if body.current_password==body.new_password: raise HTTPException(422,"Mật khẩu mới cần khác mật khẩu hiện tại")
+    encoded=await connection.fetchval("SELECT password_hash FROM users WHERE id=$1",current["id"])
+    if not encoded or not await asyncio.to_thread(verify_password,body.current_password,encoded):
+        raise HTTPException(403,"Mật khẩu hiện tại không đúng")
+    password_hash=await asyncio.to_thread(hash_password,body.new_password)
+    async with connection.transaction():
+        await connection.execute("UPDATE users SET password_hash=$2 WHERE id=$1",current["id"],password_hash)
+        # Sign out every other device that may know the old password.
+        await connection.execute("DELETE FROM sessions WHERE user_id=$1",current["id"])
+        await issue_session(connection,response,current["id"])
+    return {"ok":True}
 
 @app.post("/api/auth/logout")
 async def logout(request: Request,response: Response,connection=Depends(db)):
@@ -144,7 +191,7 @@ async def lesson(topic_id: str,offset: int=0,current=Depends(user),connection=De
             "offset":offset,"has_more":offset+len(rows)<summary["total"]}
 
 @app.get("/api/phrases")
-async def phrases(q: str="",topic: str="",favorites: bool=False,mistakes: bool=False,limit: int=200,offset: int=0,current=Depends(user),connection=Depends(db)):
+async def phrases(q: str="",topic: str="",favorites: bool=False,mistakes: bool=False,due: bool=False,limit: int=200,offset: int=0,current=Depends(user),connection=Depends(db)):
     if limit < 1 or limit > 200 or offset < 0:
         raise HTTPException(422,"Phân trang không hợp lệ")
     if len(q)>200: raise HTTPException(422,"Từ khóa quá dài")
@@ -155,9 +202,11 @@ async def phrases(q: str="",topic: str="",favorites: bool=False,mistakes: bool=F
     rows=await connection.fetch("""SELECT p.*, (f.phrase_id IS NOT NULL) AS favorite, coalesce(c.mastered,false) AS mastered
       FROM phrases p LEFT JOIN favorites f ON f.phrase_id=p.id AND f.user_id=$1
       LEFT JOIN flashcards c ON c.phrase_id=p.id AND c.user_id=$1
-      WHERE ($2='' OR p.topic_id=$2) AND (strpos(lower(p.english),lower($3))>0 OR strpos(lower(p.vietnamese),lower($3))>0)
+      WHERE ($2='' OR p.topic_id=$2) AND (strpos(lower(p.english),lower($3))>0 OR strpos(translate(lower(p.vietnamese),$10,$11),$12)>0)
       AND (NOT $4::boolean OR f.phrase_id IS NOT NULL)
-      AND (NOT $7::boolean OR p.id=ANY($8::text[])) ORDER BY p.topic_id,p.english LIMIT $5 OFFSET $6""",current["id"],topic,q,favorites,limit,offset,mistakes,mistake_ids)
+      AND (NOT $7::boolean OR p.id=ANY($8::text[]))
+      AND (NOT $9::boolean OR (c.mastered AND coalesce(c.due_at,now())<=now()))
+      ORDER BY p.topic_id,p.english LIMIT $5 OFFSET $6""",current["id"],topic,q,favorites,limit,offset,mistakes,mistake_ids,due,FOLD_FROM,FOLD_TO,fold_text(q))
     return [dict(r) for r in rows]
 
 class Flag(BaseModel): value: bool
@@ -172,15 +221,28 @@ async def favorite(pid: str,body: Flag,current=Depends(user),connection=Depends(
 @app.put("/api/flashcards/{pid}")
 async def flashcard(pid: str,body: Flag,current=Depends(user),connection=Depends(db)):
     if not await connection.fetchval("SELECT 1 FROM phrases WHERE id=$1",pid): raise HTTPException(404,"Không tìm thấy câu")
-    await connection.execute("INSERT INTO flashcards VALUES($1,$2,$3,now()) ON CONFLICT(user_id,phrase_id) DO UPDATE SET mastered=excluded.mastered,updated_at=now()",current["id"],pid,body.value)
-    return {"ok":True}
+    # Marking a due phrase as still known counts as one review and lengthens its interval.
+    row=await connection.fetchrow("""INSERT INTO flashcards(user_id,phrase_id,mastered,updated_at,reviews,due_at)
+      VALUES($1,$2,$3,now(),0,CASE WHEN $3 THEN now()+make_interval(days=>($4::int[])[1]) END)
+      ON CONFLICT(user_id,phrase_id) DO UPDATE SET mastered=excluded.mastered,updated_at=now(),
+        reviews=CASE WHEN NOT excluded.mastered OR NOT flashcards.mastered THEN 0
+                     WHEN coalesce(flashcards.due_at,now())<=now() THEN flashcards.reviews+1
+                     ELSE flashcards.reviews END,
+        due_at=CASE WHEN NOT excluded.mastered THEN NULL
+                    WHEN NOT flashcards.mastered THEN now()+make_interval(days=>($4::int[])[1])
+                    WHEN coalesce(flashcards.due_at,now())<=now() THEN now()+make_interval(days=>($4::int[])[least(flashcards.reviews+2,array_length($4::int[],1))])
+                    ELSE flashcards.due_at END
+      RETURNING reviews,due_at""",current["id"],pid,body.value,REVIEW_INTERVALS)
+    return {"ok":True,"reviews":row["reviews"],"due_at":row["due_at"]}
 
-class QuizStart(BaseModel): topic: str=""
+class QuizStart(BaseModel):
+    topic: str=""
+    count: Literal[5,10]=5
 class Submission(BaseModel): answers: list[str] = Field(max_length=10)
 
 @app.post("/api/quizzes")
 async def start_quiz(body: QuizStart,current=Depends(user),connection=Depends(db)):
-    rows=await connection.fetch("SELECT * FROM phrases WHERE ($1='' OR topic_id=$1) ORDER BY random() LIMIT 5",body.topic)
+    rows=await connection.fetch("SELECT * FROM phrases WHERE ($1='' OR topic_id=$1) ORDER BY random() LIMIT $2",body.topic,body.count)
     all_rows=await connection.fetch("SELECT DISTINCT vietnamese FROM phrases")
     try:
         questions=build_questions(rows,[r["vietnamese"] for r in all_rows])
@@ -252,11 +314,25 @@ async def progress(current=Depends(user),connection=Depends(db)):
       LEFT JOIN flashcards c ON c.phrase_id=p.id AND c.user_id=$1
       LEFT JOIN favorites f ON f.phrase_id=p.id AND f.user_id=$1
       GROUP BY t.id ORDER BY t.id""",uid)
-    quiz_count=await connection.fetchval("SELECT count(*) FROM quizzes WHERE user_id=$1 AND submitted_at IS NOT NULL",uid)
-    return {"quiz_count":quiz_count,"topics":[dict(r) for r in topic_progress],
-     "mastered":await connection.fetchval("SELECT count(*) FROM flashcards WHERE user_id=$1 AND mastered",uid),
-     "favorites":await connection.fetchval("SELECT count(*) FROM favorites WHERE user_id=$1",uid),
-     "total":await connection.fetchval("SELECT count(*) FROM phrases"),"history":[dict(r) for r in history]}
+    # One round trip for all totals instead of four.
+    totals=await connection.fetchrow("""SELECT
+      (SELECT count(*) FROM quizzes WHERE user_id=$1 AND submitted_at IS NOT NULL)::int AS quiz_count,
+      (SELECT coalesce(sum(score),0) FROM quizzes WHERE user_id=$1 AND submitted_at IS NOT NULL)::int AS correct,
+      (SELECT coalesce(sum(jsonb_array_length(questions)),0) FROM quizzes WHERE user_id=$1 AND submitted_at IS NOT NULL)::int AS answered,
+      (SELECT count(*) FROM flashcards WHERE user_id=$1 AND mastered)::int AS mastered,
+      (SELECT count(*) FROM favorites WHERE user_id=$1)::int AS favorites,
+      (SELECT count(*) FROM phrases)::int AS total,
+      (SELECT count(*) FROM flashcards WHERE user_id=$1 AND mastered AND coalesce(due_at,now())<=now())::int AS due,
+      (now() AT TIME ZONE 'Asia/Ho_Chi_Minh')::date AS today""",uid)
+    days=await connection.fetch("""SELECT DISTINCT d FROM (
+      SELECT (submitted_at AT TIME ZONE 'Asia/Ho_Chi_Minh')::date AS d FROM quizzes WHERE user_id=$1 AND submitted_at>now()-interval '370 days'
+      UNION ALL SELECT (updated_at AT TIME ZONE 'Asia/Ho_Chi_Minh')::date FROM flashcards WHERE user_id=$1 AND updated_at>now()-interval '370 days'
+      UNION ALL SELECT (updated_at AT TIME ZONE 'Asia/Ho_Chi_Minh')::date FROM course_work WHERE user_id=$1 AND updated_at>now()-interval '370 days'
+      UNION ALL SELECT (submitted_at AT TIME ZONE 'Asia/Ho_Chi_Minh')::date FROM ai_exercises WHERE user_id=$1 AND submitted_at>now()-interval '370 days') activity""",uid)
+    return {"quiz_count":totals["quiz_count"],"topics":[dict(r) for r in topic_progress],
+     "mastered":totals["mastered"],"favorites":totals["favorites"],"total":totals["total"],"due":totals["due"],
+     "accuracy":round(100*totals["correct"]/totals["answered"]) if totals["answered"] else None,
+     **study_streak([r["d"] for r in days],totals["today"]),"history":[dict(r) for r in history]}
 
 # Additional learning features share the existing authentication and CSRF checks.
 from .expansion import install as install_expansion

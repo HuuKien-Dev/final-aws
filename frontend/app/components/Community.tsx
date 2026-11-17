@@ -26,9 +26,12 @@ const reasons=[
 export function WhyEnglish(){return <section><p>Bạn không cần giỏi ngay từ đầu. Hãy chọn một lý do gắn với cuộc sống của mình để bắt đầu.</p><div className="reason-grid">{reasons.map(([title,body],i)=><article className="reason-card" key={title}><span className="eyebrow">{String(i+1).padStart(2,'0')}</span><h3>{title}</h3><p>{body}</p></article>)}</div></section>}
 const encouragements=['Bạn không cần học thật nhiều hôm nay. Chỉ cần bắt đầu với một câu.','Một lỗi sai được sửa là một bước tiến mới. Cứ thử nói nhé!','Mỗi lần ôn lại, bạn đang cho trí nhớ thêm một cơ hội.','Năm phút tập trung hôm nay cũng đáng ghi nhận.','Hôm nay bạn có thể hiểu thêm một câu mà hôm qua chưa biết.','Học theo nhịp của bạn. Sự đều đặn quan trọng hơn vội vàng.','Đừng đợi hoàn hảo mới nói. Hãy bắt đầu từ điều bạn muốn chia sẻ.','Bài học nhỏ hôm nay có thể giúp một cuộc trò chuyện ngày mai.']
 export function Motivation({onLearn}:{onLearn:()=>void}){
- const [quote,setQuote]=useState(encouragements[0])
- useEffect(()=>{setQuote(encouragements[Math.floor(Math.random()*encouragements.length)])},[])
- return <aside className="motivation" aria-label="Lời nhắn khích lệ"><div><span className="eyebrow">MỘT CHÚT ĐỘNG LỰC HÔM NAY</span><p>{quote}</p></div><button className="small-button" onClick={onLearn}>Học một bài nhỏ →</button></aside>
+ const [quote,setQuote]=useState(encouragements[0]),[hidden,setHidden]=useState(false)
+ // Dismissed for the rest of the day on this device.
+ const today=()=>new Date().toDateString()
+ useEffect(()=>{setQuote(encouragements[Math.floor(Math.random()*encouragements.length)]);try{setHidden(window.localStorage.getItem('motivation-hidden')===today())}catch{}},[])
+ if(hidden)return null
+ return <aside className="motivation" aria-label="Lời nhắn khích lệ"><div><span className="eyebrow">MỘT CHÚT ĐỘNG LỰC HÔM NAY</span><p>{quote}</p></div><div className="motivation-actions"><button className="small-button" onClick={onLearn}>Học một bài nhỏ →</button><button className="motivation-close" aria-label="Ẩn lời nhắn hôm nay" title="Ẩn hôm nay" onClick={()=>{setHidden(true);try{window.localStorage.setItem('motivation-hidden',today())}catch{}}}>×</button></div></aside>
 }
 type Entry={id:string;category:string;message:string;created_at:string}
 const categories={bug:'Báo lỗi',feature:'Đề xuất tính năng',content:'Góp ý nội dung',other:'Góp ý khác'}
