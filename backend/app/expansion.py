@@ -231,6 +231,8 @@ def install(app,user,db):
     @app.post('/api/ai')
     async def ai(body:ai_service.AIRequest,current=Depends(user),connection=Depends(db)):
         ai_service.settings() # Fail before consuming quota when no key exists.
+        # Checked here, before spend(): a request that cannot succeed must not cost a daily call.
+        if body.action=='speech' and not ai_service.capabilities()['audio']:raise HTTPException(422,'API đang chọn chưa bật tính năng âm thanh.')
         if body.action=='speech' and (not body.text.strip() or len(body.text)>2000):raise HTTPException(422,'Nội dung đọc cần từ 1 đến 2000 ký tự')
         if body.audio_base64:
             if body.action!='speaking' or not ai_service.capabilities()['audio']:raise HTTPException(422,'API đang chọn không hỗ trợ ghi âm; hãy nhập bản chép lời.')

@@ -486,6 +486,16 @@ def test_roleplay_requests_are_checked_before_quota_or_provider(monkeypatch):
     assert client.post('/api/ai/roleplay',headers=ORIGIN,json={'scenario_id':'cafe-order','text':'Hello'}).status_code==429
     assert not used and connection.spent()==1
 
+def test_speech_without_audio_support_is_rejected_before_quota(monkeypatch):
+    monkeypatch.setenv('AI_API_KEY','test')
+    # Audio switched off, then switched on for a provider that has no audio API.
+    for provider,enabled in [('openai','false'),('deepseek','true')]:
+        monkeypatch.setenv('AI_PROVIDER',provider);monkeypatch.setenv('AI_AUDIO_ENABLED',enabled)
+        connection=Recorder();client=signed_in(connection)
+        response=client.post('/api/ai',headers=ORIGIN,json={'action':'speech','text':'Hello'})
+        assert response.status_code==422 and 'âm thanh' in response.json()['detail']
+        assert not connection.seen
+
 def test_roleplay_turn_and_saved_report_use_server_side_scene(monkeypatch):
     used=canned(monkeypatch,TURN,REPORT);connection=Recorder(fetchval={'ai_usage':1});client=signed_in(connection)
     turn=client.post('/api/ai/roleplay',headers=ORIGIN,json={'scenario_id':'cafe-order','text':'Hi, i wants a coffee','messages':[{'role':'assistant','content':'Hi there!'}]}).json()
